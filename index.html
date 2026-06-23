@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zhingkham — Short Videos</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #FF2D55;
+      --secondary: #5856D6;
+      --accent: #FF9500;
+      --dark: #000000;
+      --dark-gray: #1C1C1E;
+      --medium-gray: #2C2C2E;
+      --light-gray: #3A3A3C;
+      --white: #FFFFFF;
+      --text-secondary: #8E8E93;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--dark);
+      color: var(--white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== VIDEO FEED ===== */
+    .feed {
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+      height: 100vh;
+      scrollbar-width: none;
+    }
+    .feed::-webkit-scrollbar { display: none; }
+
+    .video-slide {
+      height: 100vh;
+      scroll-snap-align: start;
+      position: relative;
+      overflow: hidden;
+      background: var(--dark-gray);
+    }
+
+    .video-slide video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Top header */
+    .top-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+    }
+
+    .top-header span {
+      font-size: 17px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .top-header span.active {
+      color: var(--white);
+      font-weight: 700;
+    }
+    .top-header .divider {
+      width: 1px;
+      height: 16px;
+      background: rgba(255,255,255,0.3);
+    }
+
+    /* Right actions */
+    .actions {
+      position: absolute;
+      right: 12px;
+      bottom: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      z-index: 10;
+    }
+
+    .action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--white);
+    }
+
+    .action-btn svg {
+      width: 30px;
+      height: 30px;
+      filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5));
+    }
+
+    .action-btn .count {
+      font-size: 12px;
+      font-weight: 600;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+
+    .action-btn.liked svg { fill: var(--primary); }
+
+    .avatar-action {
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .avatar-action img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid var(--white);
+      object-fit: cover;
+    }
+
+    .follow-badge {
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .music-disc {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 8px solid var(--dark-gray);
+      overflow: hidden;
+      animation: spin 4s linear infinite;
+    }
+    .music-disc img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Bottom info */
+    .bottom-info {
+      position: absolute;
+      bottom: 80px;
+      left: 14px;
+      right: 80px;
+      z-index: 10;
+    }
+
+    .user-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .user-row .username {
+      font-size: 16px;
+      font-weight: 700;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+
+    .verified-badge {
+      width: 16px;
+      height: 16px;
+      background: #20D5EC;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    .description {
+      font-size: 14px;
+      line-height: 20px;
+      margin-bottom: 8px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .song-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+
+    /* ===== BOTTOM TAB BAR ===== */
+    .tab-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      z-index: 200;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 10px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .tab-item.active { color: var(--white); }
+    .tab-item svg { width: 24px; height: 24px; }
+
+    .create-btn {
+      width: 44px;
+      height: 30px;
+      background: var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(255,45,85,0.4);
+    }
+    .create-btn svg { width: 22px; height: 22px; }
+
+    /* ===== SCREENS ===== */
+    .screen {
+      display: none;
+      min-height: 100vh;
+      padding-bottom: 70px;
+    }
+    .screen.active { display: block; }
+
+    /* Discover */
+    .discover-screen { padding-top: 16px; }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--medium-gray);
+      border-radius: 12px;
+      margin: 0 12px 12px;
+      padding: 0 12px;
+      height: 40px;
+    }
+    .search-bar svg { width: 20px; height: 20px; color: var(--text-secondary); }
+    .search-bar input {
+      flex: 1;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 15px;
+      outline: none;
+    }
+    .search-bar input::placeholder { color: var(--text-secondary); }
+
+    .categories {
+      display: flex;
+      gap: 8px;
+      padding: 0 12px 16px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .categories::-webkit-scrollbar { display: none; }
+
+    .category-chip {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 12px 12px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .grid-tile {
+      aspect-ratio: 3/4;
+      background: var(--medium-gray);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .grid-tile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .grid-tile .overlay {
+      position: absolute;
+      bottom: 6px;
+      left: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* Profile */
+    .profile-screen { padding-top: 16px; }
+
+    .profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 16px 12px;
+    }
+    .profile-header .username {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .profile-header svg { width: 24px; height: 24px; cursor: pointer; }
+
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 16px 16px;
+    }
+
+    .profile-avatar {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 12px;
+    }
+
+    .profile-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .stats-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 16px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+    .stat-item .num {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .stat-item .label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--light-gray);
+    }
+
+    .profile-actions {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .edit-btn {
+      background: var(--medium-gray);
+      border: none;
+      color: var(--white);
+      padding: 10px 40px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .icon-btn {
+      background: var(--medium-gray);
+      border: none;
+      color: var(--white);
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .icon-btn svg { width: 20px; height: 20px; }
+
+    .bio { font-size: 14px; text-align: center; margin-bottom: 16px; }
+
+    .profile-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--medium-gray);
+    }
+    .profile-tab {
+      flex: 1;
+      text-align: center;
+      padding: 12px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      color: var(--text-secondary);
+    }
+    .profile-tab.active {
+      border-bottom-color: var(--white);
+      color: var(--white);
+    }
+    .profile-tab svg { width: 20px; height: 20px; }
+
+    /* Inbox */
+    .inbox-screen { padding-top: 16px; }
+
+    .inbox-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 16px 12px;
+    }
+    .inbox-header h2 {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .inbox-tabs {
+      display: flex;
+      gap: 12px;
+      padding: 0 16px 12px;
+    }
+    .inbox-tab {
+      padding: 6px 16px;
+      border-radius: 20px;
+      background: var(--medium-gray);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      border: none;
+      cursor: pointer;
+    }
+    .inbox-tab.active {
+      background: var(--white);
+      color: var(--dark);
+    }
+
+    .notif-list { padding: 0 16px; }
+
+    .notif-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--medium-gray);
+    }
+    .notif-item img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .notif-content { flex: 1; }
+    .notif-content .text {
+      font-size: 14px;
+      line-height: 20px;
+    }
+    .notif-content .text strong { font-weight: 700; }
+    .notif-content .time {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+    .notif-icon { width: 18px; height: 18px; }
+
+    /* Pause overlay */
+    .pause-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.15);
+      z-index: 5;
+      cursor: pointer;
+    }
+    .pause-overlay svg { width: 60px; height: 60px; opacity: 0.7; }
+    .pause-overlay.hidden { display: none; }
+
+    /* Create screen */
+    .create-screen {
+      display: none;
+      height: 100vh;
+      padding-bottom: 0;
+    }
+    .create-screen.active { display: flex; flex-direction: column; }
+
+    .create-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      z-index: 10;
+    }
+    .create-header .title { font-size: 18px; font-weight: 700; }
+    .create-header svg { width: 28px; height: 28px; cursor: pointer; }
+
+    .camera-placeholder {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--dark-gray);
+      gap: 12px;
+    }
+    .camera-placeholder svg { width: 60px; height: 60px; color: var(--text-secondary); }
+    .camera-placeholder .cam-text { font-size: 18px; font-weight: 600; color: var(--text-secondary); }
+    .camera-placeholder .cam-sub { font-size: 14px; color: var(--text-secondary); }
+
+    .create-controls {
+      padding: 20px 16px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .duration-row {
+      display: flex;
+      gap: 16px;
+    }
+    .duration-row span {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      cursor: pointer;
+    }
+    .duration-row span.active { color: var(--white); }
+
+    .record-btn {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      border: 4px solid var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: none;
+    }
+    .record-btn-inner {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--primary);
+      transition: border-radius 0.2s, width 0.2s, height 0.2s;
+    }
+    .record-btn:hover .record-btn-inner {
+      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+    }
+
+    .mode-row {
+      display: flex;
+      gap: 20px;
+    }
+    .mode-row span {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      cursor: pointer;
+    }
+    .mode-row span.active { color: var(--white); }
+
+    /* Double-tap heart animation */
+    .heart-anim {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      font-size: 80px;
+      pointer-events: none;
+      z-index: 50;
+      opacity: 0;
+    }
+    .heart-anim.pop {
+      animation: heartPop 0.8s ease forwards;
+    }
+    @keyframes heartPop {
+      0% { transform: translate(-50%,-50%) scale(0); opacity: 1; }
+      30% { transform: translate(-50%,-50%) scale(1.2); opacity: 1; }
+      60% { transform: translate(-50%,-50%) scale(1); opacity: 1; }
+      100% { transform: translate(-50%,-50%) scale(1); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HOME SCREEN (VIDEO FEED) ===== -->
+  <div id="home-screen" class="screen active">
+    <div class="top-header">
+      <span>Following</span>
+      <div class="divider"></div>
+      <span class="active">For You</span>
+    </div>
+    <div class="feed" id="feed"></div>
+  </div>
+
+  <!-- ===== DISCOVER SCREEN ===== -->
+  <div id="discover-screen" class="screen discover-screen">
+    <div class="search-bar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" placeholder="Search Zhingkham">
+    </div>
+    <div class="categories" id="categories"></div>
+    <div class="section-title">Trending Now</div>
+    <div class="video-grid" id="discover-grid"></div>
+  </div>
+
+  <!-- ===== CREATE SCREEN ===== -->
+  <div id="create-screen" class="screen create-screen">
+    <div class="create-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      <span class="title">Create</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    </div>
+    <div class="camera-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      <span class="cam-text">Camera Preview</span>
+      <span class="cam-sub">Tap the record button to start</span>
+    </div>
+    <div class="create-controls">
+      <div class="duration-row">
+        <span>15s</span>
+        <span class="active">60s</span>
+        <span>3m</span>
+      </div>
+      <button class="record-btn"><div class="record-btn-inner"></div></button>
+      <div class="mode-row">
+        <span>Photo</span>
+        <span class="active">Video</span>
+        <span>Live</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== INBOX SCREEN ===== -->
+  <div id="inbox-screen" class="screen inbox-screen">
+    <div class="inbox-header">
+      <h2>Inbox</h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width:24px;height:24px;cursor:pointer"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    </div>
+    <div class="inbox-tabs">
+      <button class="inbox-tab active">All Activity</button>
+      <button class="inbox-tab">Mentions</button>
+    </div>
+    <div class="notif-list" id="notif-list"></div>
+  </div>
+
+  <!-- ===== PROFILE SCREEN ===== -->
+  <div id="profile-screen" class="screen profile-screen">
+    <div class="profile-header">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+      <span class="username">@zhingkham_user</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </div>
+    <div class="profile-section">
+      <img class="profile-avatar" src="https://i.pravatar.cc/150?img=10" alt="avatar">
+      <div class="profile-name">Zhingkham User</div>
+      <div class="stats-row">
+        <div class="stat-item"><div class="num">356</div><div class="label">Following</div></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><div class="num">1.2K</div><div class="label">Followers</div></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><div class="num">8.9K</div><div class="label">Likes</div></div>
+      </div>
+      <div class="profile-actions">
+        <button class="edit-btn">Edit Profile</button>
+        <button class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></button>
+        <button class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
+      </div>
+      <div class="bio">Welcome to Zhingkham! 🇧🇹</div>
+    </div>
+    <div class="profile-tabs">
+      <button class="profile-tab active"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg></button>
+      <button class="profile-tab"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+    </div>
+    <div class="video-grid" id="profile-grid"></div>
+  </div>
+
+  <!-- ===== BOTTOM TAB BAR ===== -->
+  <div class="tab-bar">
+    <button class="tab-item active" data-screen="home-screen">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="tab-item" data-screen="discover-screen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <span>Discover</span>
+    </button>
+    <button class="tab-item" data-screen="create-screen">
+      <div class="create-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+      </div>
+    </button>
+    <button class="tab-item" data-screen="inbox-screen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      <span>Inbox</span>
+    </button>
+    <button class="tab-item" data-screen="profile-screen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Profile</span>
+    </button>
+  </div>
+
+  <script>
+    const VIDEOS = [
+      {
+        id: '1',
+        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        poster: '',
+        user: { username: 'dorji_wangmo', avatar: 'https://i.pravatar.cc/150?img=1', verified: true },
+        description: "Beautiful sunrise over the Tiger's Nest monastery 🏔️ #bhutan #travel #tigersnest",
+        song: 'Original Sound - dorji_wangmo',
+        likes: 45200, comments: 1230, shares: 890, bookmarks: 2100,
+      },
+      {
+        id: '2',
+        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        user: { username: 'pema_tshering', avatar: 'https://i.pravatar.cc/150?img=2', verified: false },
+        description: 'Traditional Bhutanese cooking 🍲 Making ema datshi! #food #bhutan #emadatshi',
+        song: 'Bhutanese Folk - Traditional',
+        likes: 23100, comments: 456, shares: 320, bookmarks: 890,
+      },
+      {
+        id: '3',
+        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+        user: { username: 'karma_dancer', avatar: 'https://i.pravatar.cc/150?img=3', verified: true },
+        description: 'Cham dance practice for Tshechu festival 💃 #dance #bhutan #tshechu #culture',
+        song: 'Festival Drums - karma_dancer',
+        likes: 67800, comments: 2340, shares: 1200, bookmarks: 4500,
+      },
+      {
+        id: '4',
+        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+        user: { username: 'thinley_adventures', avatar: 'https://i.pravatar.cc/150?img=4', verified: false },
+        description: 'Hiking the Snowman Trek, day 15! The views are unreal 🏔️❄️ #hiking #snowmantrek',
+        song: 'Mountain Vibes - Ambient',
+        likes: 89400, comments: 3450, shares: 5600, bookmarks: 12000,
+      },
+      {
+        id: '5',
+        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+        user: { username: 'sonam_arts', avatar: 'https://i.pravatar.cc/150?img=5', verified: true },
+        description: 'Painting thangka art in my studio 🎨 Hours of meditation in every stroke #art #thangka',
+        song: 'Lo-fi Meditation - sonam_arts',
+        likes: 34500, comments: 890, shares: 670, bookmarks: 3400,
+      },
+    ];
+
+    const CATEGORIES = [
+      { label: '🔥 Trending', color: '#FF2D55' },
+      { label: '💃 Dance', color: '#5856D6' },
+      { label: '🍲 Food', color: '#FF9500' },
+      { label: '🏛️ Culture', color: '#34C759' },
+      { label: '✈️ Travel', color: '#007AFF' },
+      { label: '🎵 Music', color: '#AF52DE' },
+      { label: '😂 Comedy', color: '#FFD60A' },
+      { label: '⚽ Sports', color: '#30D158' },
+    ];
+
+    const NOTIFICATIONS = [
+      { user: 'dorji_wangmo', avatar: 'https://i.pravatar.cc/150?img=1', text: 'liked your video', time: '2h ago', iconColor: '#FF2D55' },
+      { user: 'pema_tshering', avatar: 'https://i.pravatar.cc/150?img=2', text: 'started following you', time: '3h ago', iconColor: '#5856D6' },
+      { user: 'karma_dancer', avatar: 'https://i.pravatar.cc/150?img=3', text: 'commented: "This is amazing! 🔥"', time: '5h ago', iconColor: '#FF9500' },
+      { user: 'thinley_adventures', avatar: 'https://i.pravatar.cc/150?img=4', text: 'and 42 others liked your video', time: '8h ago', iconColor: '#FF2D55' },
+      { user: 'sonam_arts', avatar: 'https://i.pravatar.cc/150?img=5', text: 'mentioned you in a comment', time: '1d ago', iconColor: '#34C759' },
+    ];
+
+    function fmt(n) {
+      if (n >= 1e6) return (n/1e6).toFixed(1) + 'M';
+      if (n >= 1e3) return (n/1e3).toFixed(1) + 'K';
+      return n;
+    }
+
+    // Build video feed
+    const feed = document.getElementById('feed');
+    VIDEOS.forEach((v, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'video-slide';
+      slide.innerHTML = `
+        <video src="${v.src}" loop muted playsinline preload="${i === 0 ? 'auto' : 'metadata'}"></video>
+        <div class="pause-overlay hidden" id="pause-${v.id}">
+          <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+        <div class="heart-anim" id="heart-${v.id}">❤️</div>
+        <div class="actions">
+          <div class="avatar-action">
+            <img src="${v.user.avatar}" alt="">
+            <div class="follow-badge">+</div>
+          </div>
+          <button class="action-btn" id="like-btn-${v.id}" onclick="toggleLike('${v.id}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            <span class="count" id="like-count-${v.id}">${fmt(v.likes)}</span>
+          </button>
+          <button class="action-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            <span class="count">${fmt(v.comments)}</span>
+          </button>
+          <button class="action-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+            <span class="count">${fmt(v.bookmarks)}</span>
+          </button>
+          <button class="action-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>
+            <span class="count">${fmt(v.shares)}</span>
+          </button>
+          <div class="music-disc"><img src="${v.user.avatar}" alt=""></div>
+        </div>
+        <div class="bottom-info">
+          <div class="user-row">
+            <span class="username">@${v.user.username}</span>
+            ${v.user.verified ? '<span class="verified-badge">✓</span>' : ''}
+          </div>
+          <div class="description">${v.description}</div>
+          <div class="song-row">♫ ${v.song}</div>
+        </div>
+      `;
+
+      // Tap to pause/play
+      const video = slide.querySelector('video');
+      const pauseEl = slide.querySelector('.pause-overlay');
+      let lastTap = 0;
+
+      slide.addEventListener('click', (e) => {
+        if (e.target.closest('.actions') || e.target.closest('.action-btn')) return;
+        const now = Date.now();
+        if (now - lastTap < 300) {
+          // Double tap = like
+          toggleLike(v.id, true);
+          const heart = document.getElementById(`heart-${v.id}`);
+          heart.classList.remove('pop');
+          void heart.offsetWidth;
+          heart.classList.add('pop');
+        } else {
+          setTimeout(() => {
+            if (Date.now() - lastTap >= 300) {
+              if (video.paused) {
+                video.play();
+                pauseEl.classList.add('hidden');
+              } else {
+                video.pause();
+                pauseEl.classList.remove('hidden');
+              }
+            }
+          }, 300);
+        }
+        lastTap = now;
+      });
+
+      feed.appendChild(slide);
+    });
+
+    // Like toggle
+    const likedSet = new Set();
+    function toggleLike(id, forceOn) {
+      const btn = document.getElementById(`like-btn-${id}`);
+      const countEl = document.getElementById(`like-count-${id}`);
+      const v = VIDEOS.find(x => x.id === id);
+      if (forceOn && likedSet.has(id)) return;
+      if (likedSet.has(id) && !forceOn) {
+        likedSet.delete(id);
+        btn.classList.remove('liked');
+        btn.querySelector('svg').setAttribute('fill', 'none');
+        countEl.textContent = fmt(v.likes);
+      } else {
+        likedSet.add(id);
+        btn.classList.add('liked');
+        btn.querySelector('svg').setAttribute('fill', '#FF2D55');
+        btn.querySelector('svg').setAttribute('stroke', '#FF2D55');
+        countEl.textContent = fmt(v.likes + 1);
+      }
+    }
+
+    // Auto-play visible video
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const video = entry.target.querySelector('video');
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+          entry.target.querySelector('.pause-overlay').classList.add('hidden');
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.6 });
+
+    document.querySelectorAll('.video-slide').forEach(s => observer.observe(s));
+
+    // Build categories
+    const catContainer = document.getElementById('categories');
+    CATEGORIES.forEach(c => {
+      const chip = document.createElement('div');
+      chip.className = 'category-chip';
+      chip.style.background = c.color + '22';
+      chip.style.color = c.color;
+      chip.textContent = c.label;
+      catContainer.appendChild(chip);
+    });
+
+    // Build grids
+    function buildGrid(containerId) {
+      const grid = document.getElementById(containerId);
+      [...VIDEOS, ...VIDEOS].forEach((v, i) => {
+        const tile = document.createElement('div');
+        tile.className = 'grid-tile';
+        tile.innerHTML = `<img src="${v.user.avatar}" alt=""><div class="overlay">▶ ${fmt(v.likes)}</div>`;
+        grid.appendChild(tile);
+      });
+    }
+    buildGrid('discover-grid');
+    buildGrid('profile-grid');
+
+    // Build notifications
+    const notifList = document.getElementById('notif-list');
+    NOTIFICATIONS.forEach(n => {
+      const item = document.createElement('div');
+      item.className = 'notif-item';
+      item.innerHTML = `
+        <img src="${n.avatar}" alt="">
+        <div class="notif-content">
+          <div class="text"><strong>${n.user}</strong> ${n.text}</div>
+          <div class="time">${n.time}</div>
+        </div>
+        <svg class="notif-icon" viewBox="0 0 24 24" fill="${n.iconColor}"><circle cx="12" cy="12" r="5"/></svg>
+      `;
+      notifList.appendChild(item);
+    });
+
+    // Tab navigation
+    document.querySelectorAll('.tab-item').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.screen).classList.add('active');
+
+        // Pause all videos when leaving home
+        if (tab.dataset.screen !== 'home-screen') {
+          document.querySelectorAll('.video-slide video').forEach(v => v.pause());
+        }
+      });
+    });
+  </script>
+</body>
+</html>

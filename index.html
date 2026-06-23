@@ -286,20 +286,16 @@
         <div style="width:28px"></div>
       </div>
       <div class="upload-area">
-        <div class="upload-box" id="upload-box" onclick="document.getElementById('video-input').click()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          <span class="up-text">Select video</span>
-          <span class="up-sub">MP4, WebM, MOV</span>
+        <div class="upload-box" id="upload-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+          <span class="up-text">Paste a video URL above</span>
+          <span class="up-sub">MP4, WebM links supported</span>
         </div>
-        <input type="file" id="video-input" accept="video/*" class="hidden" onchange="handleVideoSelect(event)">
-        <div class="upload-form" id="upload-form" style="display:none">
+        <div class="upload-form" id="upload-form" style="display:flex">
+          <input id="vid-url" placeholder="Video URL (paste MP4 link)" oninput="handleVideoUrlPreview()">
           <textarea id="vid-caption" placeholder="Write a caption... #hashtags"></textarea>
           <input id="vid-song" placeholder="Song name (optional)">
           <button class="upload-btn" id="upload-btn" onclick="uploadVideo()">Post</button>
-        </div>
-        <div class="upload-progress hidden" id="upload-progress">
-          <div class="progress-bar"><div class="fill" id="progress-fill"></div></div>
-          <div class="progress-text" id="progress-text">Uploading...</div>
         </div>
       </div>
     </div>
@@ -396,7 +392,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<!-- Storage SDK not needed without Blaze plan -->
 
 <script>
 // ============================================================
@@ -422,7 +418,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
-const storage = firebase.storage();
+// Storage not used — Blaze plan not enabled
 
 // ============================================================
 // STATE
@@ -490,12 +486,7 @@ async function handleAuth() {
       const name = document.getElementById('auth-name').value.trim();
       if (!name) { errEl.textContent = 'Please enter your name'; btn.disabled = false; btn.textContent = 'Sign Up'; return; }
       const cred = await auth.createUserWithEmailAndPassword(email, pass);
-      let avatarURL = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=FF2D55&color=fff&size=200`;
-      if (selectedAvatarFile) {
-        const ref = storage.ref(`avatars/${cred.user.uid}`);
-        await ref.put(selectedAvatarFile);
-        avatarURL = await ref.getDownloadURL();
-      }
+      const avatarURL = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=FF2D55&color=fff&size=200`;
       await cred.user.updateProfile({ displayName: name, photoURL: avatarURL });
       await db.collection('users').doc(cred.user.uid).set({
         displayName: name,
@@ -554,6 +545,7 @@ auth.onAuthStateChanged(async (user) => {
     document.getElementById('auth-screen').classList.add('hidden');
     document.getElementById('app').classList.add('active');
     await loadUserProfile();
+    await seedSampleVideos();
     loadFeed();
     loadDiscover();
     loadNotifications();
@@ -1016,62 +1008,79 @@ function goToVideo(videoId) {
 }
 
 // ============================================================
-// UPLOAD VIDEO
+// SAMPLE VIDEOS — seeded into Firestore on first load
+// ============================================================
+const SAMPLE_VIDEOS = [
+  { videoURL: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', username: 'dorji_wangmo', displayName: 'Dorji Wangmo', avatar: 'https://i.pravatar.cc/150?img=1', verified: true, caption: "Beautiful sunrise over the Tiger's Nest monastery 🏔️ #bhutan #travel #tigersnest", song: 'Original Sound - dorji_wangmo', likes: 45200, comments: 12, shares: 890 },
+  { videoURL: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', username: 'pema_tshering', displayName: 'Pema Tshering', avatar: 'https://i.pravatar.cc/150?img=2', verified: false, caption: 'Traditional Bhutanese cooking 🍲 Making ema datshi! #food #bhutan #emadatshi', song: 'Bhutanese Folk - Traditional', likes: 23100, comments: 5, shares: 320 },
+  { videoURL: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4', username: 'karma_dancer', displayName: 'Karma Lhamo', avatar: 'https://i.pravatar.cc/150?img=3', verified: true, caption: 'Cham dance practice for Tshechu festival 💃 #dance #bhutan #tshechu #culture', song: 'Festival Drums - karma_dancer', likes: 67800, comments: 23, shares: 1200 },
+  { videoURL: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4', username: 'thinley_adventures', displayName: 'Thinley Dorji', avatar: 'https://i.pravatar.cc/150?img=4', verified: false, caption: 'Hiking the Snowman Trek, day 15! 🏔️❄️ #hiking #snowmantrek #bhutan', song: 'Mountain Vibes - Ambient', likes: 89400, comments: 34, shares: 5600 },
+  { videoURL: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', username: 'sonam_arts', displayName: 'Sonam Choden', avatar: 'https://i.pravatar.cc/150?img=5', verified: true, caption: 'Painting thangka art in my studio 🎨 #art #thangka #bhutan', song: 'Lo-fi Meditation - sonam_arts', likes: 34500, comments: 8, shares: 670 },
+];
+
+async function seedSampleVideos() {
+  const snap = await db.collection('videos').limit(1).get();
+  if (!snap.empty) return;
+  for (const v of SAMPLE_VIDEOS) {
+    await db.collection('videos').add({
+      userId: 'sample_' + v.username,
+      username: v.username,
+      userAvatar: v.avatar,
+      displayName: v.displayName,
+      verified: v.verified,
+      videoURL: v.videoURL,
+      caption: v.caption,
+      song: v.song,
+      likes: v.likes,
+      comments: v.comments,
+      shares: v.shares,
+      bookmarks: 0,
+      likedBy: [],
+      bookmarkedBy: [],
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+  }
+}
+
+// ============================================================
+// UPLOAD VIDEO (via URL — no Storage needed)
 // ============================================================
 function handleVideoSelect(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  if (file.size > 100 * 1024 * 1024) { toast('Video must be under 100MB', 'error'); return; }
-  selectedVideoFile = file;
+  // Not used in URL mode
+}
 
+function handleVideoUrlPreview() {
+  const url = document.getElementById('vid-url').value.trim();
   const box = document.getElementById('upload-box');
-  const url = URL.createObjectURL(file);
+  if (!url) {
+    box.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+      <span class="up-text">Paste a video URL above</span>
+      <span class="up-sub">MP4, WebM links supported</span>
+    `;
+    return;
+  }
   box.innerHTML = `
     <video src="${url}" autoplay loop muted playsinline></video>
-    <div class="remove-preview" onclick="event.stopPropagation();clearVideoPreview()">
+    <div class="remove-preview" onclick="event.stopPropagation();document.getElementById('vid-url').value='';handleVideoUrlPreview()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </div>
   `;
-  document.getElementById('upload-form').style.display = 'flex';
-}
-
-function clearVideoPreview() {
-  selectedVideoFile = null;
-  const box = document.getElementById('upload-box');
-  box.innerHTML = `
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-    <span class="up-text">Select video</span>
-    <span class="up-sub">MP4, WebM, MOV</span>
-  `;
-  document.getElementById('upload-form').style.display = 'none';
 }
 
 async function uploadVideo() {
-  if (!selectedVideoFile || !currentUser) return;
+  if (!currentUser) return;
   const btn = document.getElementById('upload-btn');
-  const progress = document.getElementById('upload-progress');
-  const fill = document.getElementById('progress-fill');
-  const pText = document.getElementById('progress-text');
+  const videoURL = document.getElementById('vid-url').value.trim();
   const caption = document.getElementById('vid-caption').value.trim();
   const song = document.getElementById('vid-song').value.trim();
 
+  if (!videoURL) { toast('Please paste a video URL', 'error'); return; }
+
   btn.disabled = true;
-  progress.classList.remove('hidden');
+  btn.textContent = 'Posting...';
 
   try {
-    const videoId = Date.now().toString(36) + Math.random().toString(36).slice(2);
-    const ref = storage.ref(`videos/${currentUser.uid}/${videoId}`);
-    const task = ref.put(selectedVideoFile);
-
-    task.on('state_changed', (snap) => {
-      const pct = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
-      fill.style.width = pct + '%';
-      pText.textContent = `Uploading... ${pct}%`;
-    });
-
-    await task;
-    const videoURL = await ref.getDownloadURL();
-
     await db.collection('videos').add({
       userId: currentUser.uid,
       username: userProfile?.username || 'user',
@@ -1090,24 +1099,23 @@ async function uploadVideo() {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
 
-    pText.textContent = 'Posted! 🎉';
-    toast('Video posted!', 'success');
+    toast('Video posted! 🎉', 'success');
 
     setTimeout(() => {
-      clearVideoPreview();
+      document.getElementById('vid-url').value = '';
       document.getElementById('vid-caption').value = '';
       document.getElementById('vid-song').value = '';
-      progress.classList.add('hidden');
-      fill.style.width = '0%';
+      handleVideoUrlPreview();
       btn.disabled = false;
+      btn.textContent = 'Post';
       switchTab('home');
       loadFeed();
     }, 1500);
   } catch (e) {
     console.error('Upload error:', e);
-    toast('Upload failed: ' + e.message, 'error');
+    toast('Post failed: ' + e.message, 'error');
     btn.disabled = false;
-    progress.classList.add('hidden');
+    btn.textContent = 'Post';
   }
 }
 
@@ -1198,9 +1206,12 @@ async function saveProfile() {
   try {
     let avatar = userProfile.avatar;
     if (editAvatarFile) {
-      const ref = storage.ref(`avatars/${currentUser.uid}`);
-      await ref.put(editAvatarFile);
-      avatar = await ref.getDownloadURL();
+      // Convert to data URL since Storage is not enabled
+      avatar = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (ev) => resolve(ev.target.result);
+        reader.readAsDataURL(editAvatarFile);
+      });
     }
 
     await db.collection('users').doc(currentUser.uid).update({

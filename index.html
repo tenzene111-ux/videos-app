@@ -9,11 +9,11 @@
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
     *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     :root{
-      --g1:#D4A44C;--g2:#C08B33;--g3:#E8C068;--r1:#E04B3A;--r2:#C7392F;
-      --acc:#6C5CE7;--teal:#00B894;--coral:#FD79A8;--blue:#0984E3;
+      --g1:#D4A44C;--g2:#C08B33;--g3:#E8C068;--r1:#C0392B;--r2:#C7392F;
+      --acc:#8B5CF6;--saffron:#FF9F43;--teal:#00B894;--coral:#FD79A8;--blue:#0984E3;
       --b1:#0A0908;--b2:#141210;--b3:#1E1C18;--b4:#282520;--b5:#353230;
       --w:#F8F5EF;--w2:rgba(248,245,239,.7);--w3:rgba(248,245,239,.4);--w4:rgba(248,245,239,.15);--w5:rgba(248,245,239,.06);
-      --glass:rgba(14,12,10,.65);--glass2:rgba(14,12,10,.82);
+      --glass:rgba(20,16,10,.65);--glass2:rgba(20,16,10,.82);
       --ease:cubic-bezier(.4,0,.2,1);--bounce:cubic-bezier(.34,1.56,.64,1);--spring:cubic-bezier(.175,.885,.32,1.275);
     }
     html,body{height:100%;overflow:hidden}
@@ -83,7 +83,7 @@
     .creator-row .c-info .c-name .verified{width:16px;height:16px;background:linear-gradient(135deg,var(--g1),var(--g3));border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:8px;color:var(--b1);font-weight:900;box-shadow:0 2px 6px rgba(212,164,76,.3)}
     .creator-row .c-info .c-loc{font-size:10px;color:var(--w3);display:flex;align-items:center;gap:3px;margin-top:1px}
     .creator-row .c-info .c-loc svg{width:10px;height:10px}
-    .creator-row .follow-btn{padding:6px 16px;border-radius:20px;font-size:11px;font-weight:700;border:none;cursor:pointer;transition:all .3s var(--spring);margin-left:auto}
+    .creator-row .follow-btn{padding:6px 16px;border-radius:12px;font-size:11px;font-weight:700;border:none;cursor:pointer;transition:all .3s var(--spring);margin-left:auto}
     .follow-btn.not{background:linear-gradient(135deg,var(--g1),var(--g3));color:var(--b1);box-shadow:0 4px 16px rgba(212,164,76,.25)}
     .follow-btn.yes{background:var(--w5);color:var(--w3);backdrop-filter:blur(10px);border:1px solid var(--w5)}
     .caption-text{font-size:13px;line-height:20px;text-shadow:0 1px 6px rgba(0,0,0,.5);opacity:.9;margin-bottom:8px;font-weight:400;overflow:hidden;max-height:40px;transition:max-height .3s var(--ease);cursor:pointer}
@@ -109,8 +109,8 @@
     .side-actions{position:absolute;right:10px;bottom:88px;display:flex;flex-direction:column;align-items:center;gap:18px;z-index:10}
     .s-btn{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:var(--w);cursor:pointer;transition:transform .2s var(--spring)}
     .s-btn:active{transform:scale(.75)}
-    .s-btn .icon{width:44px;height:44px;border-radius:50%;background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--w5);display:flex;align-items:center;justify-content:center;transition:all .3s var(--spring);position:relative;overflow:hidden}
-    .s-btn .icon::before{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.08),transparent);pointer-events:none}
+    .s-btn .icon{width:44px;height:44px;border-radius:12px;background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--w5);display:flex;align-items:center;justify-content:center;transition:all .3s var(--spring);position:relative;overflow:hidden}
+    .s-btn .icon::before{content:'';position:absolute;inset:0;border-radius:12px;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.08),transparent);pointer-events:none}
     .s-btn svg{width:20px;height:20px;transition:all .25s var(--ease)}
     .s-btn .cnt{font-size:10px;font-weight:600;opacity:.7;transition:all .2s}
     .s-btn.liked .icon{background:rgba(224,75,58,.18);border-color:rgba(224,75,58,.35);box-shadow:0 0 20px rgba(224,75,58,.15)}
@@ -164,7 +164,7 @@
     .vid-counter{position:absolute;top:44px;left:50%;transform:translateX(-50%);z-index:21;font-size:10px;font-weight:600;color:var(--w3);opacity:0;transition:opacity .3s}
 
     /* === DOCK === */
-    .dock{position:absolute;bottom:14px;left:14px;right:14px;height:60px;display:flex;align-items:center;justify-content:space-around;background:var(--glass2);backdrop-filter:blur(40px) saturate(200%);border-radius:22px;border:1px solid var(--w5);z-index:200;box-shadow:0 8px 40px rgba(0,0,0,.5),0 0 0 .5px rgba(212,164,76,.05)}
+    .dock{position:absolute;bottom:0;left:0;right:0;height:60px;display:flex;align-items:center;justify-content:space-around;background:var(--glass2);backdrop-filter:blur(40px) saturate(200%);border-radius:24px 24px 0 0;border:none;border-top:1px solid var(--w5);z-index:200}
     .dock-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;width:50px;height:50px;border-radius:16px;border:none;background:none;color:var(--w3);cursor:pointer;transition:all .3s var(--spring);position:relative}
     .dock-item svg{width:22px;height:22px;transition:all .3s var(--spring)}
     .dock-item .d-label{font-size:8px;font-weight:600;letter-spacing:.3px;opacity:.5;transform:translateY(0);transition:all .3s var(--spring)}
@@ -172,9 +172,9 @@
     .dock-item.active svg{transform:translateY(-2px);filter:drop-shadow(0 2px 6px rgba(212,164,76,.3))}
     .dock-item.active .d-label{opacity:1;transform:translateY(0)}
     .dock-badge{position:absolute;top:4px;right:4px;min-width:16px;height:16px;border-radius:8px;background:var(--r1);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid var(--b1);padding:0 3px;color:white}
-    .dock-item.active::after{content:'';position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--g1);box-shadow:0 0 8px rgba(212,164,76,.4)}
-    .dock-create{width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,var(--g1),var(--r1));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(212,164,76,.3),inset 0 1px 0 rgba(255,255,255,.15);transition:all .3s var(--spring);position:relative;overflow:hidden}
-    .dock-create::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent 60%);border-radius:16px}
+    .dock-item.active::after{content:'';position:absolute;top:0;width:24px;height:3px;border-radius:0 0 3px 3px;background:var(--g1);box-shadow:0 2px 8px rgba(212,164,76,.4)}
+    .dock-create{width:50px;height:50px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);background:linear-gradient(135deg,var(--g1),var(--r1));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(212,164,76,.3),inset 0 1px 0 rgba(255,255,255,.15);transition:all .3s var(--spring);position:relative;overflow:hidden}
+    .dock-create::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent 60%)}
     .dock-create:active{transform:scale(.85) rotate(-5deg)}
     .dock-create svg{width:20px;height:20px;color:white}
     .notif-dot{position:absolute;top:6px;right:10px;width:8px;height:8px;border-radius:50%;background:var(--r1);border:2px solid var(--b1);box-shadow:0 0 8px rgba(224,75,58,.4)}
@@ -236,7 +236,7 @@
     .search-pill .mic-btn svg{width:14px;height:14px}
     .tags{display:flex;gap:6px;padding:0 16px 14px;overflow-x:auto;scrollbar-width:none}
     .tags::-webkit-scrollbar{display:none}
-    .tag{padding:8px 16px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;border:1px solid transparent;transition:all .3s var(--spring)}
+    .tag{padding:8px 16px;border-radius:12px;font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;border:1px solid transparent;transition:all .3s var(--spring)}
     .tag:active{transform:scale(.92)}
     .tag.active{box-shadow:0 0 0 1px currentColor}
     .section-title{font-size:17px;font-weight:700;padding:8px 16px 10px;display:flex;align-items:center;gap:8px;letter-spacing:-.3px}
@@ -264,7 +264,7 @@
     .trending-card .tc-follow{width:100%;padding:6px;border-radius:10px;background:rgba(212,164,76,.1);border:1px solid rgba(212,164,76,.15);color:var(--g1);font-size:10px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
     .trending-card .tc-follow:active{transform:scale(.95)}
 
-    .featured{margin:0 16px 16px;border-radius:20px;overflow:hidden;position:relative;aspect-ratio:16/10;cursor:pointer;transition:transform .3s}
+    .featured{margin:0 16px 16px;border-radius:20px;overflow:hidden;position:relative;aspect-ratio:9/16;max-height:320px;cursor:pointer;transition:transform .3s}
     .featured:active{transform:scale(.98)}
     .featured video{width:100%;height:100%;object-fit:cover}
     .featured::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,9,8,.85),transparent 60%)}
@@ -314,7 +314,7 @@
     .dur-pills span.active{color:var(--g1);background:rgba(212,164,76,.08)}
     .rec-ring{width:74px;height:74px;border-radius:50%;border:3px solid var(--g1);display:flex;align-items:center;justify-content:center;cursor:pointer;background:none;transition:all .4s var(--spring);box-shadow:0 0 0 6px rgba(212,164,76,.06)}
     .rec-ring:active{transform:scale(.92)}
-    .rec-dot{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--g1),var(--r1));transition:all .4s var(--spring);box-shadow:0 4px 16px rgba(212,164,76,.2)}
+    .rec-dot{width:56px;height:56px;border-radius:50%;background:var(--r1);transition:all .4s var(--spring);box-shadow:0 4px 16px rgba(212,164,76,.2)}
     .rec-ring.on{border-color:var(--r1);box-shadow:0 0 0 6px rgba(224,75,58,.1),0 0 20px rgba(224,75,58,.15)}
     .rec-ring.on .rec-dot{border-radius:12px;width:28px;height:28px;background:var(--r1)}
     .go-live-btn{display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--r1),var(--coral));border:none;color:white;padding:10px 28px;border-radius:16px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.5px;box-shadow:0 4px 20px rgba(224,75,58,.35);transition:all .3s var(--spring);animation:livePulse 2s ease infinite}
@@ -330,7 +330,7 @@
     .inb-head .msg-btn svg{width:18px;height:18px}
     .inb-head .msg-btn .badge{position:absolute;top:-2px;right:-2px;width:16px;height:16px;border-radius:50%;background:var(--r1);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid var(--b1)}
     .inb-pills{display:flex;gap:6px;padding:10px 16px 14px}
-    .inb-pill{padding:8px 16px;border-radius:20px;font-size:12px;font-weight:600;background:var(--b3);color:var(--w3);border:1px solid var(--w5);cursor:pointer;transition:all .3s var(--spring)}
+    .inb-pill{padding:8px 16px;border-radius:12px;font-size:12px;font-weight:600;background:var(--b3);color:var(--w3);border:1px solid var(--w5);cursor:pointer;transition:all .3s var(--spring)}
     .inb-pill:active{transform:scale(.93)}
     .inb-pill.active{background:rgba(212,164,76,.1);color:var(--g1);border-color:rgba(212,164,76,.2)}
     .inb-today{font-size:12px;font-weight:600;color:var(--w3);padding:4px 16px 8px}
@@ -660,7 +660,7 @@
     /* === STUDIO SIDEBAR TOOLS === */
     .studio-sidebar{position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;z-index:10}
     .studio-sidebar .sb-tool{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:var(--w);cursor:pointer;font-family:inherit}
-    .studio-sidebar .sb-tool .sb-ico{width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.4);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;transition:all .2s}
+    .studio-sidebar .sb-tool .sb-ico{width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.4);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;transition:all .2s;border:1px solid rgba(212,164,76,.15)}
     .studio-sidebar .sb-tool:active .sb-ico{transform:scale(.85);background:rgba(212,164,76,.2)}
     .studio-sidebar .sb-tool svg{width:18px;height:18px}
     .studio-sidebar .sb-tool span{font-size:8px;font-weight:600;opacity:.7}
@@ -689,7 +689,7 @@
       .dynamic-island,.home-bar{display:none}
       .shell{width:100vw;height:100dvh}
       .slide{height:100dvh;min-height:100dvh}
-      .dock{position:fixed;left:10px;right:10px;bottom:10px;bottom:max(10px,env(safe-area-inset-bottom));z-index:9999}
+      .dock{position:fixed;left:0;right:0;bottom:0;bottom:max(0px,env(safe-area-inset-bottom));z-index:9999}
       .toast-el{position:fixed}
       .top-bar{top:14px}
       .ex-head,.inb-head,.prof-header,.studio-top{padding-top:16px}
@@ -759,7 +759,7 @@
       <div id="p-explore" class="page">
         <div class="explore-page">
           <div class="ex-head">
-            <h1>Explore</h1>
+            <h1>Discover<div style="width:40px;height:3px;background:linear-gradient(90deg,var(--g1),var(--g3));border-radius:2px;margin-top:4px"></div></h1>
             <div class="av-wrap">
               <img class="av" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face" alt="">
               <div class="av-online"></div>
@@ -792,13 +792,14 @@
         <div class="studio-page">
           <div class="studio-top">
             <button class="st-btn" onclick="nav('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
-            <h2>Studio</h2>
-            <button class="st-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></button>
+            <h2>Create</h2>
+            <button class="st-btn" style="width:auto;border-radius:12px;padding:0 12px;gap:6px;display:flex;font-size:11px;font-weight:600"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>Sounds</button>
           </div>
           <div class="camera" style="position:relative">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
             <span class="cam-t">Ready to Create</span>
             <span class="cam-s">Tap record below</span>
+            <div style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:600;opacity:.2;color:var(--w);letter-spacing:2px">🐉 ZHINGKHAM</div>
             <div class="rec-timer" id="recTimer">00:00</div>
             <div class="studio-sidebar">
               <button class="sb-tool" onclick="toast('🔄 Flip camera')"><div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg></div><span>Flip</span></button>
@@ -834,7 +835,7 @@
       <div id="p-inbox" class="page">
         <div class="inbox-page">
           <div class="inb-head">
-            <h1>Inbox</h1>
+            <h1>Messages</h1>
             <button class="msg-btn" onclick="toast('✏️ New message')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
           </div>
           <div class="search-pill" style="margin:6px 16px 10px">
@@ -862,7 +863,8 @@
               <button class="settings" onclick="toast('⚙️ Settings')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
             </div>
           </div>
-          <div class="prof-hero">
+          <div style="height:120px;background:linear-gradient(180deg,#0a1628,transparent);margin:-8px -0px 0;position:relative"></div>
+          <div class="prof-hero" style="margin-top:-50px;position:relative;z-index:2">
             <div class="avatar-ring">
               <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face" alt="">
               <div class="av-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div>
@@ -871,7 +873,7 @@
             <div class="prof-stats">
               <div class="ps"><div class="ps-val" id="ps-following">229</div><div class="ps-lbl">Following</div></div>
               <div class="ps"><div class="ps-val">1.8M</div><div class="ps-lbl">Followers</div></div>
-              <div class="ps"><div class="ps-val">37.6M</div><div class="ps-lbl">Likes</div></div>
+              <div class="ps"><div class="ps-val">37.6M</div><div class="ps-lbl">Zaps</div></div>
             </div>
             <div class="prof-action-btns">
               <button class="pab-follow" onclick="this.textContent=this.textContent==='Follow'?'Following':'Follow';toast(this.textContent==='Following'?'Following!':'Unfollowed')">Follow</button>
@@ -984,10 +986,10 @@
       <!-- DOCK -->
       <div class="dock">
         <button class="dock-item active" onclick="nav('home')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg><span class="d-label">Home</span></button>
-        <button class="dock-item" onclick="nav('explore')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span class="d-label">Friends</span></button>
-        <button class="dock-create" onclick="nav('studio')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></button>
+        <button class="dock-item" onclick="nav('explore')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span class="d-label">Discover</span></button>
+        <button class="dock-create" onclick="nav('studio')"><span style="font-size:22px">🐉</span></button>
         <button class="dock-item" onclick="nav('inbox')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><span class="d-label">Inbox</span><div class="dock-badge">5</div></button>
-        <button class="dock-item" onclick="nav('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="d-label">Profile</span></button>
+        <button class="dock-item" onclick="nav('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="d-label">Me</span></button>
       </div>
     </div>
   </div>
@@ -1016,7 +1018,7 @@ V[0].comments=[{u:'pema_tshering',av:AVS[2],t:'So beautiful! 😍',w:'2h',likes:
 V[2].comments=[{u:'dorji_wangmo',av:AVS[1],t:'Amazing dance! 🔥',w:'1h',likes:45},{u:'thinley_adventures',av:AVS[4],t:'Teach me! 💃',w:'3h',likes:19}];
 V[3].comments=[{u:'sonam_arts',av:AVS[5],t:'Stay safe! 🙏',w:'5h',likes:31}];
 
-const TAGS=[{l:'🔥 Trending',bg:'rgba(224,75,58,.1)',c:'#E04B3A'},{l:'💃 Dance',bg:'rgba(108,92,231,.1)',c:'#6C5CE7'},{l:'🍲 Food',bg:'rgba(212,164,76,.1)',c:'#D4A44C'},{l:'🏛️ Heritage',bg:'rgba(0,184,148,.1)',c:'#00B894'},{l:'✈️ Travel',bg:'rgba(253,121,168,.1)',c:'#FD79A8'},{l:'🎨 Art',bg:'rgba(232,192,104,.1)',c:'#E8C068'},{l:'🎵 Music',bg:'rgba(108,92,231,.1)',c:'#6C5CE7'}];
+const TAGS=[{l:'🔥 For You',bg:'rgba(192,57,43,.1)',c:'#C0392B'},{l:'🏔️ Dzongs',bg:'rgba(212,164,76,.1)',c:'#D4A44C'},{l:'💃 Cham Dance',bg:'rgba(139,92,246,.1)',c:'#8B5CF6'},{l:'🍲 Cuisine',bg:'rgba(0,184,148,.1)',c:'#00B894'},{l:'🎨 Arts',bg:'rgba(232,192,104,.1)',c:'#E8C068'},{l:'🐉 Culture',bg:'rgba(255,159,67,.1)',c:'#FF9F43'}];
 const NOTIFS=[
   {u:'dorji_wangmo',av:AVS[1],t:'liked your video',w:'2h ago',icon:'❤️',bg:'#E04B3A'},
   {u:'pema_tshering',av:AVS[2],t:'started following you',w:'3h ago',icon:'👤',bg:'#6C5CE7'},
@@ -1062,12 +1064,13 @@ V.forEach((v,i)=>{
     <video src="${v.src}" loop muted playsinline preload="${i<2?'auto':'metadata'}"></video>
     <div class="vid-progress"><div class="bar" id="prog-${v.id}"></div></div>
     <div class="top-bar">
-      <div class="feed-tabs"><button class="feed-tab">Following</button><button class="feed-tab active">For You</button></div>
+      <div class="feed-tabs"><button class="feed-tab">Trending</button><button class="feed-tab active">Following</button></div>
       <div class="top-right">
         <button class="live-btn" onclick="openLive(V[0])">Live</button>
         <button class="search-btn" onclick="nav('explore');document.getElementById('q').focus()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button>
       </div>
     </div>
+    <div style="position:absolute;top:48px;left:50%;transform:translateX(-50%);z-index:19;font-size:11px;font-weight:700;opacity:.3;color:var(--w);pointer-events:none;letter-spacing:1px">🐉 Zhingkham</div>
     ${i===0?'<div class="swipe-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span>Swipe up</span></div>':''}
     <div class="pause-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div>
     <div class="heart-anim"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>

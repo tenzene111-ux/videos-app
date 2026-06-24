@@ -3,286 +3,277 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Zhingkham — Best Short Video App</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇧🇹</text></svg>">
+  <title>Zhingkham — Land of Paradise</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐉</text></svg>">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
     *{margin:0;padding:0;box-sizing:border-box}
     :root{
-      --primary:#FF2D55;--secondary:#5856D6;--accent:#FF9500;
-      --dark:#000;--dark2:#0A0A0A;--dark3:#1C1C1E;--dark4:#2C2C2E;--dark5:#3A3A3C;
-      --white:#FFF;--gray:#8E8E93;--blue:#20D5EC;--green:#34C759;
-      --bg-main:#000;--bg-card:#1C1C1E;--bg-input:#2C2C2E;--text-main:#FFF;--text-sub:#8E8E93;
+      --saffron:#E8A838;--vermillion:#D4442A;--jade:#2D8B6F;--lapis:#2E4A7A;
+      --gold:#C9A84C;--snow:#F7F5F0;--ink:#1A1714;--parchment:#F0E8D8;
+      --mist:rgba(26,23,20,.7);--glow:rgba(232,168,56,.15);
+      --radius:16px;--radius-lg:24px;--radius-xl:32px;
     }
-    body{font-family:'Inter',sans-serif;background:#111;color:var(--white);-webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;min-height:100vh;overflow:hidden}
+    body{font-family:'DM Sans',sans-serif;background:#0D0B09;color:var(--snow);-webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;min-height:100vh;overflow:hidden}
 
     /* PHONE FRAME */
-    .phone-wrapper{display:flex;flex-direction:column;align-items:center;gap:20px}
-    .phone-label{font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .phone-sub{color:var(--gray);font-size:14px;margin-top:-12px}
-    .phone-frame{width:375px;height:812px;border-radius:50px;border:6px solid #333;overflow:hidden;position:relative;background:var(--bg-main);box-shadow:0 0 0 2px #111,0 20px 60px rgba(0,0,0,.6),0 0 80px rgba(255,45,85,.1);transition:background .5s}
-    .phone-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:160px;height:34px;background:#333;border-radius:0 0 20px 20px;z-index:999}
-    .phone-notch::after{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:60px;height:8px;background:#222;border-radius:4px}
-    .phone-home{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:140px;height:5px;background:var(--white);border-radius:3px;z-index:999;opacity:.3}
+    .phone-wrapper{display:flex;flex-direction:column;align-items:center;gap:24px}
+    .phone-brand{display:flex;align-items:center;gap:12px}
+    .phone-brand .logo{font-family:'Playfair Display',serif;font-size:32px;font-weight:800;background:linear-gradient(135deg,var(--saffron),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .phone-brand .tag{font-size:13px;color:var(--gold);opacity:.6;letter-spacing:2px;text-transform:uppercase}
+    .phone-frame{width:375px;height:812px;border-radius:50px;border:5px solid #2A2520;overflow:hidden;position:relative;background:var(--ink);box-shadow:0 0 0 1px rgba(201,168,76,.15),0 30px 80px rgba(0,0,0,.7),0 0 120px rgba(232,168,56,.06);transition:all .5s}
+    .phone-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:150px;height:32px;background:#2A2520;border-radius:0 0 18px 18px;z-index:999}
+    .phone-notch::after{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:50px;height:6px;background:#1A1714;border-radius:3px}
+    .phone-home{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:130px;height:4px;background:var(--snow);border-radius:2px;z-index:999;opacity:.2}
     .phone-inner{width:100%;height:100%;overflow:hidden;position:relative;display:flex;flex-direction:column}
 
     .screen{display:none;flex:1;overflow:hidden;position:relative;flex-direction:column}
     .screen.active{display:flex}
     .hidden{display:none!important}
 
-    /* EDGE GLOW */
-    .edge-glow{position:absolute;inset:0;pointer-events:none;z-index:800;border-radius:0;opacity:0;transition:opacity .3s}
-    .edge-glow.red{box-shadow:inset 0 0 60px rgba(255,45,85,.4);opacity:1}
-    .edge-glow.gold{box-shadow:inset 0 0 60px rgba(255,149,0,.4);opacity:1}
-    .edge-glow.blue{box-shadow:inset 0 0 60px rgba(88,86,214,.4);opacity:1}
-    .edge-glow.green{box-shadow:inset 0 0 60px rgba(52,199,89,.4);opacity:1}
+    /* AMBIENT BORDER GLOW */
+    .ambient-glow{position:absolute;inset:0;pointer-events:none;z-index:800;opacity:0;transition:opacity .5s}
+    .ambient-glow.saffron{box-shadow:inset 0 0 80px rgba(232,168,56,.25);opacity:1}
+    .ambient-glow.jade{box-shadow:inset 0 0 80px rgba(45,139,111,.25);opacity:1}
+    .ambient-glow.vermillion{box-shadow:inset 0 0 80px rgba(212,68,42,.25);opacity:1}
+    .ambient-glow.lapis{box-shadow:inset 0 0 80px rgba(46,74,122,.25);opacity:1}
 
-    /* TAB BAR */
-    .tab-bar{height:52px;background:rgba(0,0,0,.95);display:flex;align-items:center;justify-content:space-around;border-top:1px solid rgba(255,255,255,.08);flex-shrink:0;z-index:100;backdrop-filter:blur(20px)}
-    .tab-item{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--gray);font-size:9px;font-weight:600;padding:4px 12px;transition:all .2s;background:none;border:none;cursor:pointer}
-    .tab-item.active{color:var(--white);transform:scale(1.05)}
-    .tab-item svg{width:22px;height:22px}
-    .create-tab-btn{width:38px;height:26px;background:linear-gradient(135deg,var(--secondary),var(--primary));border-radius:7px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(255,45,85,.4)}
-    .create-tab-btn svg{width:18px;height:18px}
+    /* NAV BAR — Floating Pill at bottom */
+    .nav-pill{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);height:56px;display:flex;align-items:center;gap:2px;padding:4px;background:rgba(26,23,20,.85);backdrop-filter:blur(24px) saturate(180%);border-radius:28px;border:1px solid rgba(201,168,76,.12);z-index:100;box-shadow:0 8px 32px rgba(0,0,0,.4)}
+    .nav-item{width:52px;height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:24px;border:none;background:none;color:rgba(247,245,240,.4);cursor:pointer;transition:all .3s;position:relative}
+    .nav-item svg{width:22px;height:22px;transition:all .3s}
+    .nav-item span{font-size:8px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;opacity:0;transition:all .3s;position:absolute;bottom:3px}
+    .nav-item.active{color:var(--saffron);background:rgba(232,168,56,.1)}
+    .nav-item.active span{opacity:1}
+    .nav-item.active svg{transform:scale(1.1)}
+    .create-orb{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--saffron),var(--vermillion));display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(232,168,56,.4);transition:all .2s}
+    .create-orb:active{transform:scale(.9)}
+    .create-orb svg{width:20px;height:20px;color:white}
 
-    /* STORIES */
-    .stories-bar{display:flex;gap:10px;padding:6px 12px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;position:absolute;top:60px;left:0;right:0;z-index:15}
-    .stories-bar::-webkit-scrollbar{display:none}
-    .story-item{display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;cursor:pointer}
-    .story-ring{width:52px;height:52px;border-radius:50%;padding:2px;background:linear-gradient(135deg,var(--primary),var(--accent),var(--secondary))}
-    .story-ring img{width:100%;height:100%;border-radius:50%;border:2px solid var(--dark);object-fit:cover}
-    .story-ring.seen{background:var(--dark5)}
-    .story-name{font-size:9px;color:var(--white);max-width:56px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
-    .story-add{position:relative}
-    .story-add::after{content:'+';position:absolute;bottom:0;right:0;width:16px;height:16px;background:var(--primary);border-radius:50%;border:2px solid var(--dark);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1}
+    /* HOME — The Scroll */
+    .scroll-header{position:absolute;top:40px;left:0;right:0;z-index:20;display:flex;justify-content:center;padding:0 20px}
+    .scroll-tabs{display:flex;background:rgba(26,23,20,.6);backdrop-filter:blur(16px);border-radius:20px;padding:3px;border:1px solid rgba(201,168,76,.1)}
+    .scroll-tab{padding:6px 18px;border-radius:17px;font-size:13px;font-weight:600;color:rgba(247,245,240,.5);cursor:pointer;transition:all .3s;border:none;background:none}
+    .scroll-tab.active{background:var(--saffron);color:var(--ink)}
 
-    /* STORY VIEWER */
-    .story-viewer{position:absolute;inset:0;z-index:900;background:var(--dark);display:flex;flex-direction:column}
-    .story-progress{display:flex;gap:3px;padding:8px 10px;position:absolute;top:36px;left:0;right:0;z-index:10}
-    .story-progress .seg{flex:1;height:2px;background:rgba(255,255,255,.3);border-radius:1px;overflow:hidden}
-    .story-progress .seg .fill{height:100%;background:var(--white);width:0%;transition:width .05s linear}
-    .story-user{position:absolute;top:48px;left:12px;z-index:10;display:flex;align-items:center;gap:8px}
-    .story-user img{width:32px;height:32px;border-radius:50%;border:1px solid var(--white)}
-    .story-user span{font-size:13px;font-weight:600}
-    .story-close{position:absolute;top:48px;right:12px;z-index:10;background:none;border:none;color:var(--white);cursor:pointer}
-    .story-close svg{width:24px;height:24px}
-    .story-content{flex:1;display:flex;align-items:center;justify-content:center;padding:40px;text-align:center}
-    .story-text{font-size:22px;font-weight:700;line-height:1.4;text-shadow:0 2px 8px rgba(0,0,0,.3)}
-    .story-reply{position:absolute;bottom:16px;left:12px;right:12px;display:flex;gap:8px;align-items:center}
-    .story-reply input{flex:1;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:8px 14px;color:var(--white);font-size:13px;outline:none;backdrop-filter:blur(10px)}
-    .story-reply input::placeholder{color:rgba(255,255,255,.5)}
-    .story-reply button{background:none;border:none;font-size:20px;cursor:pointer}
+    /* Stories — Scroll Rings */
+    .tale-bar{display:flex;gap:12px;padding:8px 16px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;position:absolute;top:80px;left:0;right:0;z-index:15}
+    .tale-bar::-webkit-scrollbar{display:none}
+    .tale-item{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;cursor:pointer}
+    .tale-ring{width:54px;height:54px;border-radius:50%;padding:3px;background:conic-gradient(var(--saffron),var(--vermillion),var(--jade),var(--lapis),var(--saffron));position:relative}
+    .tale-ring img{width:100%;height:100%;border-radius:50%;border:2px solid var(--ink);object-fit:cover}
+    .tale-ring.seen{background:rgba(247,245,240,.15)}
+    .tale-name{font-size:9px;color:rgba(247,245,240,.6);max-width:56px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
+    .tale-add{position:relative}
+    .tale-add::after{content:'+';position:absolute;bottom:0;right:0;width:16px;height:16px;background:var(--saffron);color:var(--ink);border-radius:50%;border:2px solid var(--ink);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1}
 
-    /* VIDEO FEED */
+    /* Tale Viewer */
+    .tale-viewer{position:absolute;inset:0;z-index:900;background:var(--ink);display:flex;flex-direction:column}
+    .tale-progress{display:flex;gap:3px;padding:8px 10px;position:absolute;top:36px;left:0;right:0;z-index:10}
+    .tale-progress .seg{flex:1;height:2.5px;background:rgba(247,245,240,.2);border-radius:2px;overflow:hidden}
+    .tale-progress .seg .fill{height:100%;background:var(--saffron);width:0%;border-radius:2px;transition:width .05s linear}
+    .tale-user{position:absolute;top:50px;left:12px;z-index:10;display:flex;align-items:center;gap:8px}
+    .tale-user img{width:32px;height:32px;border-radius:50%;border:2px solid var(--saffron)}
+    .tale-user span{font-size:13px;font-weight:600}
+    .tale-close{position:absolute;top:50px;right:12px;z-index:10;background:none;border:none;color:var(--snow);cursor:pointer}
+    .tale-close svg{width:24px;height:24px}
+    .tale-content{flex:1;display:flex;align-items:center;justify-content:center;padding:40px;text-align:center}
+    .tale-text{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;line-height:1.4}
+    .tale-reply{position:absolute;bottom:20px;left:12px;right:12px;display:flex;gap:8px;align-items:center}
+    .tale-reply input{flex:1;background:rgba(247,245,240,.08);border:1px solid rgba(201,168,76,.2);border-radius:24px;padding:10px 16px;color:var(--snow);font-size:13px;outline:none;backdrop-filter:blur(10px)}
+    .tale-reply input::placeholder{color:rgba(247,245,240,.3)}
+    .tale-reply button{background:none;border:none;font-size:20px;cursor:pointer}
+
+    /* VIDEO SCROLL */
     .feed{flex:1;scroll-snap-type:y mandatory;overflow-y:scroll;scrollbar-width:none;position:relative}
     .feed::-webkit-scrollbar{display:none}
-    .video-slide{height:100%;scroll-snap-align:start;position:relative;background:var(--dark3);flex-shrink:0}
+    .video-slide{height:100%;scroll-snap-align:start;position:relative;background:var(--ink);flex-shrink:0;overflow:hidden}
     .video-slide video{width:100%;height:100%;object-fit:cover}
 
-    .top-header{position:absolute;top:38px;left:0;right:0;z-index:20;display:flex;justify-content:center;align-items:center;gap:16px;padding:0 20px}
-    .top-header span{font-size:15px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;transition:color .2s}
-    .top-header span.active{color:var(--white);font-weight:700}
-    .top-header .hdr-div{width:1px;height:14px;background:rgba(255,255,255,.3)}
+    /* Video Info — Card style at bottom */
+    .vid-info{position:absolute;bottom:80px;left:14px;right:70px;z-index:10}
+    .vid-info .creator{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+    .vid-info .creator img{width:32px;height:32px;border-radius:50%;border:2px solid var(--saffron);object-fit:cover}
+    .vid-info .creator .name{font-weight:700;font-size:14px;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+    .vid-info .creator .badge{width:14px;height:14px;background:var(--saffron);border-radius:50%;font-size:8px;display:inline-flex;align-items:center;justify-content:center;color:var(--ink);font-weight:800}
+    .vid-info .caption{font-size:13px;line-height:19px;margin-bottom:6px;text-shadow:0 1px 4px rgba(0,0,0,.5);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;opacity:.9}
+    .vid-info .music-row{display:flex;align-items:center;gap:6px;font-size:11px;opacity:.7;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+    .vid-info .music-row .note{animation:bounce .6s ease infinite alternate}
+    @keyframes bounce{to{transform:translateY(-2px)}}
 
-    .vid-actions{position:absolute;right:8px;bottom:70px;display:flex;flex-direction:column;align-items:center;gap:14px;z-index:10}
-    .vid-avatar{position:relative;margin-bottom:4px;cursor:pointer}
-    .vid-avatar img{width:40px;height:40px;border-radius:50%;border:2px solid var(--white);object-fit:cover}
-    .follow-badge{position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);width:18px;height:18px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;transition:transform .2s}
-    .follow-badge.followed{background:var(--green);transform:translateX(-50%) scale(1.1)}
-    .action-btn{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;color:var(--white);cursor:pointer;transition:transform .15s}
-    .action-btn:active{transform:scale(.85)}
-    .action-btn svg{width:26px;height:26px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5));transition:all .2s}
-    .action-btn .cnt{font-size:11px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.5)}
-    .action-btn.liked svg{fill:var(--primary);stroke:var(--primary)}
-    .action-btn.bookmarked svg{fill:var(--accent);stroke:var(--accent)}
+    /* Side Actions — Vertical "Totem" */
+    .action-totem{position:absolute;right:10px;bottom:90px;display:flex;flex-direction:column;align-items:center;gap:16px;z-index:10}
+    .totem-btn{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:var(--snow);cursor:pointer;transition:transform .2s}
+    .totem-btn:active{transform:scale(.85)}
+    .totem-btn svg{width:26px;height:26px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4));transition:all .25s}
+    .totem-btn .cnt{font-size:10px;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.5);opacity:.9}
+    .totem-btn.liked svg{fill:var(--vermillion);stroke:var(--vermillion)}
+    .totem-btn.saved svg{fill:var(--saffron);stroke:var(--saffron)}
 
-    /* MUSIC DISC WITH PROGRESS RING */
-    .music-disc-wrap{position:relative;width:38px;height:38px;margin-top:2px}
-    .music-disc{width:38px;height:38px;border-radius:50%;overflow:hidden;animation:spin 4s linear infinite}
-    .music-disc img{width:100%;height:100%;object-fit:cover}
-    .progress-ring{position:absolute;inset:-3px;width:44px;height:44px;transform:rotate(-90deg)}
-    .progress-ring circle{fill:none;stroke-width:2;stroke-linecap:round}
-    .progress-ring .bg{stroke:rgba(255,255,255,.15)}
-    .progress-ring .fg{stroke:var(--primary);transition:stroke-dashoffset .1s linear}
+    /* Music Disc — Prayer Wheel style */
+    .prayer-wheel{width:40px;height:40px;border-radius:50%;overflow:hidden;animation:spin 6s linear infinite;border:2px solid rgba(201,168,76,.3)}
+    .prayer-wheel img{width:100%;height:100%;object-fit:cover}
     @keyframes spin{to{transform:rotate(360deg)}}
 
-    .vid-info{position:absolute;bottom:60px;left:12px;right:65px;z-index:10}
-    .vid-info .uname{font-size:14px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.5);display:flex;align-items:center;gap:5px;margin-bottom:5px}
-    .vid-info .uname .vbadge{width:14px;height:14px;background:var(--blue);border-radius:50%;font-size:8px;display:inline-flex;align-items:center;justify-content:center}
-    .vid-info .desc{font-size:12px;line-height:17px;margin-bottom:6px;text-shadow:0 1px 3px rgba(0,0,0,.5);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-    .vid-info .song{font-size:11px;text-shadow:0 1px 3px rgba(0,0,0,.5);display:flex;align-items:center;gap:5px}
+    /* Mandala Particles on Double-Tap */
+    .mandala-particle{position:absolute;pointer-events:none;z-index:60;opacity:0}
+    .mandala-particle.fly{animation:mandalaFly 1.2s ease-out forwards}
+    @keyframes mandalaFly{0%{opacity:1;transform:translateY(0) rotate(0deg) scale(1)}40%{opacity:1}100%{opacity:0;transform:translateY(-140px) rotate(var(--rot)) scale(.3)}}
 
-    /* WAVEFORM VISUALIZER */
-    .waveform{display:flex;align-items:flex-end;gap:1.5px;height:16px;margin-top:4px}
-    .waveform .bar{width:2.5px;background:var(--white);border-radius:1px;opacity:.7;transition:height .12s ease}
+    .heart-pop{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);pointer-events:none;z-index:50;opacity:0}
+    .heart-pop.pop{animation:heartPop .9s ease forwards}
+    .heart-pop svg{width:80px;height:80px;fill:var(--vermillion)}
+    @keyframes heartPop{0%{transform:translate(-50%,-50%) scale(0);opacity:1}25%{transform:translate(-50%,-50%) scale(1.3);opacity:1}50%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
 
-    /* SPEED INDICATOR */
-    .speed-indicator{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.7);padding:8px 20px;border-radius:20px;font-size:18px;font-weight:700;z-index:30;opacity:0;transition:opacity .2s;backdrop-filter:blur(10px)}
-    .speed-indicator.show{opacity:1}
+    .pause-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.1);z-index:5}
+    .pause-icon svg{width:56px;height:56px;opacity:.6;fill:var(--snow)}
 
-    /* CAPTION OVERLAY */
-    .caption-overlay{position:absolute;bottom:140px;left:14px;right:70px;z-index:15;pointer-events:none}
-    .caption-line{background:rgba(0,0,0,.6);color:var(--white);padding:4px 10px;border-radius:6px;font-size:13px;line-height:1.4;display:inline-block;margin-bottom:3px;backdrop-filter:blur(4px);opacity:0;transform:translateY(5px);animation:captionIn .3s ease forwards}
-    .caption-line.dzongkha{font-size:14px}
-    @keyframes captionIn{to{opacity:1;transform:translateY(0)}}
-    .caption-toggle{position:absolute;left:12px;bottom:140px;z-index:20;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:4px 8px;color:var(--white);font-size:11px;font-weight:600;cursor:pointer;backdrop-filter:blur(10px)}
+    /* Speed Control */
+    .speed-pill{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(26,23,20,.8);padding:8px 24px;border-radius:24px;font-size:16px;font-weight:700;z-index:30;opacity:0;transition:opacity .2s;backdrop-filter:blur(16px);border:1px solid rgba(201,168,76,.2);font-family:'Playfair Display',serif;letter-spacing:1px}
+    .speed-pill.show{opacity:1}
 
-    /* DZONGKHA PARTICLES */
-    .dz-particle{position:absolute;pointer-events:none;font-size:20px;z-index:60;opacity:0}
-    .dz-particle.fly{animation:dzFly 1s ease-out forwards}
-    @keyframes dzFly{0%{opacity:1;transform:translateY(0) rotate(0deg) scale(1)}50%{opacity:1}100%{opacity:0;transform:translateY(-120px) rotate(var(--rot)) scale(.5)}}
+    /* Captions */
+    .caption-box{position:absolute;bottom:180px;left:14px;right:70px;z-index:15;pointer-events:none}
+    .caption-line{background:rgba(26,23,20,.65);color:var(--snow);padding:5px 12px;border-radius:10px;font-size:12px;line-height:1.5;display:inline-block;margin-bottom:4px;backdrop-filter:blur(8px);opacity:0;transform:translateY(6px);animation:capIn .4s ease forwards;border:1px solid rgba(201,168,76,.08)}
+    .caption-line.dz{font-size:13px;border-color:rgba(201,168,76,.15)}
+    @keyframes capIn{to{opacity:1;transform:translateY(0)}}
+    .cap-toggle{position:absolute;left:14px;bottom:180px;z-index:20;background:rgba(26,23,20,.6);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:4px 10px;color:var(--saffron);font-size:10px;font-weight:700;cursor:pointer;backdrop-filter:blur(10px);letter-spacing:.5px}
 
-    .pause-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.15);z-index:5}
-    .pause-overlay svg{width:50px;height:50px;opacity:.7}
-    .heart-pop{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);font-size:70px;pointer-events:none;z-index:50;opacity:0}
-    .heart-pop.pop{animation:heartPop .8s ease forwards}
-    @keyframes heartPop{0%{transform:translate(-50%,-50%) scale(0);opacity:1}30%{transform:translate(-50%,-50%) scale(1.2);opacity:1}60%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+    /* Sticker Tray */
+    .sticker-tray{position:absolute;bottom:170px;right:8px;background:rgba(26,23,20,.85);border-radius:var(--radius);padding:10px;display:flex;flex-direction:column;gap:8px;z-index:25;backdrop-filter:blur(16px);transform:scale(0);transform-origin:bottom right;transition:transform .25s cubic-bezier(.34,1.56,.64,1);border:1px solid rgba(201,168,76,.1)}
+    .sticker-tray.open{transform:scale(1)}
+    .sticker-tray span{font-size:24px;cursor:pointer;transition:transform .15s;padding:2px}
+    .sticker-tray span:active{transform:scale(1.4)}
+    .flying-sticker{position:absolute;font-size:30px;pointer-events:none;z-index:55;opacity:0}
+    .flying-sticker.fly{animation:stickerUp 2.5s ease-out forwards}
+    @keyframes stickerUp{0%{opacity:1;transform:translateX(0) translateY(0) scale(1)}30%{opacity:1;transform:translateX(var(--dx1)) translateY(-100px) scale(1.2)}100%{opacity:0;transform:translateX(var(--dx2)) translateY(-280px) scale(.4) rotate(var(--rot))}}
 
-    /* STICKER REACTIONS */
-    .sticker-picker{position:absolute;bottom:130px;right:6px;background:rgba(0,0,0,.8);border-radius:12px;padding:8px;display:flex;flex-direction:column;gap:6px;z-index:25;backdrop-filter:blur(10px);transform:scale(0);transform-origin:bottom right;transition:transform .2s;border:1px solid rgba(255,255,255,.1)}
-    .sticker-picker.open{transform:scale(1)}
-    .sticker-picker span{font-size:24px;cursor:pointer;transition:transform .15s;padding:2px}
-    .sticker-picker span:hover{transform:scale(1.3)}
-    .floating-sticker{position:absolute;font-size:28px;pointer-events:none;z-index:55;opacity:0}
-    .floating-sticker.fly{animation:stickerFloat 3s ease-out forwards}
-    @keyframes stickerFloat{0%{opacity:1;transform:translateX(0) translateY(0)}25%{opacity:1;transform:translateX(var(--dx1)) translateY(-80px)}50%{opacity:.8;transform:translateX(var(--dx2)) translateY(-160px)}100%{opacity:0;transform:translateX(var(--dx3)) translateY(-260px)}}
+    /* Karma */
+    .karma-fly{position:absolute;pointer-events:none;z-index:60;font-size:13px;font-weight:700;color:var(--saffron);opacity:0;font-family:'Playfair Display',serif}
+    .karma-fly.up{animation:karmaUp .9s ease-out forwards}
+    @keyframes karmaUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-45px) scale(.8)}}
 
-    /* KARMA FLOAT */
-    .karma-float{position:absolute;pointer-events:none;z-index:60;font-size:14px;font-weight:700;color:var(--accent);opacity:0}
-    .karma-float.fly{animation:karmaUp .8s ease-out forwards}
-    @keyframes karmaUp{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-40px)}}
+    /* Comments — Drawer */
+    .modal-bg{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:500;display:flex;align-items:flex-end;backdrop-filter:blur(4px)}
+    .comments-drawer{background:var(--ink);border-radius:var(--radius-xl) var(--radius-xl) 0 0;width:100%;max-height:55%;display:flex;flex-direction:column;border-top:1px solid rgba(201,168,76,.1)}
+    .comments-top{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid rgba(247,245,240,.06)}
+    .comments-top h3{font-family:'Playfair Display',serif;font-size:15px;font-weight:700}
+    .comments-top button{background:none;border:none;color:var(--snow);cursor:pointer}
+    .comments-top button svg{width:20px;height:20px}
+    .comments-scroll{flex:1;overflow-y:auto;padding:12px 16px}
+    .c-item{display:flex;gap:10px;margin-bottom:16px;animation:fadeUp .3s ease}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .c-item img{width:30px;height:30px;border-radius:50%;object-fit:cover;flex-shrink:0}
+    .c-item .c-body{flex:1}
+    .c-item .c-body .c-user{font-size:11px;font-weight:700;color:var(--saffron);margin-bottom:2px}
+    .c-item .c-body .c-text{font-size:12px;line-height:17px;opacity:.85}
+    .c-item .c-body .c-time{font-size:10px;color:rgba(247,245,240,.3);margin-top:3px}
+    .c-input-row{display:flex;gap:8px;padding:12px 16px;border-top:1px solid rgba(247,245,240,.06);align-items:center}
+    .c-input-row img{width:28px;height:28px;border-radius:50%;object-fit:cover}
+    .c-input-row input{flex:1;background:rgba(247,245,240,.06);border:1px solid rgba(201,168,76,.1);border-radius:20px;padding:9px 14px;color:var(--snow);font-size:13px;outline:none}
+    .c-input-row input::placeholder{color:rgba(247,245,240,.25)}
+    .c-input-row button{color:var(--saffron);font-weight:700;font-size:13px;padding:6px;background:none;border:none;cursor:pointer}
 
-    /* COMMENTS MODAL */
-    .modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);z-index:500;display:flex;align-items:flex-end}
-    .comments-modal{background:var(--bg-card);border-radius:14px 14px 0 0;width:100%;max-height:55%;display:flex;flex-direction:column}
-    .comments-header{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--dark4)}
-    .comments-header h3{font-size:14px;font-weight:700}
-    .comments-header button{background:none;border:none;color:var(--white);cursor:pointer}
-    .comments-header button svg{width:20px;height:20px}
-    .comments-list{flex:1;overflow-y:auto;padding:10px 14px}
-    .comment-item{display:flex;gap:8px;margin-bottom:14px;animation:fadeSlideIn .3s ease}
-    @keyframes fadeSlideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-    .comment-item img{width:30px;height:30px;border-radius:50%;object-fit:cover;flex-shrink:0}
-    .comment-item .cbody{flex:1}
-    .comment-item .cbody .cuser{font-size:11px;font-weight:700;margin-bottom:2px}
-    .comment-item .cbody .ctext{font-size:12px;line-height:17px}
-    .comment-item .cbody .ctime{font-size:10px;color:var(--gray);margin-top:3px}
-    .comment-input-row{display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--dark4);align-items:center}
-    .comment-input-row img{width:28px;height:28px;border-radius:50%;object-fit:cover}
-    .comment-input-row input{flex:1;background:var(--bg-input);border:none;border-radius:18px;padding:8px 14px;color:var(--white);font-size:13px;outline:none}
-    .comment-input-row input::placeholder{color:var(--gray)}
-    .comment-input-row button{color:var(--primary);font-weight:700;font-size:13px;padding:6px;background:none;border:none;cursor:pointer}
+    /* DISCOVER — "Explore the Kingdom" */
+    .explore{flex:1;overflow-y:auto;padding-top:44px}
+    .explore-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:800;padding:10px 16px 4px}
+    .search-wrap{display:flex;align-items:center;gap:8px;background:rgba(247,245,240,.06);border:1px solid rgba(201,168,76,.08);border-radius:14px;margin:8px 14px;padding:0 12px;height:40px}
+    .search-wrap svg{width:18px;height:18px;color:rgba(247,245,240,.3);flex-shrink:0}
+    .search-wrap input{flex:1;background:none;border:none;color:var(--snow);font-size:14px;outline:none}
+    .search-wrap input::placeholder{color:rgba(247,245,240,.25)}
+    .realm-bar{display:flex;gap:8px;padding:6px 14px 12px;overflow-x:auto;scrollbar-width:none}
+    .realm-bar::-webkit-scrollbar{display:none}
+    .realm-chip{padding:7px 16px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;transition:all .2s;border:1px solid transparent}
+    .realm-chip:active{transform:scale(.95)}
+    .sec-label{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;margin:6px 14px 10px;display:flex;align-items:center;gap:6px}
+    .sec-label .dot{width:6px;height:6px;border-radius:50%;background:var(--saffron)}
+    .mosaic{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:0 2px}
+    .mosaic-tile{aspect-ratio:3/4;background:rgba(247,245,240,.04);position:relative;overflow:hidden;cursor:pointer;border-radius:4px;transition:transform .2s}
+    .mosaic-tile:active{transform:scale(.97)}
+    .mosaic-tile video,.mosaic-tile img{width:100%;height:100%;object-fit:cover}
+    .mosaic-tile .tile-stat{position:absolute;bottom:6px;left:6px;display:flex;align-items:center;gap:3px;font-size:10px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.6)}
 
-    /* DISCOVER */
-    .discover{flex:1;overflow-y:auto;padding-top:44px}
-    .discover-title{font-size:20px;font-weight:800;padding:8px 14px 4px}
-    .search-bar{display:flex;align-items:center;gap:8px;background:var(--bg-input);border-radius:10px;margin:8px 12px;padding:0 10px;height:36px}
-    .search-bar svg{width:18px;height:18px;color:var(--gray);flex-shrink:0}
-    .search-bar input{flex:1;background:none;border:none;color:var(--white);font-size:14px;outline:none}
-    .search-bar input::placeholder{color:var(--gray)}
-    .cats{display:flex;gap:6px;padding:4px 12px 12px;overflow-x:auto;scrollbar-width:none}
-    .cats::-webkit-scrollbar{display:none}
-    .cat-chip{padding:6px 14px;border-radius:18px;font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;transition:transform .15s}
-    .cat-chip:active{transform:scale(.95)}
-    .sec-title{font-size:15px;font-weight:700;margin:4px 12px 8px}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px}
-    .grid-tile{aspect-ratio:3/4;background:var(--dark4);position:relative;overflow:hidden;cursor:pointer;transition:transform .2s}
-    .grid-tile:active{transform:scale(.97)}
-    .grid-tile video,.grid-tile img{width:100%;height:100%;object-fit:cover}
-    .grid-tile .g-overlay{position:absolute;bottom:4px;left:5px;display:flex;align-items:center;gap:3px;font-size:10px;font-weight:600;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+    /* CREATE — "The Studio" */
+    .studio{flex:1;display:flex;flex-direction:column;background:var(--ink);padding-top:44px}
+    .studio-top{display:flex;justify-content:space-between;align-items:center;padding:8px 16px}
+    .studio-top .title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700}
+    .studio-top svg{width:24px;height:24px;cursor:pointer;color:var(--snow)}
+    .viewfinder{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(247,245,240,.03);margin:12px;border-radius:var(--radius-lg);gap:12px;position:relative;overflow:hidden;border:1px solid rgba(201,168,76,.06)}
+    .viewfinder svg{width:48px;height:48px;color:var(--saffron);opacity:.5}
+    .viewfinder .vf-text{font-size:15px;font-weight:600;color:rgba(247,245,240,.4)}
+    .viewfinder .vf-sub{font-size:12px;color:rgba(247,245,240,.25)}
+    .lens-strip{display:flex;gap:8px;overflow-x:auto;padding:8px 14px;scrollbar-width:none}
+    .lens-strip::-webkit-scrollbar{display:none}
+    .lens-item{width:52px;height:52px;border-radius:14px;flex-shrink:0;cursor:pointer;border:2px solid transparent;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--snow)}
+    .lens-item.active{border-color:var(--saffron)}
+    .studio-controls{padding:10px 16px 16px;display:flex;flex-direction:column;align-items:center;gap:14px}
+    .time-row{display:flex;gap:16px}
+    .time-row span{font-size:12px;font-weight:600;color:rgba(247,245,240,.3);cursor:pointer;transition:color .2s}
+    .time-row span.active{color:var(--saffron)}
+    .rec-btn{width:72px;height:72px;border-radius:50%;border:3px solid var(--saffron);display:flex;align-items:center;justify-content:center;cursor:pointer;background:none;transition:all .3s}
+    .rec-btn-core{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--saffron),var(--vermillion));transition:all .3s}
+    .rec-btn.recording .rec-btn-core{border-radius:10px;width:28px;height:28px}
+    .mode-strip{display:flex;gap:20px}
+    .mode-strip span{font-size:13px;font-weight:600;color:rgba(247,245,240,.3);cursor:pointer;transition:color .2s}
+    .mode-strip span.active{color:var(--snow)}
 
-    /* CREATE */
-    .create-inner{flex:1;display:flex;flex-direction:column;background:var(--dark2);padding-top:44px}
-    .create-hdr{display:flex;justify-content:space-between;align-items:center;padding:8px 14px}
-    .create-hdr .title{font-size:16px;font-weight:700}
-    .create-hdr svg{width:24px;height:24px;cursor:pointer}
-    .camera-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--dark3);margin:10px;border-radius:16px;gap:10px;position:relative;overflow:hidden}
-    .camera-area svg{width:50px;height:50px;color:var(--gray)}
-    .camera-area .cam-text{font-size:15px;font-weight:600;color:var(--gray)}
-    .camera-area .cam-sub{font-size:12px;color:var(--gray)}
-    .camera-filters{display:flex;gap:8px;overflow-x:auto;padding:8px 14px;scrollbar-width:none}
-    .camera-filters::-webkit-scrollbar{display:none}
-    .filter-chip{width:50px;height:50px;border-radius:12px;flex-shrink:0;cursor:pointer;border:2px solid transparent;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--white)}
-    .filter-chip.active{border-color:var(--white)}
-    .create-controls{padding:8px 14px 12px;display:flex;flex-direction:column;align-items:center;gap:12px}
-    .duration-row{display:flex;gap:14px}
-    .duration-row span{font-size:12px;font-weight:600;color:rgba(255,255,255,.4);cursor:pointer;transition:color .2s}
-    .duration-row span.active{color:var(--white)}
-    .record-btn{width:68px;height:68px;border-radius:50%;border:4px solid var(--primary);display:flex;align-items:center;justify-content:center;cursor:pointer;background:none;transition:all .2s}
-    .record-btn-inner{width:52px;height:52px;border-radius:50%;background:var(--primary);transition:all .2s}
-    .record-btn.recording .record-btn-inner{border-radius:8px;width:28px;height:28px}
-    .mode-row{display:flex;gap:18px}
-    .mode-row span{font-size:13px;font-weight:600;color:rgba(255,255,255,.4);cursor:pointer;transition:color .2s}
-    .mode-row span.active{color:var(--white)}
+    /* INBOX — "Messages from the Kingdom" */
+    .kingdom-inbox{flex:1;overflow-y:auto;padding-top:44px}
+    .inbox-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:800;padding:10px 16px}
+    .inbox-filter{display:flex;gap:8px;padding:4px 16px 12px}
+    .inbox-chip{padding:6px 16px;border-radius:20px;background:rgba(247,245,240,.06);font-size:12px;font-weight:600;color:rgba(247,245,240,.4);border:1px solid transparent;cursor:pointer;transition:all .2s}
+    .inbox-chip.active{background:rgba(232,168,56,.12);color:var(--saffron);border-color:rgba(232,168,56,.3)}
+    .notif-stream{padding:0 16px}
+    .notif-card{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(247,245,240,.04);cursor:pointer;transition:background .2s;animation:fadeUp .3s ease}
+    .notif-card:active{background:rgba(247,245,240,.02)}
+    .notif-card img{width:40px;height:40px;border-radius:50%;object-fit:cover}
+    .notif-card .n-content{flex:1}
+    .notif-card .n-content .n-msg{font-size:13px;line-height:18px}
+    .notif-card .n-content .n-msg strong{font-weight:700;color:var(--saffron)}
+    .notif-card .n-content .n-when{font-size:11px;color:rgba(247,245,240,.25);margin-top:3px}
+    .notif-card .n-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
-    /* INBOX */
-    .inbox{flex:1;overflow-y:auto;padding-top:44px}
-    .inbox-hdr{padding:8px 14px;display:flex;justify-content:space-between;align-items:center}
-    .inbox-hdr h2{font-size:20px;font-weight:800}
-    .inbox-tabs{display:flex;gap:8px;padding:4px 14px 10px}
-    .inbox-tab{padding:5px 14px;border-radius:18px;background:var(--bg-input);font-size:12px;font-weight:600;color:var(--gray);border:none;cursor:pointer;transition:all .2s}
-    .inbox-tab.active{background:var(--white);color:var(--dark)}
-    .notif-list{padding:0 14px}
-    .notif-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;transition:background .15s;animation:fadeSlideIn .3s ease}
-    .notif-item:active{background:rgba(255,255,255,.03)}
-    .notif-item img{width:38px;height:38px;border-radius:50%;object-fit:cover}
-    .notif-item .n-body{flex:1}
-    .notif-item .n-body .n-text{font-size:13px;line-height:18px}
-    .notif-item .n-body .n-text strong{font-weight:700}
-    .notif-item .n-body .n-time{font-size:11px;color:var(--gray);margin-top:2px}
+    /* PROFILE — "Your Scroll" */
+    .my-scroll{flex:1;overflow-y:auto;padding-top:44px}
+    .scroll-top{display:flex;justify-content:space-between;align-items:center;padding:8px 16px}
+    .scroll-top .handle{font-family:'Playfair Display',serif;font-size:16px;font-weight:700}
+    .scroll-top svg{width:22px;height:22px;cursor:pointer;color:var(--snow)}
+    .scroll-profile{display:flex;flex-direction:column;align-items:center;padding:10px 16px 16px}
+    .scroll-avatar{width:84px;height:84px;border-radius:50%;object-fit:cover;margin-bottom:12px;border:3px solid var(--saffron);box-shadow:0 0 24px rgba(232,168,56,.15)}
+    .scroll-name{font-size:15px;font-weight:600;margin-bottom:8px}
+    .karma-crest{display:flex;align-items:center;gap:5px;background:linear-gradient(135deg,rgba(232,168,56,.15),rgba(201,168,76,.08));padding:4px 14px;border-radius:14px;font-size:11px;font-weight:700;margin-bottom:14px;border:1px solid rgba(201,168,76,.2);color:var(--saffron)}
+    .karma-crest svg{width:14px;height:14px;fill:var(--saffron)}
+    .scroll-stats{display:flex;align-items:center;gap:24px;margin-bottom:16px}
+    .s-stat{text-align:center}
+    .s-stat .num{font-family:'Playfair Display',serif;font-size:18px;font-weight:700}
+    .s-stat .lbl{font-size:10px;color:rgba(247,245,240,.35);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
+    .s-div{width:1px;height:22px;background:rgba(247,245,240,.08)}
+    .scroll-actions{display:flex;gap:8px;margin-bottom:12px}
+    .edit-scroll{background:rgba(247,245,240,.06);border-radius:8px;padding:9px 36px;font-size:13px;font-weight:600;border:1px solid rgba(201,168,76,.1);color:var(--snow);cursor:pointer;transition:all .2s}
+    .edit-scroll:active{transform:scale(.97)}
+    .sq-btn{background:rgba(247,245,240,.06);width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.1);color:var(--snow);cursor:pointer}
+    .sq-btn svg{width:18px;height:18px}
+    .scroll-bio{font-size:13px;text-align:center;margin-bottom:16px;opacity:.7;line-height:19px}
+    .scroll-grid-tabs{display:flex;border-bottom:1px solid rgba(247,245,240,.06)}
+    .grid-tab{flex:1;text-align:center;padding:11px;border-bottom:2px solid transparent;color:rgba(247,245,240,.3);background:none;border-top:none;border-left:none;border-right:none;cursor:pointer;transition:all .2s}
+    .grid-tab.active{border-bottom-color:var(--saffron);color:var(--saffron)}
+    .grid-tab svg{width:18px;height:18px}
 
-    /* PROFILE */
-    .profile{flex:1;overflow-y:auto;padding-top:44px}
-    .prof-hdr{display:flex;justify-content:space-between;align-items:center;padding:8px 14px}
-    .prof-hdr .uname{font-size:16px;font-weight:700}
-    .prof-hdr svg{width:22px;height:22px;cursor:pointer}
-    .prof-section{display:flex;flex-direction:column;align-items:center;padding:8px 14px 14px}
-    .prof-avatar{width:80px;height:80px;border-radius:50%;object-fit:cover;margin-bottom:10px;border:3px solid var(--primary)}
-    .prof-name{font-size:14px;font-weight:600;margin-bottom:6px}
-    .karma-badge{display:flex;align-items:center;gap:4px;background:linear-gradient(135deg,var(--accent),var(--primary));padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;margin-bottom:12px}
-    .karma-badge svg{width:14px;height:14px}
-    .stats-row{display:flex;align-items:center;gap:20px;margin-bottom:14px}
-    .stat-item{text-align:center}
-    .stat-item .num{font-size:16px;font-weight:700}
-    .stat-item .label{font-size:11px;color:var(--text-sub);margin-top:1px}
-    .stat-div{width:1px;height:18px;background:var(--dark5)}
-    .prof-actions{display:flex;gap:6px;margin-bottom:10px}
-    .edit-btn{background:var(--bg-input);border-radius:6px;padding:8px 32px;font-size:13px;font-weight:600;border:none;color:var(--white);cursor:pointer;transition:all .2s}
-    .edit-btn:active{transform:scale(.97)}
-    .icon-sq{background:var(--bg-input);width:36px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:none;color:var(--white);cursor:pointer}
-    .icon-sq svg{width:18px;height:18px}
-    .prof-bio{font-size:13px;text-align:center;margin-bottom:14px}
-    .prof-tabs{display:flex;border-bottom:1px solid var(--dark4)}
-    .prof-tab{flex:1;text-align:center;padding:10px;border-bottom:2px solid transparent;color:var(--gray);background:none;border-top:none;border-left:none;border-right:none;cursor:pointer;transition:all .2s}
-    .prof-tab.active{border-bottom-color:var(--white);color:var(--white)}
-    .prof-tab svg{width:18px;height:18px}
-    .theme-toggle{margin:16px 14px;display:flex;align-items:center;justify-content:space-between;background:var(--bg-input);padding:12px 14px;border-radius:12px;cursor:pointer}
-    .theme-toggle .t-label{font-size:13px;font-weight:600}
-    .theme-switch{width:44px;height:24px;border-radius:12px;background:var(--dark5);position:relative;transition:background .3s}
-    .theme-switch::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--white);transition:transform .3s}
-    .theme-switch.on{background:var(--primary)}
-    .theme-switch.on::after{transform:translateX(20px)}
+    /* Toast */
+    .toast-msg{position:absolute;top:52px;left:50%;transform:translateX(-50%) translateY(-80px);background:rgba(26,23,20,.9);padding:10px 22px;border-radius:14px;font-size:13px;font-weight:600;z-index:9999;transition:transform .3s;border:1px solid rgba(201,168,76,.12);white-space:nowrap;backdrop-filter:blur(16px)}
+    .toast-msg.show{transform:translateX(-50%) translateY(0)}
+    .toast-msg.success{border-color:var(--jade)}
+    .toast-msg.error{border-color:var(--vermillion)}
 
-    /* MINI PLAYER */
-    .mini-player{position:absolute;bottom:58px;right:8px;width:110px;height:180px;border-radius:12px;overflow:hidden;z-index:200;box-shadow:0 4px 20px rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.15);cursor:pointer;transition:all .2s}
-    .mini-player:active{transform:scale(.95)}
-    .mini-player video{width:100%;height:100%;object-fit:cover}
-    .mini-player .mini-close{position:absolute;top:4px;right:4px;width:20px;height:20px;background:rgba(0,0,0,.6);border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;color:var(--white);cursor:pointer;font-size:12px}
-
-    /* TOAST */
-    .toast{position:absolute;top:50px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--dark4);padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:9999;transition:transform .3s;box-shadow:0 4px 12px rgba(0,0,0,.3);white-space:nowrap;backdrop-filter:blur(10px)}
-    .toast.show{transform:translateX(-50%) translateY(0)}
-    .toast.success{background:var(--green)}
-    .toast.error{background:var(--primary)}
-
-    /* GOLDEN HOUR THEME */
-    body.golden{background:#1a1510}
-    body.golden .phone-frame{background:#1a1510}
-    body.golden :root{--bg-main:#1a1510;--bg-card:#2a2018;--bg-input:#3a3028;--text-main:#FFF5E0;--text-sub:#B8A080}
+    /* Mini Player */
+    .pip{position:absolute;bottom:82px;right:10px;width:105px;height:170px;border-radius:var(--radius);overflow:hidden;z-index:200;box-shadow:0 8px 32px rgba(0,0,0,.5);border:1px solid rgba(201,168,76,.15);cursor:pointer;transition:all .2s}
+    .pip:active{transform:scale(.95)}
+    .pip video{width:100%;height:100%;object-fit:cover}
+    .pip .pip-close{position:absolute;top:4px;right:4px;width:20px;height:20px;background:rgba(26,23,20,.7);border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;color:var(--snow);cursor:pointer;font-size:11px}
 
     @media(max-width:420px){
-      body{background:var(--bg-main)}
-      .phone-wrapper{gap:0}.phone-label,.phone-sub{display:none}
+      body{background:var(--ink)}
+      .phone-wrapper{gap:0}.phone-brand{display:none}
       .phone-frame{width:100vw;height:100vh;border-radius:0;border:none;box-shadow:none}
       .phone-notch,.phone-home{display:none}
     }
@@ -290,327 +281,303 @@
 </head>
 <body>
 <div class="phone-wrapper">
-  <div class="phone-label">Zhingkham</div>
-  <div class="phone-sub">🇧🇹 The Best Short Video App</div>
+  <div class="phone-brand">
+    <div class="logo">Zhingkham</div>
+    <div class="tag">Land of Paradise</div>
+  </div>
   <div class="phone-frame">
     <div class="phone-notch"></div>
     <div class="phone-home"></div>
     <div class="phone-inner">
-      <div class="toast" id="toast"></div>
-      <div class="edge-glow" id="edge-glow"></div>
+      <div class="toast-msg" id="toast"></div>
+      <div class="ambient-glow" id="ambient-glow"></div>
 
       <!-- HOME -->
       <div id="screen-home" class="screen active">
-        <div class="top-header">
-          <span id="hdr-following">Following</span>
-          <div class="hdr-div"></div>
-          <span id="hdr-foryou" class="active">For You</span>
+        <div class="scroll-header">
+          <div class="scroll-tabs">
+            <button class="scroll-tab" id="tab-following">Following</button>
+            <button class="scroll-tab active" id="tab-foryou">For You</button>
+          </div>
         </div>
-        <div class="stories-bar" id="stories-bar"></div>
+        <div class="tale-bar" id="tale-bar"></div>
         <div class="feed" id="feed"></div>
-        <div class="modal-overlay hidden" id="comments-modal">
-          <div class="comments-modal">
-            <div class="comments-header">
+        <div class="modal-bg hidden" id="comments-modal">
+          <div class="comments-drawer">
+            <div class="comments-top">
               <h3 id="comments-title">Comments</h3>
-              <button onclick="closeComments()"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+              <button onclick="closeComments()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
             </div>
-            <div class="comments-list" id="comments-list"></div>
-            <div class="comment-input-row">
+            <div class="comments-scroll" id="comments-list"></div>
+            <div class="c-input-row">
               <img src="https://i.pravatar.cc/150?img=10" alt="">
-              <input type="text" placeholder="Add a comment..." id="comment-input" onkeydown="if(event.key==='Enter')postComment()">
-              <button onclick="postComment()">Post</button>
+              <input type="text" placeholder="Share your thoughts..." id="comment-input" onkeydown="if(event.key==='Enter')postComment()">
+              <button onclick="postComment()">Send</button>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- STORY VIEWER -->
-      <div id="story-viewer" class="story-viewer hidden">
-        <div class="story-progress" id="story-progress"></div>
-        <div class="story-user" id="story-user"></div>
-        <button class="story-close" onclick="closeStory()"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
-        <div class="story-content" id="story-content"></div>
-        <div class="story-reply">
-          <input placeholder="Reply to story..." onclick="toast('Replies coming soon!')">
-          <button>❤️</button>
+      <!-- TALE VIEWER -->
+      <div id="tale-viewer" class="tale-viewer hidden">
+        <div class="tale-progress" id="tale-progress"></div>
+        <div class="tale-user" id="tale-user"></div>
+        <button class="tale-close" onclick="closeTale()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+        <div class="tale-content" id="tale-content"></div>
+        <div class="tale-reply">
+          <input placeholder="Reply to tale..." onclick="toast('Replies coming soon!')">
+          <button>🙏</button>
         </div>
       </div>
 
       <!-- DISCOVER -->
       <div id="screen-discover" class="screen">
-        <div class="discover">
-          <div class="discover-title">Discover</div>
-          <div class="search-bar">
+        <div class="explore">
+          <div class="explore-title">Explore</div>
+          <div class="search-wrap">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-            <input type="text" placeholder="Search Zhingkham" id="search-input" oninput="handleSearch()">
+            <input type="text" placeholder="Search the kingdom..." id="search-input" oninput="handleSearch()">
           </div>
-          <div class="cats" id="cats"></div>
-          <div class="sec-title">Trending</div>
-          <div class="grid" id="discover-grid"></div>
+          <div class="realm-bar" id="realm-bar"></div>
+          <div class="sec-label"><span class="dot"></span> Trending Now</div>
+          <div class="mosaic" id="discover-grid"></div>
         </div>
       </div>
 
       <!-- CREATE -->
       <div id="screen-create" class="screen">
-        <div class="create-inner">
-          <div class="create-hdr">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" onclick="switchTab('home')"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            <span class="title">Create</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        <div class="studio">
+          <div class="studio-top">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" onclick="switchTab('home')"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            <span class="title">Studio</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
           </div>
-          <div class="camera-area" id="camera-area">
+          <div class="viewfinder" id="viewfinder">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            <span class="cam-text">Camera Preview</span>
-            <span class="cam-sub">Tap record to start</span>
+            <span class="vf-text">Ready to Create</span>
+            <span class="vf-sub">Tap the button below</span>
           </div>
-          <div class="camera-filters" id="camera-filters"></div>
-          <div class="create-controls">
-            <div class="duration-row"><span>15s</span><span class="active">60s</span><span>3m</span></div>
-            <button class="record-btn" id="record-btn" onclick="toggleRecording()"><div class="record-btn-inner"></div></button>
-            <div class="mode-row"><span>Photo</span><span class="active">Video</span><span>Live</span></div>
+          <div class="lens-strip" id="lens-strip"></div>
+          <div class="studio-controls">
+            <div class="time-row"><span>15s</span><span class="active">60s</span><span>3m</span></div>
+            <button class="rec-btn" id="rec-btn" onclick="toggleRecording()"><div class="rec-btn-core"></div></button>
+            <div class="mode-strip"><span>Photo</span><span class="active">Video</span><span>Live</span></div>
           </div>
         </div>
       </div>
 
       <!-- INBOX -->
       <div id="screen-inbox" class="screen">
-        <div class="inbox">
-          <div class="inbox-hdr"><h2>Inbox</h2></div>
-          <div class="inbox-tabs">
-            <button class="inbox-tab active">All Activity</button>
-            <button class="inbox-tab">Mentions</button>
+        <div class="kingdom-inbox">
+          <div class="inbox-title">Inbox</div>
+          <div class="inbox-filter">
+            <button class="inbox-chip active">All</button>
+            <button class="inbox-chip">Mentions</button>
+            <button class="inbox-chip">Follows</button>
           </div>
-          <div class="notif-list" id="notif-list"></div>
+          <div class="notif-stream" id="notif-stream"></div>
         </div>
       </div>
 
       <!-- PROFILE -->
       <div id="screen-profile" class="screen">
-        <div class="profile">
-          <div class="prof-hdr">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
-            <span class="uname">@zhingkham_user</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        <div class="my-scroll">
+          <div class="scroll-top">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+            <span class="handle">@zhingkham_user</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a2 2 0 012 2v2a2 2 0 01-4 0V5a2 2 0 012-2zM12 15a2 2 0 012 2v2a2 2 0 01-4 0v-2a2 2 0 012-2zM12 9a2 2 0 012 2 2 2 0 01-4 0 2 2 0 012-2z"/></svg>
           </div>
-          <div class="prof-section">
-            <img class="prof-avatar" src="https://i.pravatar.cc/150?img=10" alt="">
-            <div class="prof-name">Zhingkham User</div>
-            <div class="karma-badge" id="karma-badge">
-              <svg viewBox="0 0 24 24" fill="white"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              <span id="karma-score">0 Karma</span>
+          <div class="scroll-profile">
+            <img class="scroll-avatar" src="https://i.pravatar.cc/150?img=10" alt="">
+            <div class="scroll-name">Zhingkham User</div>
+            <div class="karma-crest" id="karma-crest">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span id="karma-val">0 Karma</span>
             </div>
-            <div class="stats-row">
-              <div class="stat-item"><div class="num">356</div><div class="label">Following</div></div>
-              <div class="stat-div"></div>
-              <div class="stat-item"><div class="num">1.2K</div><div class="label">Followers</div></div>
-              <div class="stat-div"></div>
-              <div class="stat-item"><div class="num">8.9K</div><div class="label">Likes</div></div>
+            <div class="scroll-stats">
+              <div class="s-stat"><div class="num">356</div><div class="lbl">Following</div></div>
+              <div class="s-div"></div>
+              <div class="s-stat"><div class="num">1.2K</div><div class="lbl">Followers</div></div>
+              <div class="s-div"></div>
+              <div class="s-stat"><div class="num">8.9K</div><div class="lbl">Likes</div></div>
             </div>
-            <div class="prof-actions">
-              <button class="edit-btn" onclick="toast('Edit profile coming soon!')">Edit Profile</button>
-              <button class="icon-sq"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></button>
-              <button class="icon-sq"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
+            <div class="scroll-actions">
+              <button class="edit-scroll" onclick="toast('Edit profile coming soon!')">Edit Profile</button>
+              <button class="sq-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></button>
+              <button class="sq-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
             </div>
-            <div class="prof-bio">Welcome to Zhingkham! 🇧🇹 Sharing the best of Bhutan ❤️</div>
+            <div class="scroll-bio">Welcome to Zhingkham! 🇧🇹<br>Sharing the beauty of the Land of Paradise 🐉</div>
           </div>
-          <div class="prof-tabs">
-            <button class="prof-tab active"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg></button>
-            <button class="prof-tab"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <div class="scroll-grid-tabs">
+            <button class="grid-tab active"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg></button>
+            <button class="grid-tab"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
           </div>
-          <div class="grid" id="profile-grid"></div>
-          <div class="theme-toggle" onclick="toggleTheme()">
-            <span class="t-label">🌅 Golden Hour Theme</span>
-            <div class="theme-switch" id="theme-switch"></div>
-          </div>
+          <div class="mosaic" id="profile-grid"></div>
         </div>
       </div>
 
-      <!-- TAB BAR -->
-      <div class="tab-bar">
-        <button class="tab-item active" onclick="switchTab('home')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg><span>Home</span></button>
-        <button class="tab-item" onclick="switchTab('discover')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><span>Discover</span></button>
-        <button class="tab-item" onclick="switchTab('create')"><div class="create-tab-btn"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div></button>
-        <button class="tab-item" onclick="switchTab('inbox')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><span>Inbox</span></button>
-        <button class="tab-item" onclick="switchTab('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Me</span></button>
+      <!-- NAV PILL -->
+      <div class="nav-pill">
+        <button class="nav-item active" onclick="switchTab('home')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg><span>Home</span></button>
+        <button class="nav-item" onclick="switchTab('discover')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><span>Explore</span></button>
+        <button class="create-orb" onclick="switchTab('create')"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></button>
+        <button class="nav-item" onclick="switchTab('inbox')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><span>Inbox</span></button>
+        <button class="nav-item" onclick="switchTab('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Me</span></button>
       </div>
 
-      <!-- MINI PLAYER -->
-      <div class="mini-player hidden" id="mini-player" onclick="miniPlayerTap()">
-        <video id="mini-video" loop muted playsinline></video>
-        <button class="mini-close" onclick="event.stopPropagation();closeMiniPlayer()">✕</button>
+      <!-- PIP -->
+      <div class="pip hidden" id="pip" onclick="pipTap()">
+        <video id="pip-video" loop muted playsinline></video>
+        <button class="pip-close" onclick="event.stopPropagation();closePip()">✕</button>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-// ===== DATA =====
 const VIDEOS=[
-  {id:'1',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',user:{username:'dorji_wangmo',avatar:'https://i.pravatar.cc/150?img=1',verified:true},caption:"Beautiful sunrise over Tiger's Nest 🏔️ #bhutan #travel",song:'Original Sound - dorji_wangmo',likes:45200,comments:[],shares:890,bookmarks:2100,
-    captions:[{en:"The morning light hits the monastery",dz:"དགོང་མོའི་འོད་ཟེར་དགོན་པར་ཕོག"},{en:"Tiger's Nest, Paro, Bhutan",dz:"སྟག་ཚང་ སྤ་རོ་ བྲུག་ཡུལ།"},{en:"3,120 meters above sea level",dz:"རྒྱ་མཚོའི་ངོས་ནས་མི་ཊར ༣༡༢༠"}]},
-  {id:'2',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',user:{username:'pema_tshering',avatar:'https://i.pravatar.cc/150?img=2',verified:false},caption:'Making ema datshi 🍲 #food #bhutan',song:'Bhutanese Folk',likes:23100,comments:[],shares:320,bookmarks:890,
+  {id:'1',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',user:{username:'dorji_wangmo',avatar:'https://i.pravatar.cc/150?img=1',verified:true},caption:"Sunrise blessing at Tiger's Nest monastery 🏔️ #bhutan #sacred",song:'Original Sound — dorji_wangmo',likes:45200,comments:[],shares:890,saves:2100,
+    captions:[{en:"Morning light kisses the monastery",dz:"དགོང་མོའི་འོད་ཟེར་དགོན་པར་ཕོག"},{en:"Tiger's Nest, Paro, Bhutan",dz:"སྟག་ཚང་ སྤ་རོ་ བྲུག་ཡུལ།"},{en:"3,120 meters above sea level",dz:"རྒྱ་མཚོའི་ངོས་ནས་མི་ཊར ༣༡༢༠"}]},
+  {id:'2',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',user:{username:'pema_tshering',avatar:'https://i.pravatar.cc/150?img=2',verified:false},caption:'Making ema datshi — the soul of Bhutan 🍲 #food',song:'Bhutanese Folk',likes:23100,comments:[],shares:320,saves:890,
     captions:[{en:"First, slice the chilies",dz:"དང་པོ་ ཨེ་མ་བཅགས།"},{en:"Add fresh cheese and butter",dz:"ཕྱུར་བ་གསར་བ་དང་མར་བཅུག"},{en:"The national dish of Bhutan!",dz:"བྲུག་ཡུལ་གྱི་རྒྱལ་ཁབ་ཀྱི་ཟ་མ!"}]},
-  {id:'3',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',user:{username:'karma_dancer',avatar:'https://i.pravatar.cc/150?img=3',verified:true},caption:'Cham dance for Tshechu 💃 #dance #culture',song:'Festival Drums',likes:67800,comments:[],shares:1200,bookmarks:4500,
+  {id:'3',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',user:{username:'karma_dancer',avatar:'https://i.pravatar.cc/150?img=3',verified:true},caption:'Sacred Cham dance at Paro Tshechu 💃 #dance #culture',song:'Festival Drums',likes:67800,comments:[],shares:1200,saves:4500,
     captions:[{en:"Sacred mask dance ceremony",dz:"འཆམ་གྱི་ཆོ་ག"},{en:"Performed during Tshechu festival",dz:"ཚེས་བཅུའི་དུས་ཆེན་ལ་འཁྲབ།"},{en:"Centuries-old Buddhist tradition",dz:"ནང་ཆོས་ཀྱི་སྲོལ་རྒྱུན།"}]},
-  {id:'4',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',user:{username:'thinley_adventures',avatar:'https://i.pravatar.cc/150?img=4',verified:false},caption:'Snowman Trek day 15! 🏔️❄️ #hiking',song:'Mountain Vibes',likes:89400,comments:[],shares:5600,bookmarks:12000,
+  {id:'4',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',user:{username:'thinley_adventures',avatar:'https://i.pravatar.cc/150?img=4',verified:false},caption:'Snowman Trek day 15 — the roof of the world 🏔️❄️',song:'Mountain Vibes',likes:89400,comments:[],shares:5600,saves:12000,
     captions:[{en:"The hardest trek in the world",dz:"འཛམ་གླིང་ནང་གི་འགྲིམས་འགྲུལ་དཀའ་ཤོས།"},{en:"25 days through the Himalayas",dz:"ཧི་མ་ལ་ཡའི་ནང་ཉིན་ ༢༥"},{en:"Views you can't find anywhere else",dz:"གཞན་གང་ན་ཡང་མི་རྙེད་པའི་ལྟ་བ།"}]},
-  {id:'5',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',user:{username:'sonam_arts',avatar:'https://i.pravatar.cc/150?img=5',verified:true},caption:'Painting thangka art 🎨 #art #bhutan',song:'Lo-fi Meditation',likes:34500,comments:[],shares:670,bookmarks:3400,
+  {id:'5',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',user:{username:'sonam_arts',avatar:'https://i.pravatar.cc/150?img=5',verified:true},caption:'Painting thangka — each stroke a meditation 🎨',song:'Lo-fi Meditation',likes:34500,comments:[],shares:670,saves:3400,
     captions:[{en:"Each stroke is a meditation",dz:"རི་མོ་རེ་རེ་བསམ་གཏན་ཡིན།"},{en:"Natural mineral pigments only",dz:"རང་བྱུང་ས་ཁའི་ཚོན་རྫས་ཁོ་ན།"},{en:"This piece took 3 months",dz:"འདི་ཟླ་བ་ ༣ འགོར།"}]},
 ];
 
 VIDEOS[0].comments=[{user:'pema_tshering',avatar:'https://i.pravatar.cc/150?img=2',text:'So beautiful! 😍',time:'2h'},{user:'karma_dancer',avatar:'https://i.pravatar.cc/150?img=3',text:'I need to visit! 🏔️',time:'4h'},{user:'sonam_arts',avatar:'https://i.pravatar.cc/150?img=5',text:'The colors are incredible ✨',time:'6h'}];
 VIDEOS[2].comments=[{user:'dorji_wangmo',avatar:'https://i.pravatar.cc/150?img=1',text:'Your dance is amazing! 🔥',time:'1h'},{user:'thinley_adventures',avatar:'https://i.pravatar.cc/150?img=4',text:'Teach me! 💃',time:'3h'}];
-VIDEOS[3].comments=[{user:'sonam_arts',avatar:'https://i.pravatar.cc/150?img=5',text:'Stay safe! ❤️',time:'5h'}];
+VIDEOS[3].comments=[{user:'sonam_arts',avatar:'https://i.pravatar.cc/150?img=5',text:'Stay safe! 🙏',time:'5h'}];
 
-const CATEGORIES=[{label:'🔥 Trending',color:'#FF2D55'},{label:'💃 Dance',color:'#5856D6'},{label:'🍲 Food',color:'#FF9500'},{label:'🏛️ Culture',color:'#34C759'},{label:'✈️ Travel',color:'#007AFF'},{label:'🎵 Music',color:'#AF52DE'},{label:'😂 Comedy',color:'#FFD60A'},{label:'⚽ Sports',color:'#30D158'}];
-const NOTIFS=[{user:'dorji_wangmo',avatar:'https://i.pravatar.cc/150?img=1',text:'liked your video',time:'2h ago',color:'#FF2D55'},{user:'pema_tshering',avatar:'https://i.pravatar.cc/150?img=2',text:'started following you',time:'3h ago',color:'#5856D6'},{user:'karma_dancer',avatar:'https://i.pravatar.cc/150?img=3',text:'commented: "Amazing! 🔥"',time:'5h ago',color:'#FF9500'},{user:'thinley_adventures',avatar:'https://i.pravatar.cc/150?img=4',text:'and 42 others liked your video',time:'8h ago',color:'#FF2D55'},{user:'sonam_arts',avatar:'https://i.pravatar.cc/150?img=5',text:'mentioned you in a comment',time:'1d ago',color:'#34C759'},{user:'dorji_wangmo',avatar:'https://i.pravatar.cc/150?img=1',text:'shared your video',time:'1d ago',color:'#007AFF'},{user:'karma_dancer',avatar:'https://i.pravatar.cc/150?img=3',text:'liked your comment',time:'2d ago',color:'#FF2D55'}];
+const REALMS=[{label:'🔥 Trending',bg:'rgba(212,68,42,.12)',color:'#D4442A'},{label:'💃 Dance',bg:'rgba(46,74,122,.12)',color:'#2E4A7A'},{label:'🍲 Food',bg:'rgba(232,168,56,.12)',color:'#E8A838'},{label:'🏛️ Heritage',bg:'rgba(45,139,111,.12)',color:'#2D8B6F'},{label:'✈️ Travel',bg:'rgba(46,74,122,.12)',color:'#2E4A7A'},{label:'🎵 Music',bg:'rgba(139,92,168,.12)',color:'#8B5CA8'},{label:'🎨 Art',bg:'rgba(201,168,76,.12)',color:'#C9A84C'},{label:'🏹 Sports',bg:'rgba(45,139,111,.12)',color:'#2D8B6F'}];
+const NOTIFS=[{user:'dorji_wangmo',avatar:'https://i.pravatar.cc/150?img=1',text:'liked your video',time:'2h ago',dot:'#D4442A'},{user:'pema_tshering',avatar:'https://i.pravatar.cc/150?img=2',text:'started following you',time:'3h ago',dot:'#2E4A7A'},{user:'karma_dancer',avatar:'https://i.pravatar.cc/150?img=3',text:'commented: "Amazing! 🔥"',time:'5h ago',dot:'#E8A838'},{user:'thinley_adventures',avatar:'https://i.pravatar.cc/150?img=4',text:'and 42 others liked your video',time:'8h ago',dot:'#D4442A'},{user:'sonam_arts',avatar:'https://i.pravatar.cc/150?img=5',text:'mentioned you in a comment',time:'1d ago',dot:'#2D8B6F'},{user:'dorji_wangmo',avatar:'https://i.pravatar.cc/150?img=1',text:'shared your video',time:'1d ago',dot:'#2E4A7A'}];
 
-const STORIES=[
-  {user:'dorji_wangmo',avatar:'https://i.pravatar.cc/150?img=1',seen:false,slides:[{bg:'linear-gradient(135deg,#FF6B6B,#FF2D55)',text:'Just arrived at Punakha Dzong! 🏯'},{bg:'linear-gradient(135deg,#4ECDC4,#2D9CDB)',text:'The jacaranda trees are blooming 💜'}]},
-  {user:'karma_dancer',avatar:'https://i.pravatar.cc/150?img=3',seen:false,slides:[{bg:'linear-gradient(135deg,#A18CD1,#5856D6)',text:'New dance routine dropping tomorrow 💃'},{bg:'linear-gradient(135deg,#FF9500,#FF2D55)',text:'Tshechu preparations 🎭'},{bg:'linear-gradient(135deg,#34C759,#007AFF)',text:'Who\'s coming to the festival?'}]},
-  {user:'pema_tshering',avatar:'https://i.pravatar.cc/150?img=2',seen:true,slides:[{bg:'linear-gradient(135deg,#FF9500,#FFD60A)',text:'Ema datshi recipe of the day 🍲'}]},
-  {user:'thinley',avatar:'https://i.pravatar.cc/150?img=4',seen:false,slides:[{bg:'linear-gradient(135deg,#2D9CDB,#A18CD1)',text:'Day 16 on the Snowman Trek 🏔️'},{bg:'linear-gradient(135deg,#34C759,#2D9CDB)',text:'The view from Rinchen Zoe La pass ❄️'}]},
-  {user:'sonam_arts',avatar:'https://i.pravatar.cc/150?img=5',seen:true,slides:[{bg:'linear-gradient(135deg,#FF2D55,#FF9500)',text:'New thangka painting WIP 🎨'}]},
+const TALES=[
+  {user:'dorji_wangmo',avatar:'https://i.pravatar.cc/150?img=1',seen:false,slides:[{bg:'linear-gradient(135deg,#D4442A,#E8A838)',text:'Just arrived at Punakha Dzong! 🏯'},{bg:'linear-gradient(135deg,#2D8B6F,#2E4A7A)',text:'The jacaranda trees are blooming 💜'}]},
+  {user:'karma_dancer',avatar:'https://i.pravatar.cc/150?img=3',seen:false,slides:[{bg:'linear-gradient(135deg,#2E4A7A,#8B5CA8)',text:'New dance routine dropping tomorrow 💃'},{bg:'linear-gradient(135deg,#E8A838,#D4442A)',text:'Tshechu preparations 🎭'},{bg:'linear-gradient(135deg,#2D8B6F,#2E4A7A)',text:"Who's coming to the festival?"}]},
+  {user:'pema_tshering',avatar:'https://i.pravatar.cc/150?img=2',seen:true,slides:[{bg:'linear-gradient(135deg,#E8A838,#C9A84C)',text:'Ema datshi recipe of the day 🍲'}]},
+  {user:'thinley',avatar:'https://i.pravatar.cc/150?img=4',seen:false,slides:[{bg:'linear-gradient(135deg,#2E4A7A,#8B5CA8)',text:'Day 16 on the Snowman Trek 🏔️'},{bg:'linear-gradient(135deg,#2D8B6F,#2E4A7A)',text:'The view from Rinchen Zoe La pass ❄️'}]},
+  {user:'sonam_arts',avatar:'https://i.pravatar.cc/150?img=5',seen:true,slides:[{bg:'linear-gradient(135deg,#D4442A,#E8A838)',text:'New thangka painting WIP 🎨'}]},
 ];
 
-const DZ_CHARS='ཀ ཁ ག ང ཅ ཆ ཇ ཉ ཏ ཐ ད ན པ ཕ བ མ ཙ ཚ ཛ ཝ ཞ ཟ འ ཡ ར ལ ཤ ས ཧ ❤️ 🙏 🇧🇹 🏔️ 🐉'.split(' ');
+const MANDALA_CHARS='✦ ❋ ❊ ◈ ◆ ✧ ☸ ༄ ༅ ༆ ❤️ 🙏 🐉 🏔️ ☀ ✿'.split(' ');
 const BHUTAN_STICKERS=['🐉','🏔️','🙏','🇧🇹','🎭','🍲','🏹','🎨','💃','🏯'];
-const FILTERS=[{name:'Normal',bg:'var(--dark3)'},{name:'Warm',bg:'linear-gradient(135deg,#3a2010,#2a1510)'},{name:'Cool',bg:'linear-gradient(135deg,#101a2a,#0a1520)'},{name:'Vivid',bg:'linear-gradient(135deg,#2a102a,#1a0a2a)'},{name:'B&W',bg:'linear-gradient(135deg,#222,#111)'},{name:'Sepia',bg:'linear-gradient(135deg,#2a2010,#1a1508)'}];
+const LENSES=[{name:'Natural',bg:'rgba(247,245,240,.03)'},{name:'Warm',bg:'linear-gradient(135deg,rgba(232,168,56,.08),rgba(201,168,76,.05))'},{name:'Cool',bg:'linear-gradient(135deg,rgba(46,74,122,.1),rgba(45,139,111,.05))'},{name:'Vivid',bg:'linear-gradient(135deg,rgba(139,92,168,.08),rgba(212,68,42,.05))'},{name:'Mono',bg:'linear-gradient(135deg,rgba(247,245,240,.06),rgba(26,23,20,.3))'},{name:'Sepia',bg:'linear-gradient(135deg,rgba(201,168,76,.1),rgba(232,168,56,.05))'}];
 
-let likedSet=new Set(),bookmarkedSet=new Set(),followedSet=new Set(),currentVideoId=null,karma=0,isGolden=false,isRecording=false;
-let miniPlayerVideoId=null,currentStory=null,storySlideIdx=0,storyTimer=null;
+let likedSet=new Set(),savedSet=new Set(),followedSet=new Set(),currentVideoId=null,karma=0,isRecording=false;
+let pipVideoId=null,currentTale=null,taleSlideIdx=0,taleTimer=null;
 let captionStates={};
 
 function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n}
-function toast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+(type||'');setTimeout(()=>t.className='toast',2500)}
-function glow(color){const g=document.getElementById('edge-glow');g.className='edge-glow '+color;setTimeout(()=>g.className='edge-glow',400)}
+function toast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast-msg show '+(type||'');setTimeout(()=>t.className='toast-msg',2500)}
+function glow(color){const g=document.getElementById('ambient-glow');g.className='ambient-glow '+color;setTimeout(()=>g.className='ambient-glow',500)}
 function addKarma(pts,el){
-  karma+=pts;
-  document.getElementById('karma-score').textContent=karma+' Karma';
+  karma+=pts;document.getElementById('karma-val').textContent=karma+' Karma';
   if(el){
     const rect=el.getBoundingClientRect();
     const phoneRect=document.querySelector('.phone-inner').getBoundingClientRect();
-    const f=document.createElement('div');
-    f.className='karma-float';
+    const f=document.createElement('div');f.className='karma-fly';
     f.textContent='+'+pts+' ✦';
     f.style.left=(rect.left-phoneRect.left+rect.width/2)+'px';
     f.style.top=(rect.top-phoneRect.top)+'px';
     document.querySelector('.phone-inner').appendChild(f);
-    requestAnimationFrame(()=>f.classList.add('fly'));
-    setTimeout(()=>f.remove(),900);
+    requestAnimationFrame(()=>f.classList.add('up'));
+    setTimeout(()=>f.remove(),1000);
   }
 }
 
-// ===== STORIES =====
-const storiesBar=document.getElementById('stories-bar');
-storiesBar.innerHTML=`<div class="story-item" onclick="toast('Create your story!')"><div class="story-ring story-add"><img src="https://i.pravatar.cc/150?img=10" alt=""></div><div class="story-name">Your story</div></div>`+
-  STORIES.map((s,i)=>`<div class="story-item" onclick="openStory(${i})"><div class="story-ring ${s.seen?'seen':''}"><img src="${s.avatar}" alt=""></div><div class="story-name">${s.user}</div></div>`).join('');
+// TALES
+const taleBar=document.getElementById('tale-bar');
+taleBar.innerHTML=`<div class="tale-item" onclick="toast('Create your tale!')"><div class="tale-ring tale-add"><img src="https://i.pravatar.cc/150?img=10" alt=""></div><div class="tale-name">Your tale</div></div>`+
+  TALES.map((s,i)=>`<div class="tale-item" onclick="openTale(${i})"><div class="tale-ring ${s.seen?'seen':''}"><img src="${s.avatar}" alt=""></div><div class="tale-name">${s.user}</div></div>`).join('');
 
-function openStory(idx){
-  currentStory=idx;storySlideIdx=0;
-  const s=STORIES[idx];s.seen=true;
-  document.getElementById('story-viewer').classList.remove('hidden');
-  document.getElementById('story-user').innerHTML=`<img src="${s.avatar}"><span>@${s.user}</span>`;
-  document.getElementById('story-progress').innerHTML=s.slides.map((_,i)=>`<div class="seg"><div class="fill" id="seg-${i}"></div></div>`).join('');
-  showStorySlide();
+function openTale(idx){
+  currentTale=idx;taleSlideIdx=0;
+  const s=TALES[idx];s.seen=true;
+  document.getElementById('tale-viewer').classList.remove('hidden');
+  document.getElementById('tale-user').innerHTML=`<img src="${s.avatar}"><span>@${s.user}</span>`;
+  document.getElementById('tale-progress').innerHTML=s.slides.map((_,i)=>`<div class="seg"><div class="fill" id="seg-${i}"></div></div>`).join('');
+  showTaleSlide();
 }
-function showStorySlide(){
-  const s=STORIES[currentStory];
-  if(storySlideIdx>=s.slides.length){closeStory();return}
-  const slide=s.slides[storySlideIdx];
-  document.getElementById('story-content').style.background=slide.bg;
-  document.getElementById('story-content').innerHTML=`<div class="story-text">${slide.text}</div>`;
+function showTaleSlide(){
+  const s=TALES[currentTale];
+  if(taleSlideIdx>=s.slides.length){closeTale();return}
+  const slide=s.slides[taleSlideIdx];
+  document.getElementById('tale-content').style.background=slide.bg;
+  document.getElementById('tale-content').innerHTML=`<div class="tale-text">${slide.text}</div>`;
   for(let i=0;i<s.slides.length;i++){
     const seg=document.getElementById('seg-'+i);
-    if(seg)seg.style.width=i<storySlideIdx?'100%':'0%';
+    if(seg)seg.style.width=i<taleSlideIdx?'100%':'0%';
   }
   let progress=0;
-  clearInterval(storyTimer);
-  storyTimer=setInterval(()=>{
+  clearInterval(taleTimer);
+  taleTimer=setInterval(()=>{
     progress+=2;
-    const seg=document.getElementById('seg-'+storySlideIdx);
+    const seg=document.getElementById('seg-'+taleSlideIdx);
     if(seg)seg.style.width=progress+'%';
-    if(progress>=100){storySlideIdx++;showStorySlide()}
+    if(progress>=100){taleSlideIdx++;showTaleSlide()}
   },100);
-
-  document.getElementById('story-viewer').onclick=(e)=>{
-    if(e.target.closest('.story-close')||e.target.closest('.story-reply'))return;
-    const rect=document.getElementById('story-viewer').getBoundingClientRect();
-    if(e.clientX>rect.left+rect.width/2){storySlideIdx++;showStorySlide()}
-    else if(storySlideIdx>0){storySlideIdx--;showStorySlide()}
+  document.getElementById('tale-viewer').onclick=(e)=>{
+    if(e.target.closest('.tale-close')||e.target.closest('.tale-reply'))return;
+    const rect=document.getElementById('tale-viewer').getBoundingClientRect();
+    if(e.clientX>rect.left+rect.width/2){taleSlideIdx++;showTaleSlide()}
+    else if(taleSlideIdx>0){taleSlideIdx--;showTaleSlide()}
   };
 }
-function closeStory(){clearInterval(storyTimer);document.getElementById('story-viewer').classList.add('hidden');currentStory=null;
-  storiesBar.querySelectorAll('.story-ring')[1]&&(storiesBar.querySelectorAll('.story-item').forEach((el,i)=>{if(i>0&&STORIES[i-1].seen)el.querySelector('.story-ring').classList.add('seen')}));
+function closeTale(){clearInterval(taleTimer);document.getElementById('tale-viewer').classList.add('hidden');currentTale=null;
+  taleBar.querySelectorAll('.tale-item').forEach((el,i)=>{if(i>0&&TALES[i-1].seen)el.querySelector('.tale-ring').classList.add('seen')});
 }
 
-// ===== BUILD FEED =====
+// BUILD FEED
 const feed=document.getElementById('feed');
 VIDEOS.forEach((v,i)=>{
   const s=document.createElement('div');s.className='video-slide';s.dataset.id=v.id;
-  const circumference=2*Math.PI*18;
   s.innerHTML=`
     <video src="${v.src}" loop muted playsinline preload="${i<2?'auto':'metadata'}"></video>
-    <div class="pause-overlay hidden"><svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21"/></svg></div>
-    <div class="heart-pop">❤️</div>
-    <div class="speed-indicator" id="speed-${v.id}">1.0x</div>
-    <div class="caption-overlay hidden" id="captions-${v.id}"></div>
-    <button class="caption-toggle" onclick="toggleCaptions('${v.id}')">Aa</button>
-    <div class="sticker-picker" id="stickers-${v.id}">${BHUTAN_STICKERS.map(s=>`<span onclick="launchSticker('${v.id}','${s}')">${s}</span>`).join('')}</div>
-    <div class="vid-actions">
-      <div class="vid-avatar"><img src="${v.user.avatar}" alt=""><div class="follow-badge" onclick="toggleFollow('${v.id}',this)">+</div></div>
-      <button class="action-btn" data-action="like" onclick="toggleLike('${v.id}',this)">
+    <div class="pause-icon hidden"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div>
+    <div class="heart-pop"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+    <div class="speed-pill" id="speed-${v.id}">1.0x</div>
+    <div class="caption-box hidden" id="captions-${v.id}"></div>
+    <button class="cap-toggle" onclick="toggleCaptions('${v.id}')">Aa</button>
+    <div class="sticker-tray" id="stickers-${v.id}">${BHUTAN_STICKERS.map(st=>`<span onclick="launchSticker('${v.id}','${st}')">${st}</span>`).join('')}</div>
+    <div class="action-totem">
+      <button class="totem-btn" data-action="like" onclick="toggleLike('${v.id}',this)">
         <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
         <span class="cnt">${fmt(v.likes)}</span>
       </button>
-      <button class="action-btn" onclick="openComments('${v.id}')">
+      <button class="totem-btn" onclick="openComments('${v.id}')">
         <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
         <span class="cnt">${v.comments.length}</span>
       </button>
-      <button class="action-btn" data-action="bookmark" onclick="toggleBookmark('${v.id}',this)">
+      <button class="totem-btn" data-action="save" onclick="toggleSave('${v.id}',this)">
         <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
-        <span class="cnt">${fmt(v.bookmarks)}</span>
+        <span class="cnt">${fmt(v.saves)}</span>
       </button>
-      <button class="action-btn" onclick="toggleStickerPicker('${v.id}')" oncontextmenu="event.preventDefault();toggleStickerPicker('${v.id}')">
+      <button class="totem-btn" onclick="toggleStickerTray('${v.id}')">
         <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>
         <span class="cnt">${fmt(v.shares)}</span>
       </button>
-      <div class="music-disc-wrap">
-        <svg class="progress-ring" viewBox="0 0 44 44"><circle class="bg" cx="22" cy="22" r="18"/><circle class="fg" cx="22" cy="22" r="18" stroke-dasharray="${circumference}" stroke-dashoffset="${circumference}" id="ring-${v.id}"/></svg>
-        <div class="music-disc"><img src="${v.user.avatar}" alt=""></div>
-      </div>
+      <div class="prayer-wheel"><img src="${v.user.avatar}" alt=""></div>
     </div>
     <div class="vid-info">
-      <div class="uname">@${v.user.username} ${v.user.verified?'<span class="vbadge">✓</span>':''}</div>
-      <div class="desc">${v.caption}</div>
-      <div class="song">♫ ${v.song}</div>
-      <div class="waveform" id="wave-${v.id}">${Array(24).fill(0).map(()=>'<div class="bar"></div>').join('')}</div>
+      <div class="creator">
+        <img src="${v.user.avatar}" alt="">
+        <span class="name">@${v.user.username}</span>
+        ${v.user.verified?'<span class="badge">✓</span>':''}
+      </div>
+      <div class="caption">${v.caption}</div>
+      <div class="music-row"><span class="note">♫</span> ${v.song}</div>
     </div>`;
 
   const video=s.querySelector('video');
-  const pauseEl=s.querySelector('.pause-overlay');
+  const pauseEl=s.querySelector('.pause-icon');
   let lastTap=0,longPressTimer=null,isLongPress=false,startX=0;
 
-  // Video progress ring
-  video.addEventListener('timeupdate',()=>{
-    if(!video.duration)return;
-    const pct=video.currentTime/video.duration;
-    const ring=document.getElementById('ring-'+v.id);
-    if(ring)ring.style.strokeDashoffset=circumference*(1-pct);
-  });
-
-  // Waveform
-  let waveInterval=null;
-  video.addEventListener('play',()=>{
-    waveInterval=setInterval(()=>{
-      document.querySelectorAll('#wave-'+v.id+' .bar').forEach(b=>{b.style.height=(3+Math.random()*13)+'px'});
-    },150);
-  });
-  video.addEventListener('pause',()=>{clearInterval(waveInterval);document.querySelectorAll('#wave-'+v.id+' .bar').forEach(b=>{b.style.height='3px'})});
-
-  // Long press for speed control
   s.addEventListener('touchstart',(e)=>{
-    if(e.target.closest('.vid-actions')||e.target.closest('.vid-avatar')||e.target.closest('.caption-toggle')||e.target.closest('.sticker-picker'))return;
+    if(e.target.closest('.action-totem')||e.target.closest('.cap-toggle')||e.target.closest('.sticker-tray'))return;
     startX=e.touches[0].clientX;isLongPress=false;
     longPressTimer=setTimeout(()=>{isLongPress=true;video.playbackRate=2;showSpeed(v.id,2)},500);
   });
@@ -626,12 +593,11 @@ VIDEOS.forEach((v,i)=>{
     if(isLongPress){video.playbackRate=1;hideSpeed(v.id);isLongPress=false;return}
   });
 
-  // Tap / double tap
   s.addEventListener('click',(e)=>{
-    if(e.target.closest('.vid-actions')||e.target.closest('.vid-avatar')||e.target.closest('.caption-toggle')||e.target.closest('.sticker-picker')||isLongPress)return;
+    if(e.target.closest('.action-totem')||e.target.closest('.cap-toggle')||e.target.closest('.sticker-tray')||isLongPress)return;
     const now=Date.now();
     if(now-lastTap<300){
-      spawnDzongkhaParticles(s,e);
+      spawnMandala(s,e);
       const heart=s.querySelector('.heart-pop');heart.classList.remove('pop');void heart.offsetWidth;heart.classList.add('pop');
       if(!likedSet.has(v.id))toggleLike(v.id,s.querySelector('[data-action="like"]'));
     }else{
@@ -646,23 +612,21 @@ VIDEOS.forEach((v,i)=>{
 function showSpeed(id,rate){const el=document.getElementById('speed-'+id);el.textContent=rate.toFixed(2)+'x';el.classList.add('show')}
 function hideSpeed(id){document.getElementById('speed-'+id).classList.remove('show')}
 
-// Dzongkha particles on double-tap
-function spawnDzongkhaParticles(slide,e){
+function spawnMandala(slide,e){
   const rect=slide.getBoundingClientRect();
-  for(let i=0;i<12;i++){
-    const p=document.createElement('div');p.className='dz-particle';
-    p.textContent=DZ_CHARS[Math.floor(Math.random()*DZ_CHARS.length)];
+  for(let i=0;i<10;i++){
+    const p=document.createElement('div');p.className='mandala-particle';
+    p.textContent=MANDALA_CHARS[Math.floor(Math.random()*MANDALA_CHARS.length)];
     p.style.left=(e.clientX-rect.left+Math.random()*60-30)+'px';
     p.style.top=(e.clientY-rect.top)+'px';
     p.style.setProperty('--rot',(Math.random()*360-180)+'deg');
-    p.style.fontSize=(16+Math.random()*14)+'px';
+    p.style.fontSize=(14+Math.random()*16)+'px';
     slide.appendChild(p);
     requestAnimationFrame(()=>p.classList.add('fly'));
-    setTimeout(()=>p.remove(),1100);
+    setTimeout(()=>p.remove(),1300);
   }
 }
 
-// Captions
 function toggleCaptions(id){
   const states=['off','en','dz','both'];
   captionStates[id]=(captionStates[id]||0)+1;
@@ -674,58 +638,53 @@ function toggleCaptions(id){
   if(state==='off'){el.classList.add('hidden');btn.textContent='Aa';return}
   el.classList.remove('hidden');
   btn.textContent=state==='en'?'EN':state==='dz'?'དྲ':'EN/དྲ';
-  showCaptionLines(id,state,v.captions);
+  showCaptions(id,state,v.captions);
 }
-function showCaptionLines(id,state,captions){
+function showCaptions(id,state,captions){
   const el=document.getElementById('captions-'+id);el.innerHTML='';
   captions.forEach((c,i)=>{
     setTimeout(()=>{
       if(state==='en'||state==='both')el.innerHTML+=`<div class="caption-line" style="animation-delay:${i*.1}s">${c.en}</div><br>`;
-      if(state==='dz'||state==='both')el.innerHTML+=`<div class="caption-line dzongkha" style="animation-delay:${i*.1}s">${c.dz}</div><br>`;
+      if(state==='dz'||state==='both')el.innerHTML+=`<div class="caption-line dz" style="animation-delay:${i*.1}s">${c.dz}</div><br>`;
     },i*1200);
   });
 }
 
-// Sticker picker
-function toggleStickerPicker(id){
+function toggleStickerTray(id){
   const el=document.getElementById('stickers-'+id);el.classList.toggle('open');
   setTimeout(()=>el.classList.remove('open'),4000);
 }
 function launchSticker(id,emoji){
   const slide=document.querySelector(`.video-slide[data-id="${id}"]`);
-  const s=document.createElement('div');s.className='floating-sticker';s.textContent=emoji;
+  const s=document.createElement('div');s.className='flying-sticker';s.textContent=emoji;
   s.style.right=(20+Math.random()*40)+'px';s.style.bottom='150px';
   s.style.setProperty('--dx1',(Math.random()*60-30)+'px');
   s.style.setProperty('--dx2',(Math.random()*80-40)+'px');
-  s.style.setProperty('--dx3',(Math.random()*100-50)+'px');
+  s.style.setProperty('--rot',(Math.random()*360-180)+'deg');
   slide.appendChild(s);requestAnimationFrame(()=>s.classList.add('fly'));
-  setTimeout(()=>s.remove(),3100);
+  setTimeout(()=>s.remove(),2600);
   addKarma(2,null);
   document.getElementById('stickers-'+id).classList.remove('open');
 }
 
-// Random floating stickers from "other users"
 setInterval(()=>{
-  const slides=document.querySelectorAll('.video-slide');
-  slides.forEach(sl=>{
-    if(Math.random()>.7){
+  document.querySelectorAll('.video-slide').forEach(sl=>{
+    if(Math.random()>.75){
       const emoji=BHUTAN_STICKERS[Math.floor(Math.random()*BHUTAN_STICKERS.length)];
-      const s=document.createElement('div');s.className='floating-sticker';s.textContent=emoji;
+      const s=document.createElement('div');s.className='flying-sticker';s.textContent=emoji;
       s.style.left=(10+Math.random()*60)+'px';s.style.bottom='100px';
       s.style.setProperty('--dx1',(Math.random()*50)+'px');
       s.style.setProperty('--dx2',(Math.random()*70)+'px');
-      s.style.setProperty('--dx3',(Math.random()*90)+'px');
+      s.style.setProperty('--rot',(Math.random()*180)+'deg');
       sl.appendChild(s);requestAnimationFrame(()=>s.classList.add('fly'));
-      setTimeout(()=>s.remove(),3100);
+      setTimeout(()=>s.remove(),2600);
     }
   });
-},5000);
+},6000);
 
-// Auto-play observer
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{const v=e.target.querySelector('video');if(e.isIntersecting){v.play().catch(()=>{});e.target.querySelector('.pause-overlay')?.classList.add('hidden')}else v.pause()})},{threshold:.6});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{const v=e.target.querySelector('video');if(e.isIntersecting){v.play().catch(()=>{});e.target.querySelector('.pause-icon')?.classList.add('hidden')}else v.pause()})},{threshold:.6});
 document.querySelectorAll('.video-slide').forEach(s=>obs.observe(s));
 
-// ===== LIKES =====
 function toggleLike(id,el){
   const slide=document.querySelector(`.video-slide[data-id="${id}"]`);
   const btn=el||slide.querySelector('[data-action="like"]');
@@ -736,45 +695,33 @@ function toggleLike(id,el){
     btn.querySelector('.cnt').textContent=fmt(v.likes);
   }else{
     likedSet.add(id);btn.classList.add('liked');
-    btn.querySelector('svg').setAttribute('fill','var(--primary)');btn.querySelector('svg').setAttribute('stroke','var(--primary)');
+    btn.querySelector('svg').setAttribute('fill','var(--vermillion)');btn.querySelector('svg').setAttribute('stroke','var(--vermillion)');
     btn.querySelector('.cnt').textContent=fmt(v.likes+1);
-    glow('red');addKarma(5,btn);
+    glow('vermillion');addKarma(5,btn);
   }
 }
 
-function toggleBookmark(id,el){
+function toggleSave(id,el){
   const slide=document.querySelector(`.video-slide[data-id="${id}"]`);
-  const btn=el||slide.querySelector('[data-action="bookmark"]');
-  if(bookmarkedSet.has(id)){
-    bookmarkedSet.delete(id);btn.classList.remove('bookmarked');
+  const btn=el||slide.querySelector('[data-action="save"]');
+  if(savedSet.has(id)){
+    savedSet.delete(id);btn.classList.remove('saved');
     btn.querySelector('svg').setAttribute('fill','none');btn.querySelector('svg').setAttribute('stroke','white');
-    toast('Removed from bookmarks');
+    toast('Removed from collection');
   }else{
-    bookmarkedSet.add(id);btn.classList.add('bookmarked');
-    btn.querySelector('svg').setAttribute('fill','var(--accent)');btn.querySelector('svg').setAttribute('stroke','var(--accent)');
-    toast('Saved to bookmarks','success');glow('gold');addKarma(3,btn);
+    savedSet.add(id);btn.classList.add('saved');
+    btn.querySelector('svg').setAttribute('fill','var(--saffron)');btn.querySelector('svg').setAttribute('stroke','var(--saffron)');
+    toast('Saved to collection','success');glow('saffron');addKarma(3,btn);
   }
 }
 
-function toggleFollow(id,el){
-  const v=VIDEOS.find(x=>x.id===id);
-  if(followedSet.has(v.user.username)){
-    followedSet.delete(v.user.username);el.textContent='+';el.classList.remove('followed');
-    toast('Unfollowed @'+v.user.username);
-  }else{
-    followedSet.add(v.user.username);el.textContent='✓';el.classList.add('followed');
-    toast('Following @'+v.user.username+'!','success');glow('blue');addKarma(10,el);
-  }
-}
-
-// ===== COMMENTS =====
 function openComments(id){
   currentVideoId=id;const v=VIDEOS.find(x=>x.id===id);
   document.getElementById('comments-modal').classList.remove('hidden');
   document.getElementById('comments-title').textContent=v.comments.length+' Comments';
   const list=document.getElementById('comments-list');
-  if(!v.comments.length){list.innerHTML='<div style="text-align:center;padding:30px;color:var(--gray);font-size:13px">No comments yet. Be the first! 💬</div>';return}
-  list.innerHTML=v.comments.map(c=>`<div class="comment-item"><img src="${c.avatar}"><div class="cbody"><div class="cuser">@${c.user}</div><div class="ctext">${c.text}</div><div class="ctime">${c.time}</div></div></div>`).join('');
+  if(!v.comments.length){list.innerHTML='<div style="text-align:center;padding:30px;color:rgba(247,245,240,.25);font-size:13px">No comments yet. Be the first! 🙏</div>';return}
+  list.innerHTML=v.comments.map(c=>`<div class="c-item"><img src="${c.avatar}"><div class="c-body"><div class="c-user">@${c.user}</div><div class="c-text">${c.text}</div><div class="c-time">${c.time}</div></div></div>`).join('');
 }
 function postComment(){
   if(!currentVideoId)return;const input=document.getElementById('comment-input');const text=input.value.trim();if(!text)return;input.value='';
@@ -782,61 +729,54 @@ function postComment(){
   v.comments.unshift({user:'zhingkham_user',avatar:'https://i.pravatar.cc/150?img=10',text,time:'now'});
   openComments(currentVideoId);
   const slide=document.querySelector(`.video-slide[data-id="${currentVideoId}"]`);
-  if(slide)slide.querySelectorAll('.action-btn')[1].querySelector('.cnt').textContent=v.comments.length;
-  toast('Comment posted!','success');glow('green');addKarma(5,null);
+  if(slide)slide.querySelectorAll('.totem-btn')[1].querySelector('.cnt').textContent=v.comments.length;
+  toast('Comment posted!','success');glow('jade');addKarma(5,null);
 }
 function closeComments(){document.getElementById('comments-modal').classList.add('hidden');currentVideoId=null}
 
-// ===== DISCOVER =====
-document.getElementById('cats').innerHTML=CATEGORIES.map(c=>`<div class="cat-chip" style="background:${c.color}22;color:${c.color}" onclick="searchCat('${c.label.split(' ')[1]}')">${c.label}</div>`).join('');
-function buildGrid(cid,vids){document.getElementById(cid).innerHTML=vids.map(v=>`<div class="grid-tile" onclick="goToVideo('${v.id}')"><video src="${v.src}" preload="metadata" muted></video><div class="g-overlay">▶ ${fmt(v.likes)}</div></div>`).join('')}
-buildGrid('discover-grid',[...VIDEOS,...VIDEOS]);buildGrid('profile-grid',VIDEOS);
-function searchCat(t){document.getElementById('search-input').value=t;handleSearch()}
-function handleSearch(){const q=document.getElementById('search-input').value.toLowerCase().trim();if(!q){buildGrid('discover-grid',[...VIDEOS,...VIDEOS]);return}const f=VIDEOS.filter(v=>v.caption.toLowerCase().includes(q)||v.user.username.includes(q)||v.song.toLowerCase().includes(q));buildGrid('discover-grid',f.length?f:[]);if(!f.length)document.getElementById('discover-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--gray);font-size:13px">No results for "'+q+'"</div>'}
+// DISCOVER
+document.getElementById('realm-bar').innerHTML=REALMS.map(c=>`<div class="realm-chip" style="background:${c.bg};color:${c.color};border-color:${c.color}33" onclick="searchRealm('${c.label.split(' ')[1]}')">${c.label}</div>`).join('');
+function buildMosaic(cid,vids){document.getElementById(cid).innerHTML=vids.map(v=>`<div class="mosaic-tile" onclick="goToVideo('${v.id}')"><video src="${v.src}" preload="metadata" muted></video><div class="tile-stat">▶ ${fmt(v.likes)}</div></div>`).join('')}
+buildMosaic('discover-grid',[...VIDEOS,...VIDEOS]);buildMosaic('profile-grid',VIDEOS);
+function searchRealm(t){document.getElementById('search-input').value=t;handleSearch()}
+function handleSearch(){const q=document.getElementById('search-input').value.toLowerCase().trim();if(!q){buildMosaic('discover-grid',[...VIDEOS,...VIDEOS]);return}const f=VIDEOS.filter(v=>v.caption.toLowerCase().includes(q)||v.user.username.includes(q)||v.song.toLowerCase().includes(q));buildMosaic('discover-grid',f.length?f:[]);if(!f.length)document.getElementById('discover-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:30px;color:rgba(247,245,240,.25);font-size:13px">No results for "'+q+'"</div>'}
 function goToVideo(id){switchTab('home');const s=document.querySelector(`.video-slide[data-id="${id}"]`);if(s)s.scrollIntoView({behavior:'smooth'})}
 
-// ===== INBOX =====
-document.getElementById('notif-list').innerHTML=NOTIFS.map(n=>`<div class="notif-item"><img src="${n.avatar}"><div class="n-body"><div class="n-text"><strong>${n.user}</strong> ${n.text}</div><div class="n-time">${n.time}</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="${n.color}"><circle cx="12" cy="12" r="5"/></svg></div>`).join('');
+// INBOX
+document.getElementById('notif-stream').innerHTML=NOTIFS.map(n=>`<div class="notif-card"><img src="${n.avatar}"><div class="n-content"><div class="n-msg"><strong>${n.user}</strong> ${n.text}</div><div class="n-when">${n.time}</div></div><div class="n-dot" style="background:${n.dot}"></div></div>`).join('');
 
-// ===== CREATE =====
-document.getElementById('camera-filters').innerHTML=FILTERS.map((f,i)=>`<div class="filter-chip ${i===0?'active':''}" style="background:${f.bg}" onclick="applyFilter(this,'${f.bg}')">${f.name}</div>`).join('');
-function applyFilter(el,bg){document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');document.getElementById('camera-area').style.background=bg;toast(el.textContent+' filter applied','success')}
-function toggleRecording(){const btn=document.getElementById('record-btn');isRecording=!isRecording;btn.classList.toggle('recording');toast(isRecording?'Recording started! 🔴':'Recording stopped',isRecording?'error':'success')}
+// CREATE
+document.getElementById('lens-strip').innerHTML=LENSES.map((f,i)=>`<div class="lens-item ${i===0?'active':''}" style="background:${f.bg}" onclick="applyLens(this,'${f.bg}')">${f.name}</div>`).join('');
+function applyLens(el,bg){document.querySelectorAll('.lens-item').forEach(c=>c.classList.remove('active'));el.classList.add('active');document.getElementById('viewfinder').style.background=bg;toast(el.textContent+' lens applied','success')}
+function toggleRecording(){const btn=document.getElementById('rec-btn');isRecording=!isRecording;btn.classList.toggle('recording');toast(isRecording?'Recording started...':'Recording stopped',isRecording?'error':'success')}
 
-// ===== MINI PLAYER =====
-function showMiniPlayer(videoId){
+// PIP
+function showPip(videoId){
   const v=VIDEOS.find(x=>x.id===videoId);if(!v)return;
-  miniPlayerVideoId=videoId;
-  const mp=document.getElementById('mini-player');
-  const mv=document.getElementById('mini-video');
-  mv.src=v.src;mv.play().catch(()=>{});
+  pipVideoId=videoId;
+  const mp=document.getElementById('pip');
+  document.getElementById('pip-video').src=v.src;
+  document.getElementById('pip-video').play().catch(()=>{});
   mp.classList.remove('hidden');
 }
-function closeMiniPlayer(){document.getElementById('mini-player').classList.add('hidden');document.getElementById('mini-video').pause();miniPlayerVideoId=null}
-function miniPlayerTap(){if(miniPlayerVideoId){closeMiniPlayer();switchTab('home');const s=document.querySelector(`.video-slide[data-id="${miniPlayerVideoId}"]`);if(s)s.scrollIntoView({behavior:'smooth'})}}
+function closePip(){document.getElementById('pip').classList.add('hidden');document.getElementById('pip-video').pause();pipVideoId=null}
+function pipTap(){if(pipVideoId){closePip();switchTab('home');const s=document.querySelector(`.video-slide[data-id="${pipVideoId}"]`);if(s)s.scrollIntoView({behavior:'smooth'})}}
 
-// ===== THEME =====
-function toggleTheme(){
-  isGolden=!isGolden;document.body.classList.toggle('golden',isGolden);
-  document.getElementById('theme-switch').classList.toggle('on',isGolden);
-  toast(isGolden?'Golden Hour theme enabled 🌅':'Dark theme enabled 🌙','success');
-}
-
-// ===== TAB NAVIGATION =====
+// TAB NAV
 let currentTab='home';
 function switchTab(name){
-  // Show mini player when leaving home with a playing video
   if(currentTab==='home'&&name!=='home'){
     const playingSlide=document.querySelector('.video-slide video:not([paused])');
-    if(playingSlide){const id=playingSlide.closest('.video-slide').dataset.id;showMiniPlayer(id)}
+    if(playingSlide){const id=playingSlide.closest('.video-slide').dataset.id;showPip(id)}
   }
-  if(name==='home')closeMiniPlayer();
+  if(name==='home')closePip();
   currentTab=name;
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab-item').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(t=>t.classList.remove('active'));
   document.getElementById('screen-'+name).classList.add('active');
-  const idx={home:0,discover:1,create:2,inbox:3,profile:4}[name];
-  document.querySelectorAll('.tab-item')[idx]?.classList.add('active');
+  const navItems=document.querySelectorAll('.nav-item');
+  const idx={home:0,discover:1,inbox:2,profile:3}[name];
+  if(idx!==undefined)navItems[idx]?.classList.add('active');
   if(name!=='home')document.querySelectorAll('.video-slide video').forEach(v=>v.pause());
 }
 </script>

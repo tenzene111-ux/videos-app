@@ -662,7 +662,7 @@
             </div>
             <div class="sheet-body" id="cm-list"></div>
             <div class="sheet-input">
-              <img src="https://i.pravatar.cc/150?img=10" alt="">
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face" alt="">
               <input type="text" placeholder="Add a comment..." id="cm-input" onkeydown="if(event.key==='Enter')postCM()">
               <button class="emoji-btn" onclick="addEmoji()">😊</button>
               <button class="send-btn" onclick="postCM()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
@@ -677,7 +677,7 @@
           <div class="ex-head">
             <h1>Explore</h1>
             <div class="av-wrap">
-              <img class="av" src="https://i.pravatar.cc/150?img=10" alt="">
+              <img class="av" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face" alt="">
               <div class="av-online"></div>
             </div>
           </div>
@@ -759,7 +759,7 @@
           </div>
           <div class="prof-hero">
             <div class="avatar-ring">
-              <img src="https://i.pravatar.cc/150?img=10" alt="">
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face" alt="">
               <div class="av-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div>
             </div>
             <div class="p-name">Zhingkham User</div>
@@ -798,7 +798,7 @@
           <video src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" autoplay muted loop playsinline id="live-video"></video>
           <div class="live-top">
             <div class="live-host">
-              <img class="av" src="https://i.pravatar.cc/150?img=1" id="lh-av">
+              <img class="av" src="" id="lh-av">
               <div>
                 <div style="font-weight:700;font-size:13px" id="lh-name">dorji_wangmo</div>
                 <div style="font-size:10px;color:var(--w3)">Paro, Bhutan</div>
@@ -884,26 +884,37 @@
 </div>
 
 <script>
+const AVS={
+  me:'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face',
+  1:'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=150&h=150&fit=crop&crop=face',
+  2:'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face',
+  3:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face',
+  4:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+  5:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face',
+  6:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
+  7:'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
+  8:'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
+};
 const V=[
-  {id:'1',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',u:{name:'dorji_wangmo',av:'https://i.pravatar.cc/150?img=1',v:true,fans:'12.5K'},cap:"Sunrise blessing at Tiger's Nest 🏔️ #bhutan #travel @pema_tshering",song:'Original Sound — dorji_wangmo',likes:45200,comments:[],shares:890,saves:2100,loc:'Paro, Bhutan',dur:'0:15'},
-  {id:'2',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',u:{name:'pema_tshering',av:'https://i.pravatar.cc/150?img=2',v:false,fans:'3.2K'},cap:'Making ema datshi — soul of Bhutan 🍲 #food #culture #recipe',song:'Bhutanese Folk — traditional',likes:23100,comments:[],shares:320,saves:890,loc:'Thimphu',dur:'0:30'},
-  {id:'3',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',u:{name:'karma_dancer',av:'https://i.pravatar.cc/150?img=3',v:true,fans:'89.1K'},cap:'Sacred Cham dance at Paro Tshechu 💃 #dance #festival #tshechu',song:'Festival Drums — live',likes:67800,comments:[],shares:1200,saves:4500,loc:'Paro Dzong',dur:'0:45'},
-  {id:'4',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',u:{name:'thinley_adventures',av:'https://i.pravatar.cc/150?img=4',v:false,fans:'45.7K'},cap:'Snowman Trek day 15 — roof of the world 🏔️❄️ #adventure #trek',song:'Mountain Vibes — ambient',likes:89400,comments:[],shares:5600,saves:12000,loc:'Laya',dur:'1:00'},
-  {id:'5',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',u:{name:'sonam_arts',av:'https://i.pravatar.cc/150?img=5',v:true,fans:'67.3K'},cap:'Painting thangka — each stroke a meditation 🎨 #art #thangka',song:'Lo-fi Meditation — beats',likes:34500,comments:[],shares:670,saves:3400,loc:'Bumthang',dur:'0:20'},
+  {id:'1',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',u:{name:'dorji_wangmo',av:AVS[1],v:true,fans:'12.5K'},cap:"Sunrise blessing at Tiger's Nest 🏔️ #bhutan #travel @pema_tshering",song:'Original Sound — dorji_wangmo',likes:45200,comments:[],shares:890,saves:2100,loc:'Paro, Bhutan',dur:'0:15'},
+  {id:'2',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',u:{name:'pema_tshering',av:AVS[2],v:false,fans:'3.2K'},cap:'Making ema datshi — soul of Bhutan 🍲 #food #culture #recipe',song:'Bhutanese Folk — traditional',likes:23100,comments:[],shares:320,saves:890,loc:'Thimphu',dur:'0:30'},
+  {id:'3',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',u:{name:'karma_dancer',av:AVS[3],v:true,fans:'89.1K'},cap:'Sacred Cham dance at Paro Tshechu 💃 #dance #festival #tshechu',song:'Festival Drums — live',likes:67800,comments:[],shares:1200,saves:4500,loc:'Paro Dzong',dur:'0:45'},
+  {id:'4',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',u:{name:'thinley_adventures',av:AVS[4],v:false,fans:'45.7K'},cap:'Snowman Trek day 15 — roof of the world 🏔️❄️ #adventure #trek',song:'Mountain Vibes — ambient',likes:89400,comments:[],shares:5600,saves:12000,loc:'Laya',dur:'1:00'},
+  {id:'5',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',u:{name:'sonam_arts',av:AVS[5],v:true,fans:'67.3K'},cap:'Painting thangka — each stroke a meditation 🎨 #art #thangka',song:'Lo-fi Meditation — beats',likes:34500,comments:[],shares:670,saves:3400,loc:'Bumthang',dur:'0:20'},
 ];
-V[0].comments=[{u:'pema_tshering',av:'https://i.pravatar.cc/150?img=2',t:'So beautiful! 😍',w:'2h',likes:24},{u:'karma_dancer',av:'https://i.pravatar.cc/150?img=3',t:'I need to visit! 🏔️',w:'4h',likes:12},{u:'sonam_arts',av:'https://i.pravatar.cc/150?img=5',t:'Incredible colors ✨',w:'6h',likes:8}];
-V[2].comments=[{u:'dorji_wangmo',av:'https://i.pravatar.cc/150?img=1',t:'Amazing dance! 🔥',w:'1h',likes:45},{u:'thinley_adventures',av:'https://i.pravatar.cc/150?img=4',t:'Teach me! 💃',w:'3h',likes:19}];
-V[3].comments=[{u:'sonam_arts',av:'https://i.pravatar.cc/150?img=5',t:'Stay safe! 🙏',w:'5h',likes:31}];
+V[0].comments=[{u:'pema_tshering',av:AVS[2],t:'So beautiful! 😍',w:'2h',likes:24},{u:'karma_dancer',av:AVS[3],t:'I need to visit! 🏔️',w:'4h',likes:12},{u:'sonam_arts',av:AVS[5],t:'Incredible colors ✨',w:'6h',likes:8}];
+V[2].comments=[{u:'dorji_wangmo',av:AVS[1],t:'Amazing dance! 🔥',w:'1h',likes:45},{u:'thinley_adventures',av:AVS[4],t:'Teach me! 💃',w:'3h',likes:19}];
+V[3].comments=[{u:'sonam_arts',av:AVS[5],t:'Stay safe! 🙏',w:'5h',likes:31}];
 
 const TAGS=[{l:'🔥 Trending',bg:'rgba(224,75,58,.1)',c:'#E04B3A'},{l:'💃 Dance',bg:'rgba(108,92,231,.1)',c:'#6C5CE7'},{l:'🍲 Food',bg:'rgba(212,164,76,.1)',c:'#D4A44C'},{l:'🏛️ Heritage',bg:'rgba(0,184,148,.1)',c:'#00B894'},{l:'✈️ Travel',bg:'rgba(253,121,168,.1)',c:'#FD79A8'},{l:'🎨 Art',bg:'rgba(232,192,104,.1)',c:'#E8C068'},{l:'🎵 Music',bg:'rgba(108,92,231,.1)',c:'#6C5CE7'}];
 const NOTIFS=[
-  {u:'dorji_wangmo',av:'https://i.pravatar.cc/150?img=1',t:'liked your video',w:'2h ago',icon:'❤️',bg:'#E04B3A'},
-  {u:'pema_tshering',av:'https://i.pravatar.cc/150?img=2',t:'started following you',w:'3h ago',icon:'👤',bg:'#6C5CE7'},
-  {u:'karma_dancer',av:'https://i.pravatar.cc/150?img=3',t:'commented: "Amazing! 🔥"',w:'5h ago',icon:'💬',bg:'#D4A44C'},
-  {u:'thinley_adventures',av:'https://i.pravatar.cc/150?img=4',t:'and 42 others liked your video',w:'8h ago',icon:'❤️',bg:'#E04B3A'},
-  {u:'sonam_arts',av:'https://i.pravatar.cc/150?img=5',t:'mentioned you in a comment',w:'1d ago',icon:'@',bg:'#00B894'},
-  {u:'pema_tshering',av:'https://i.pravatar.cc/150?img=2',t:'shared your video',w:'1d ago',icon:'↗',bg:'#FD79A8'},
-  {u:'karma_dancer',av:'https://i.pravatar.cc/150?img=3',t:'went live: "Evening dance practice"',w:'1d ago',icon:'🔴',bg:'#E04B3A'},
+  {u:'dorji_wangmo',av:AVS[1],t:'liked your video',w:'2h ago',icon:'❤️',bg:'#E04B3A'},
+  {u:'pema_tshering',av:AVS[2],t:'started following you',w:'3h ago',icon:'👤',bg:'#6C5CE7'},
+  {u:'karma_dancer',av:AVS[3],t:'commented: "Amazing! 🔥"',w:'5h ago',icon:'💬',bg:'#D4A44C'},
+  {u:'thinley_adventures',av:AVS[4],t:'and 42 others liked your video',w:'8h ago',icon:'❤️',bg:'#E04B3A'},
+  {u:'sonam_arts',av:AVS[5],t:'mentioned you in a comment',w:'1d ago',icon:'@',bg:'#00B894'},
+  {u:'pema_tshering',av:AVS[2],t:'shared your video',w:'1d ago',icon:'↗',bg:'#FD79A8'},
+  {u:'karma_dancer',av:AVS[3],t:'went live: "Evening dance practice"',w:'1d ago',icon:'🔴',bg:'#E04B3A'},
 ];
 const SYMS='✦ ❋ ◈ ☸ ✿ ◆ ❤️ 🙏 🐉 🏔️ ⚡ 💫'.split(' ');
 const EMOJIS=['😊','🔥','❤️','😂','👏','🙏','💯','✨','🎉','💪'];
@@ -1072,7 +1083,7 @@ function openCM(id){cmVid=id;const v=V.find(x=>x.id===id);document.getElementByI
   const sl=document.querySelector(`.slide[data-id="${id}"]`);if(sl)sl.classList.add('dimmed');
 }
 function renderCM(v){const l=document.getElementById('cm-list');if(!v.comments.length){l.innerHTML='<div style="text-align:center;padding:40px 0;color:var(--w3);font-size:13px">No comments yet 🙏<br><span style="font-size:11px;opacity:.6">Be the first to comment</span></div>';return}l.innerHTML=v.comments.map((c,i)=>`<div class="cm" style="animation:cmSlide .4s ${i*.06}s var(--spring) both"><img src="${c.av}"><div class="cm-body"><div class="cm-user">@${c.u}</div><div class="cm-text">${c.t}</div><div class="cm-meta"><span class="cm-time">${c.w}</span><button class="cm-reply">Reply</button></div></div><div class="cm-like-wrap"><button class="cm-like"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button><span class="cm-like-count">${c.likes||0}</span></div></div>`).join('')}
-function postCM(){if(!cmVid)return;const inp=document.getElementById('cm-input'),t=inp.value.trim();if(!t)return;inp.value='';const v=V.find(x=>x.id===cmVid);v.comments.unshift({u:'zhingkham_user',av:'https://i.pravatar.cc/150?img=10',t,w:'now',likes:0});renderCM(v);document.getElementById('cm-title').textContent=v.comments.length+' Comments';const sl=document.querySelector(`.slide[data-id="${cmVid}"]`);if(sl)sl.querySelectorAll('.s-btn')[1].querySelector('.cnt').textContent=v.comments.length;toast('💬 Posted!');addK(5)}
+function postCM(){if(!cmVid)return;const inp=document.getElementById('cm-input'),t=inp.value.trim();if(!t)return;inp.value='';const v=V.find(x=>x.id===cmVid);v.comments.unshift({u:'zhingkham_user',av:'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face',t,w:'now',likes:0});renderCM(v);document.getElementById('cm-title').textContent=v.comments.length+' Comments';const sl=document.querySelector(`.slide[data-id="${cmVid}"]`);if(sl)sl.querySelectorAll('.s-btn')[1].querySelector('.cnt').textContent=v.comments.length;toast('💬 Posted!');addK(5)}
 function closeCM(){document.getElementById('cm-overlay').classList.add('hidden');cmVid=null;
   document.querySelectorAll('.slide').forEach(s=>s.classList.remove('dimmed'));
 }
@@ -1356,7 +1367,7 @@ function confirmSendGift(){
   clearTimeout(giftComboTimer);
   giftComboTimer=setTimeout(()=>{giftCombo=0;lastGiftName='';giftComboTimer=null},5000);
   const page=document.querySelector('.live-page');
-  playGiftAnim(page,selectedGift,'You','https://i.pravatar.cc/150?img=10',true,giftCombo);
+  playGiftAnim(page,selectedGift,'You',AVS.me,true,giftCombo);
   addLiveChatMsg('You','sent '+selectedGift.n+(giftCombo>1?' x'+giftCombo:'')+' (🪙'+selectedGift.p+')');
   addK(selectedGift.p>=200?20:10);
   addDiamonds(selectedGift.p,'You',selectedGift.n);
@@ -1374,7 +1385,7 @@ function startSimGifts(){
     const avIdx=Math.floor(Math.random()*8)+1;
     const page=document.querySelector('.live-page');
     if(!page||!document.getElementById('p-live').classList.contains('active'))return;
-    playGiftAnim(page,g,u,`https://i.pravatar.cc/150?img=${avIdx}`,false,1);
+    playGiftAnim(page,g,u,AVS[avIdx]||AVS[1],false,1);
     addLiveChatMsg(u,'sent '+g.n+' 🎁');
     addDiamonds(g.p,u,g.n);
   },8000);

@@ -167,10 +167,11 @@
     .dock{position:absolute;bottom:14px;left:14px;right:14px;height:60px;display:flex;align-items:center;justify-content:space-around;background:var(--glass2);backdrop-filter:blur(40px) saturate(200%);border-radius:22px;border:1px solid var(--w5);z-index:200;box-shadow:0 8px 40px rgba(0,0,0,.5),0 0 0 .5px rgba(212,164,76,.05)}
     .dock-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;width:50px;height:50px;border-radius:16px;border:none;background:none;color:var(--w3);cursor:pointer;transition:all .3s var(--spring);position:relative}
     .dock-item svg{width:22px;height:22px;transition:all .3s var(--spring)}
-    .dock-item .d-label{font-size:8px;font-weight:600;letter-spacing:.3px;opacity:0;transform:translateY(4px);transition:all .3s var(--spring)}
+    .dock-item .d-label{font-size:8px;font-weight:600;letter-spacing:.3px;opacity:.5;transform:translateY(0);transition:all .3s var(--spring)}
     .dock-item.active{color:var(--g1)}
-    .dock-item.active svg{transform:translateY(-3px);filter:drop-shadow(0 2px 6px rgba(212,164,76,.3))}
+    .dock-item.active svg{transform:translateY(-2px);filter:drop-shadow(0 2px 6px rgba(212,164,76,.3))}
     .dock-item.active .d-label{opacity:1;transform:translateY(0)}
+    .dock-badge{position:absolute;top:4px;right:4px;min-width:16px;height:16px;border-radius:8px;background:var(--r1);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid var(--b1);padding:0 3px;color:white}
     .dock-item.active::after{content:'';position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--g1);box-shadow:0 0 8px rgba(212,164,76,.4)}
     .dock-create{width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,var(--g1),var(--r1));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(212,164,76,.3),inset 0 1px 0 rgba(255,255,255,.15);transition:all .3s var(--spring);position:relative;overflow:hidden}
     .dock-create::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent 60%);border-radius:16px}
@@ -605,6 +606,80 @@
     .go-live-overlay .gl-start:active{transform:scale(.92)}
     .go-live-overlay .gl-cancel{background:none;border:1px solid var(--w5);color:var(--w3);padding:10px 30px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
 
+    /* === SUGGESTED ACCOUNTS === */
+    .suggested-row{display:flex;flex-direction:column;gap:12px;padding:0 16px 16px}
+    .suggested-item{display:flex;align-items:center;gap:12px;padding:10px 12px;background:var(--b3);border-radius:14px;border:1px solid var(--w5)}
+    .suggested-item img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--g1);flex-shrink:0}
+    .suggested-item .si-info{flex:1;min-width:0}
+    .suggested-item .si-name{font-size:13px;font-weight:700;display:flex;align-items:center;gap:4px}
+    .suggested-item .si-name .verified{width:14px;height:14px;background:linear-gradient(135deg,var(--g1),var(--g3));border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:7px;color:var(--b1);font-weight:900}
+    .suggested-item .si-cat{font-size:11px;color:var(--w3)}
+    .suggested-item .si-follow{padding:7px 20px;border-radius:20px;background:linear-gradient(135deg,var(--g1),var(--g3));border:none;color:var(--b1);font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s var(--spring);flex-shrink:0}
+    .suggested-item .si-follow:active{transform:scale(.92)}
+    .suggested-item .si-follow.following{background:var(--b4);color:var(--w3);border:1px solid var(--w5)}
+
+    /* Trending cards with thumbnails */
+    .trending-thumb-row{display:flex;gap:10px;padding:0 16px 16px;overflow-x:auto;scrollbar-width:none}
+    .trending-thumb-row::-webkit-scrollbar{display:none}
+    .trending-thumb{flex-shrink:0;width:160px;border-radius:14px;overflow:hidden;background:var(--b3);border:1px solid var(--w5);cursor:pointer;transition:all .3s var(--spring)}
+    .trending-thumb:active{transform:scale(.95)}
+    .trending-thumb .tt-img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+    .trending-thumb .tt-info{padding:8px 10px}
+    .trending-thumb .tt-title{font-size:11px;font-weight:600;line-height:15px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .trending-thumb .tt-views{font-size:10px;color:var(--w3);margin-top:4px;display:flex;align-items:center;gap:3px}
+    .trending-thumb .tt-views svg{width:10px;height:10px}
+
+    /* === INBOX STORIES & MESSAGES === */
+    .inbox-stories{display:flex;gap:12px;padding:12px 16px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--w5)}
+    .inbox-stories::-webkit-scrollbar{display:none}
+    .inbox-story{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;flex-shrink:0}
+    .inbox-story .is-ring{width:52px;height:52px;border-radius:50%;padding:2px;background:linear-gradient(135deg,var(--g1),var(--r1));position:relative}
+    .inbox-story .is-ring img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid var(--b1)}
+    .inbox-story .is-ring .is-badge{position:absolute;bottom:-1px;right:-1px;width:16px;height:16px;border-radius:50%;background:var(--teal);border:2px solid var(--b1);display:flex;align-items:center;justify-content:center;font-size:8px;color:white;font-weight:700}
+    .inbox-story.add-story .is-ring{background:var(--b3);border:1px dashed var(--w4);display:flex;align-items:center;justify-content:center}
+    .inbox-story.add-story .is-ring svg{width:18px;height:18px;color:var(--g1)}
+    .inbox-story .is-name{font-size:9px;font-weight:500;color:var(--w3);max-width:52px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .inbox-tabs{display:flex;border-bottom:1px solid var(--w5);padding:0 16px}
+    .inbox-tab{flex:1;text-align:center;padding:12px;font-size:14px;font-weight:600;color:var(--w3);border-bottom:2px solid transparent;cursor:pointer;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;font-family:inherit;position:relative}
+    .inbox-tab.active{color:var(--g1);border-bottom-color:var(--g1)}
+    .inbox-tab .tab-dot{width:6px;height:6px;border-radius:50%;background:var(--r1);display:inline-block;margin-left:4px;vertical-align:middle}
+    .msg-list{padding:0 16px 100px}
+    .msg-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--w5);cursor:pointer;transition:all .15s}
+    .msg-item:active{background:var(--w5);margin:0 -16px;padding:14px 16px;border-radius:12px}
+    .msg-item .msg-av{position:relative;flex-shrink:0}
+    .msg-item .msg-av img{width:50px;height:50px;border-radius:50%;object-fit:cover}
+    .msg-item .msg-av .msg-online{position:absolute;bottom:2px;right:2px;width:10px;height:10px;border-radius:50%;background:var(--teal);border:2px solid var(--b1)}
+    .msg-item .msg-body{flex:1;min-width:0}
+    .msg-item .msg-name{font-size:14px;font-weight:700}
+    .msg-item .msg-preview{font-size:12px;color:var(--w3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+    .msg-item .msg-meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
+    .msg-item .msg-time{font-size:11px;color:var(--w3)}
+    .msg-item .msg-cam{width:28px;height:28px;border-radius:50%;background:var(--b4);border:1px solid var(--w5);display:flex;align-items:center;justify-content:center;color:var(--w3)}
+    .msg-item .msg-cam svg{width:14px;height:14px}
+
+    /* === STUDIO SIDEBAR TOOLS === */
+    .studio-sidebar{position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;z-index:10}
+    .studio-sidebar .sb-tool{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:var(--w);cursor:pointer;font-family:inherit}
+    .studio-sidebar .sb-tool .sb-ico{width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.4);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;transition:all .2s}
+    .studio-sidebar .sb-tool:active .sb-ico{transform:scale(.85);background:rgba(212,164,76,.2)}
+    .studio-sidebar .sb-tool svg{width:18px;height:18px}
+    .studio-sidebar .sb-tool span{font-size:8px;font-weight:600;opacity:.7}
+    .studio-modes{display:flex;gap:16px;justify-content:center;padding:4px 0}
+    .studio-modes span{font-size:13px;font-weight:600;color:var(--w3);cursor:pointer;padding:4px 8px;border-radius:8px;transition:all .2s}
+    .studio-modes span.active{color:var(--w);background:rgba(212,164,76,.08)}
+    .studio-speed{display:flex;gap:10px;justify-content:center;padding:6px 0}
+    .studio-speed span{font-size:12px;font-weight:600;color:var(--w3);cursor:pointer;padding:3px 8px;border-radius:8px;transition:all .2s}
+    .studio-speed span.active{color:var(--g1);background:rgba(212,164,76,.08)}
+
+    /* Profile Follow/Message buttons for other users */
+    .prof-action-btns{display:flex;gap:8px;margin-bottom:16px;padding:0 24px;width:100%}
+    .prof-action-btns .pab-follow{flex:1;height:40px;border-radius:20px;background:linear-gradient(135deg,var(--g1),var(--g3));border:none;font-size:14px;font-weight:700;color:var(--b1);cursor:pointer;font-family:inherit;transition:all .3s var(--spring);box-shadow:0 4px 16px rgba(212,164,76,.2)}
+    .prof-action-btns .pab-follow:active{transform:scale(.95)}
+    .prof-action-btns .pab-msg{flex:1;height:40px;border-radius:20px;background:var(--b3);border:1px solid var(--w5);font-size:14px;font-weight:600;color:var(--w);cursor:pointer;font-family:inherit;transition:all .3s var(--spring)}
+    .prof-action-btns .pab-msg:active{transform:scale(.95)}
+    .prof-action-btns .pab-more{width:40px;height:40px;border-radius:50%;background:var(--b3);border:1px solid var(--w5);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--w);flex-shrink:0}
+    .prof-action-btns .pab-more svg{width:16px;height:16px}
+
     /* === RESPONSIVE === */
     @media(min-width:769px){.dock{position:absolute}}
     @media(max-width:768px){
@@ -690,6 +765,10 @@
           <div class="tags" id="tags"></div>
           <div class="section-title">🔴 Live Now <span class="see-all">See all</span></div>
           <div class="live-row" id="live-row"></div>
+          <div class="section-title">Trending 🔥 <span class="see-all">See all</span></div>
+          <div class="trending-thumb-row" id="trending-thumb-row"></div>
+          <div class="section-title">Suggested Accounts <span class="see-all">See all</span></div>
+          <div class="suggested-row" id="suggested-row"></div>
           <div class="section-title">Trending Creators <span class="see-all">See all</span></div>
           <div class="trending-row" id="trending-row"></div>
           <div class="section-title">Featured <span class="see-all">See all</span></div>
@@ -707,12 +786,21 @@
             <h2>Studio</h2>
             <button class="st-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></button>
           </div>
-          <div class="camera">
+          <div class="camera" style="position:relative">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
             <span class="cam-t">Ready to Create</span>
             <span class="cam-s">Tap record below</span>
             <div class="rec-timer" id="recTimer">00:00</div>
+            <div class="studio-sidebar">
+              <button class="sb-tool" onclick="toast('🔄 Flip camera')"><div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg></div><span>Flip</span></button>
+              <button class="sb-tool" onclick="toast('⚡ Speed')"><div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><span>Speed</span></button>
+              <button class="sb-tool" onclick="toast('✨ Beauty mode')"><div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3c-1.2 1.6-2 3.5-2 5.5 0 4.4 3.6 8 8 8 2 0 3.9-.7 5.5-2C22.6 18.1 18 22 12.5 22 6.7 22 2 17.3 2 11.5 2 6 5.9 1.4 11 .5"/></svg></div><span>Beauty</span></button>
+              <button class="sb-tool" onclick="toast('🎨 Filters')"><div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div><span>Filters</span></button>
+              <button class="sb-tool" onclick="toast('⏱️ Timer')"><div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><span>Timer</span></button>
+              <button class="sb-tool" onclick="toast('⚡ Flash')"><div class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><span>Flash</span></button>
+            </div>
           </div>
+          <div class="studio-speed"><span>0.3x</span><span>0.5x</span><span class="active">1x</span><span>2x</span><span>3x</span></div>
           <div class="studio-tools">
             <button class="st-tool" onclick="toast('📸 Gallery')"><div class="st-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>Gallery</button>
             <button class="st-tool" onclick="toast('⚡ Effects')"><div class="st-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>Effects</button>
@@ -721,9 +809,13 @@
             <button class="st-tool" onclick="toast('⏱️ Timer')"><div class="st-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>Timer</button>
           </div>
           <div class="studio-foot">
-            <div class="dur-pills"><span>15s</span><span class="active">60s</span><span>3m</span><span>10m</span></div>
-            <button class="rec-ring" id="recBtn" onclick="toggleRec()"><div class="rec-dot"></div></button>
-            <div class="dur-pills"><span>Photo</span><span class="active" style="color:var(--w)">Video</span></div>
+            <div class="dur-pills"><span>3m</span><span class="active">60s</span><span>15s</span></div>
+            <div style="display:flex;align-items:center;gap:24px">
+              <button class="st-tool" onclick="toast('⚡ Effects')"><div class="st-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>Effects</button>
+              <button class="rec-ring" id="recBtn" onclick="toggleRec()"><div class="rec-dot"></div></button>
+              <button class="st-tool" onclick="toast('📤 Upload')"><div class="st-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>Upload</button>
+            </div>
+            <div class="studio-modes"><span>Photo</span><span class="active">Video</span><span>Text</span></div>
             <button class="go-live-btn" onclick="openGoLive()"><span class="glb-dot"></span>Go Live</button>
           </div>
         </div>
@@ -734,16 +826,19 @@
         <div class="inbox-page">
           <div class="inb-head">
             <h1>Inbox</h1>
-            <button class="msg-btn" onclick="toast('💬 Messages coming soon!')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><div class="badge">3</div></button>
+            <button class="msg-btn" onclick="toast('✏️ New message')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
           </div>
-          <div class="inb-pills">
-            <button class="inb-pill active">All</button>
-            <button class="inb-pill">Likes</button>
-            <button class="inb-pill">Follows</button>
-            <button class="inb-pill">Mentions</button>
+          <div class="search-pill" style="margin:6px 16px 10px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" placeholder="Search messages..." style="flex:1;background:none;border:none;color:var(--w);font-size:13px;font-family:inherit;outline:none">
           </div>
-          <div class="inb-today">Today</div>
-          <div class="noti-list" id="noti-list"></div>
+          <div class="inbox-stories" id="inbox-stories"></div>
+          <div class="inbox-tabs">
+            <button class="inbox-tab active" onclick="switchInboxTab(this,'messages')">Messages</button>
+            <button class="inbox-tab" onclick="switchInboxTab(this,'activity')">Activity<span class="tab-dot"></span></button>
+          </div>
+          <div id="inbox-messages" class="msg-list"></div>
+          <div id="inbox-activity" class="noti-list" style="display:none;padding:0 16px 100px"></div>
         </div>
       </div>
 
@@ -762,18 +857,23 @@
               <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face" alt="">
               <div class="av-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div>
             </div>
-            <div class="p-name">Zhingkham User</div>
-            <div class="p-handle">Creator since 2024</div>
+            <div class="p-handle">@zhingkham_user</div>
+            <div class="prof-stats">
+              <div class="ps"><div class="ps-val" id="ps-following">229</div><div class="ps-lbl">Following</div></div>
+              <div class="ps"><div class="ps-val">1.8M</div><div class="ps-lbl">Followers</div></div>
+              <div class="ps"><div class="ps-val">37.6M</div><div class="ps-lbl">Likes</div></div>
+            </div>
+            <div class="prof-action-btns">
+              <button class="pab-follow" onclick="this.textContent=this.textContent==='Follow'?'Following':'Follow';toast(this.textContent==='Following'?'Following!':'Unfollowed')">Follow</button>
+              <button class="pab-msg" onclick="toast('💬 Messages coming soon!')">Message</button>
+              <button class="pab-more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg></button>
+            </div>
+            <div class="prof-bio" style="text-align:left;padding:0 24px">Welcome to Zhingkham! 🇧🇹<br>Sharing the beauty of Bhutan 🐉✨<br><span style="color:var(--w3);font-size:11px">📧 hello@zhingkham.app</span><br><span style="color:var(--w3);font-size:11px">📍 Thimphu, Bhutan</span></div>
             <div class="karma-badge" id="kb">
               <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               <span id="kv">0 Karma</span>
             </div>
             <div class="level-bar"><div class="level-fill" id="level-fill"></div></div>
-            <div class="prof-stats">
-              <div class="ps"><div class="ps-val" id="ps-following">356</div><div class="ps-lbl">Following</div></div>
-              <div class="ps"><div class="ps-val">1.2K</div><div class="ps-lbl">Followers</div></div>
-              <div class="ps"><div class="ps-val">8.9K</div><div class="ps-lbl">Likes</div></div>
-            </div>
             <div class="prof-btns">
               <button class="edit-btn" onclick="openWallet()">💎 Wallet</button>
               <button class="edit-btn" onclick="toast('✏️ Coming soon!')">Edit Profile</button>
@@ -781,8 +881,6 @@
               <button class="sq-btn" onclick="openShare()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
             </div>
           </div>
-          <div class="prof-bio">Welcome to Zhingkham! 🇧🇹<br>Sharing the beauty of Bhutan 🐉✨</div>
-          <div class="prof-link">zhingkham.app/user</div>
           <div class="prof-tab-bar">
             <button class="prof-tab active"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg></button>
             <button class="prof-tab"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
@@ -874,10 +972,10 @@
       <!-- DOCK -->
       <div class="dock">
         <button class="dock-item active" onclick="nav('home')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg><span class="d-label">Home</span></button>
-        <button class="dock-item" onclick="nav('explore')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><span class="d-label">Explore</span></button>
+        <button class="dock-item" onclick="nav('explore')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span class="d-label">Friends</span></button>
         <button class="dock-create" onclick="nav('studio')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></button>
-        <button class="dock-item" onclick="nav('inbox')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="d-label">Inbox</span><div class="notif-dot"></div></button>
-        <button class="dock-item" onclick="nav('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="d-label">Me</span></button>
+        <button class="dock-item" onclick="nav('inbox')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><span class="d-label">Inbox</span><div class="dock-badge">5</div></button>
+        <button class="dock-item" onclick="nav('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="d-label">Profile</span></button>
       </div>
     </div>
   </div>

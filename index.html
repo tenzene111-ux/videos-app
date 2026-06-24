@@ -736,6 +736,15 @@
               <button onclick="closeCM()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
             </div>
             <div class="sheet-body" id="cm-list"></div>
+            <div style="display:flex;gap:12px;padding:8px 16px;border-top:1px solid var(--w5);justify-content:center">
+              <span style="font-size:20px;cursor:pointer" onclick="document.getElementById('cm-input').value+='❤️'">❤️</span>
+              <span style="font-size:20px;cursor:pointer" onclick="document.getElementById('cm-input').value+='👍'">👍</span>
+              <span style="font-size:20px;cursor:pointer" onclick="document.getElementById('cm-input').value+='🔥'">🔥</span>
+              <span style="font-size:20px;cursor:pointer" onclick="document.getElementById('cm-input').value+='👏'">👏</span>
+              <span style="font-size:20px;cursor:pointer" onclick="document.getElementById('cm-input').value+='😢'">😢</span>
+              <span style="font-size:20px;cursor:pointer" onclick="document.getElementById('cm-input').value+='😍'">😍</span>
+              <span style="font-size:20px;cursor:pointer" onclick="document.getElementById('cm-input').value+='💀'">💀</span>
+            </div>
             <div class="sheet-input">
               <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face" alt="">
               <input type="text" placeholder="Add a comment..." id="cm-input" onkeydown="if(event.key==='Enter')postCM()">
@@ -846,10 +855,11 @@
       <div id="p-profile" class="page">
         <div class="profile-page">
           <div class="prof-header">
-            <span class="handle">@zhingkham_user <span class="verified">&#10003;</span></span>
+            <button class="settings" onclick="nav('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+            <span class="handle">zhingkham_user <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px;vertical-align:middle;opacity:.5"><path d="M6 9l6 6 6-6"/></svg></span>
             <div class="h-right">
-              <button class="settings" onclick="toast('⚙️ Settings')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></button>
-              <button class="settings" onclick="toast('📊 Analytics')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></button>
+              <button class="settings" onclick="toast('🔔 Notifications')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></button>
+              <button class="settings" onclick="toast('⚙️ Settings')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
             </div>
           </div>
           <div class="prof-hero">
@@ -882,8 +892,10 @@
             </div>
           </div>
           <div class="prof-tab-bar">
-            <button class="prof-tab active"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg></button>
-            <button class="prof-tab"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+            <button class="prof-tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09"/></svg></button>
+            <button class="prof-tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg></button>
+            <button class="prof-tab"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg></button>
+            <button class="prof-tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></button>
             <button class="prof-tab"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></button>
           </div>
           <div class="prof-grid" id="p-grid"></div>
@@ -1211,6 +1223,25 @@ document.getElementById('tags').innerHTML=TAGS.map((t,i)=>`<div class="tag${i===
 // Trending creators
 document.getElementById('trending-row').innerHTML=V.map(v=>`<div class="trending-card"><img src="${v.u.av}" alt=""><div class="tc-name">@${v.u.name}</div><div class="tc-fans">${v.u.fans} fans</div><button class="tc-follow" onclick="this.textContent=this.textContent==='Follow'?'Following':'Follow';toast(this.textContent==='Following'?'🎉 Followed @${v.u.name}':'Unfollowed')">Follow</button></div>`).join('');
 
+// Suggested accounts
+const SUGGESTED=[
+  {name:'dorji_wangmo',av:AVS[1],cat:'Travel Creator',v:true},
+  {name:'karma_dancer',av:AVS[3],cat:'Dance & Culture',v:true},
+  {name:'sonam_arts',av:AVS[5],cat:'Art & Meditation',v:true},
+  {name:'thinley_adventures',av:AVS[4],cat:'Adventure & Trek',v:false}
+];
+document.getElementById('suggested-row').innerHTML=SUGGESTED.map(s=>`<div class="suggested-item"><img src="${s.av}" alt=""><div class="si-info"><div class="si-name">@${s.name} ${s.v?'<span class="verified">&#10003;</span>':''}</div><div class="si-cat">${s.cat}</div></div><button class="si-follow" onclick="this.textContent=this.textContent==='Follow'?'Following':'Follow';this.classList.toggle('following');toast(this.textContent==='Following'?'Following @${s.name}':'Unfollowed')">Follow</button></div>`).join('');
+
+// Trending thumbnails with images
+const TRENDING_THUMBS=[
+  {title:"Tiger's Nest at sunrise",views:'2.3M',img:'https://images.unsplash.com/photo-1553856622-d1b352e24b54?w=320&h=200&fit=crop'},
+  {title:'Bhutanese ema datshi recipe',views:'890K',img:'https://images.unsplash.com/photo-1567337710282-00832b415979?w=320&h=200&fit=crop'},
+  {title:'Paro Tshechu festival dance',views:'1.5M',img:'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=320&h=200&fit=crop'},
+  {title:'Snowman Trek Bhutan day 15',views:'670K',img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=320&h=200&fit=crop'},
+  {title:'Thangka painting meditation',views:'430K',img:'https://images.unsplash.com/photo-1580137189272-c9379f8864fd?w=320&h=200&fit=crop'}
+];
+document.getElementById('trending-thumb-row').innerHTML=TRENDING_THUMBS.map(t=>`<div class="trending-thumb" onclick="toast('${t.title}')"><img class="tt-img" src="${t.img}" alt=""><div class="tt-info"><div class="tt-title">${t.title}</div><div class="tt-views"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg>${t.views} views</div></div></div>`).join('');
+
 const fv=V[0];
 document.getElementById('featured').innerHTML=`<video src="${fv.src}" muted playsinline preload="metadata"></video><div class="f-info"><div class="f-tag"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Featured</div><div class="f-title">${fv.cap.replace(/(#\w+)/g,'').replace(/(@\w+)/g,'')}</div><div class="f-meta"><span class="f-views"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg>${fmt(fv.likes)}</span> · @${fv.u.name}</div></div>`;
 function buildG(id,vs){document.getElementById(id).innerHTML=vs.map(v=>`<div class="g-tile" onclick="goVid('${v.id}')"><video src="${v.src}" preload="metadata" muted></video><div class="g-dur">${v.dur||'0:15'}</div><div class="g-info"><div class="g-user">@${v.u.name}</div><div class="g-views"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg>${fmt(v.likes)}</div></div></div>`).join('')}
@@ -1222,9 +1253,43 @@ function doSearch(){const q=document.getElementById('q').value.toLowerCase().tri
 function selectTag(el){document.querySelectorAll('.tag').forEach(x=>x.classList.remove('active'));el.classList.add('active');toast(el.textContent+' selected')}
 
 // === INBOX ===
-document.getElementById('noti-list').innerHTML=NOTIFS.map((n,i)=>`<div class="noti" style="animation:cmSlide .3s ${i*.04}s var(--ease) both"><div class="noti-av"><img src="${n.av}"><div class="noti-icon" style="background:${n.bg}">${n.icon}</div></div><div class="noti-body"><div class="noti-text"><b>${n.u}</b> ${n.t}</div><div class="noti-time">${n.w}</div></div></div>`).join('');
+// Story circles
+const INBOX_STORIES=[
+  {name:'Your story',av:AVS.me,add:true},
+  {name:'dorji',av:AVS[1],badge:'3'},
+  {name:'pema',av:AVS[2],badge:''},
+  {name:'karma',av:AVS[3],badge:'1'},
+  {name:'thinley',av:AVS[4],badge:''},
+  {name:'sonam',av:AVS[5],badge:'2'},
+  {name:'dechen',av:AVS[6],badge:''},
+  {name:'ugyen',av:AVS[7],badge:''}
+];
+document.getElementById('inbox-stories').innerHTML=INBOX_STORIES.map(s=>{
+  if(s.add)return `<div class="inbox-story add-story" onclick="toast('📸 Add your story')"><div class="is-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div><div class="is-name">Your story</div></div>`;
+  return `<div class="inbox-story" onclick="toast('Viewing ${s.name}\\'s story')"><div class="is-ring"><img src="${s.av}" alt="">${s.badge?`<div class="is-badge">${s.badge}</div>`:''}</div><div class="is-name">${s.name}</div></div>`;
+}).join('');
 
-document.querySelectorAll('.inb-pill').forEach(p=>p.addEventListener('click',function(){document.querySelectorAll('.inb-pill').forEach(x=>x.classList.remove('active'));this.classList.add('active');toast(this.textContent+' filter')}));
+// Messages
+const MESSAGES=[
+  {name:'dorji_wangmo',av:AVS[1],preview:'Sent you a video',time:'2m',online:true,cam:true},
+  {name:'pema_tshering',av:AVS[2],preview:'Hey! Are you coming to the festival?',time:'15m',online:true,cam:false},
+  {name:'karma_dancer',av:AVS[3],preview:'That dance tutorial was amazing! 🔥',time:'1h',online:false,cam:true},
+  {name:'thinley_adventures',av:AVS[4],preview:'Check out this trail 🏔️',time:'3h',online:false,cam:false},
+  {name:'sonam_arts',av:AVS[5],preview:'Thanks for the collab!',time:'5h',online:true,cam:false},
+  {name:'dechen_zam',av:AVS[6],preview:'See you tomorrow!',time:'1d',online:false,cam:true},
+  {name:'ugyen_dorji',av:AVS[7],preview:'🙏🙏🙏',time:'2d',online:false,cam:false}
+];
+document.getElementById('inbox-messages').innerHTML=MESSAGES.map((m,i)=>`<div class="msg-item" style="animation:cmSlide .3s ${i*.04}s var(--ease) both" onclick="toast('Chat with @${m.name}')"><div class="msg-av"><img src="${m.av}">${m.online?'<div class="msg-online"></div>':''}</div><div class="msg-body"><div class="msg-name">${m.name}</div><div class="msg-preview">${m.preview}</div></div><div class="msg-meta"><div class="msg-time">${m.time}</div>${m.cam?'<div class="msg-cam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>':''}</div></div>`).join('');
+
+// Activity tab (old notifications)
+document.getElementById('inbox-activity').innerHTML=NOTIFS.map((n,i)=>`<div class="noti" style="animation:cmSlide .3s ${i*.04}s var(--ease) both"><div class="noti-av"><img src="${n.av}"><div class="noti-icon" style="background:${n.bg}">${n.icon}</div></div><div class="noti-body"><div class="noti-text"><b>${n.u}</b> ${n.t}</div><div class="noti-time">${n.w}</div></div></div>`).join('');
+
+function switchInboxTab(el,tab){
+  document.querySelectorAll('.inbox-tab').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('inbox-messages').style.display=tab==='messages'?'block':'none';
+  document.getElementById('inbox-activity').style.display=tab==='activity'?'block':'none';
+}
 document.querySelectorAll('.prof-tab').forEach(t=>t.addEventListener('click',function(){document.querySelectorAll('.prof-tab').forEach(x=>x.classList.remove('active'));this.classList.add('active')}));
 
 // === STUDIO ===
@@ -1240,7 +1305,7 @@ function toggleRec(){
   }
 }
 
-document.querySelectorAll('.dur-pills span').forEach(s=>s.addEventListener('click',function(){this.parentElement.querySelectorAll('span').forEach(x=>x.classList.remove('active'));this.classList.add('active')}));
+document.querySelectorAll('.dur-pills span, .studio-speed span, .studio-modes span').forEach(s=>s.addEventListener('click',function(){this.parentElement.querySelectorAll('span').forEach(x=>x.classList.remove('active'));this.classList.add('active')}));
 
 // Feed tab switching
 document.querySelectorAll('.feed-tab').forEach(t=>t.addEventListener('click',function(){

@@ -535,6 +535,47 @@
     .cp-price{background:linear-gradient(135deg,var(--g1),var(--g3));border:none;color:var(--b1);padding:8px 18px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
     .cp-price:active{transform:scale(.92)}
 
+    /* Host earnings badge in live */
+    .live-earnings{display:flex;align-items:center;gap:4px;background:linear-gradient(135deg,rgba(116,185,255,.2),rgba(116,185,255,.05));backdrop-filter:blur(20px);border:1px solid rgba(116,185,255,.2);border-radius:12px;padding:5px 10px;font-size:11px;font-weight:700;color:#74b9ff;position:absolute;top:90px;right:12px;z-index:10;animation:earningsIn .4s var(--spring)}
+    @keyframes earningsIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+    .live-earnings svg{width:14px;height:14px}
+    .diamond-fly{position:absolute;z-index:55;pointer-events:none;font-size:20px;animation:dFly 1s var(--ease) forwards}
+    @keyframes dFly{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.5)}}
+
+    /* Wallet page in profile */
+    .wallet-overlay{position:absolute;inset:0;z-index:200;background:var(--b1);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .4s var(--spring)}
+    .wallet-overlay.open{transform:translateX(0)}
+    .wallet-head{display:flex;align-items:center;gap:12px;padding:50px 16px 16px}
+    .wallet-head .wh-back{width:32px;height:32px;border-radius:50%;background:var(--b3);border:none;color:var(--w);display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .wallet-head .wh-back svg{width:18px;height:18px}
+    .wallet-head h2{font-size:18px;font-weight:800;flex:1}
+    .wallet-balance{text-align:center;padding:20px 16px;margin:0 16px;background:linear-gradient(135deg,rgba(116,185,255,.1),rgba(108,92,231,.1));border:1px solid rgba(116,185,255,.1);border-radius:20px}
+    .wallet-balance .wb-icon{font-size:36px;margin-bottom:4px}
+    .wallet-balance .wb-amount{font-size:38px;font-weight:900;background:linear-gradient(135deg,#74b9ff,#a29bfe);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .wallet-balance .wb-label{font-size:12px;color:var(--w3);margin-top:2px}
+    .wallet-balance .wb-value{font-size:14px;font-weight:700;color:var(--teal);margin-top:6px}
+    .wallet-actions{display:flex;gap:10px;padding:16px}
+    .wallet-actions .wa-btn{flex:1;padding:12px;border-radius:14px;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s var(--spring)}
+    .wallet-actions .wa-btn:active{transform:scale(.95)}
+    .wallet-actions .wa-btn.primary{background:linear-gradient(135deg,#74b9ff,#a29bfe);color:var(--b1)}
+    .wallet-actions .wa-btn.secondary{background:var(--b3);color:var(--w);border:1px solid var(--w5)}
+    .wallet-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 16px;margin-bottom:16px}
+    .wallet-stat{padding:14px;background:var(--b3);border-radius:14px;border:1px solid var(--w5)}
+    .wallet-stat .ws-val{font-size:18px;font-weight:800;color:var(--w)}
+    .wallet-stat .ws-lbl{font-size:10px;color:var(--w3);margin-top:2px}
+    .wallet-section{padding:0 16px}
+    .wallet-section h3{font-size:13px;font-weight:700;color:var(--w3);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
+    .tx-list{display:flex;flex-direction:column;gap:6px;max-height:240px;overflow-y:auto;scrollbar-width:none}
+    .tx-list::-webkit-scrollbar{display:none}
+    .tx-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--b3);border-radius:12px;border:1px solid var(--w5)}
+    .tx-item .tx-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .tx-item .tx-info{flex:1;min-width:0}
+    .tx-item .tx-name{font-size:12px;font-weight:700}
+    .tx-item .tx-time{font-size:10px;color:var(--w3)}
+    .tx-item .tx-amount{font-size:13px;font-weight:800}
+    .tx-item .tx-amount.plus{color:var(--teal)}
+    .tx-item .tx-amount.minus{color:var(--r1)}
+
     /* Live streams in explore */
     .live-row{display:flex;gap:10px;padding:0 16px 16px;overflow-x:auto;scrollbar-width:none}
     .live-row::-webkit-scrollbar{display:none}
@@ -734,6 +775,7 @@
               <div class="ps"><div class="ps-val">8.9K</div><div class="ps-lbl">Likes</div></div>
             </div>
             <div class="prof-btns">
+              <button class="edit-btn" onclick="openWallet()">💎 Wallet</button>
               <button class="edit-btn" onclick="toast('✏️ Coming soon!')">Edit Profile</button>
               <button class="sq-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></button>
               <button class="sq-btn" onclick="openShare()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
@@ -766,6 +808,7 @@
             </div>
             <button class="live-close" onclick="closeLive()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
           </div>
+          <div class="live-earnings" id="live-earnings"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z"/></svg><span id="le-count">0</span> 💎</div>
           <div class="live-chat" id="live-chat"></div>
           <div class="live-bottom">
             <input class="live-comment-input" placeholder="Say something..." id="live-input" onkeydown="if(event.key==='Enter')sendLiveMsg()">
@@ -796,6 +839,29 @@
         <input class="gl-title" placeholder="Add a title for your live..." id="gl-title-input">
         <button class="gl-start" onclick="startLive()">Start Live Video</button>
         <button class="gl-cancel" onclick="cancelGoLive()">Cancel</button>
+      </div>
+
+      <!-- WALLET -->
+      <div class="wallet-overlay" id="wallet-overlay">
+        <div class="wallet-head">
+          <button class="wh-back" onclick="closeWallet()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+          <h2>Creator Wallet</h2>
+        </div>
+        <div class="wallet-balance">
+          <div class="wb-icon">💎</div>
+          <div class="wb-amount" id="wb-diamonds">0</div>
+          <div class="wb-label">Diamonds Earned</div>
+          <div class="wb-value" id="wb-value">≈ Nu. 0</div>
+        </div>
+        <div class="wallet-actions">
+          <button class="wa-btn primary" onclick="cashOut()">Cash Out</button>
+          <button class="wa-btn secondary" onclick="closeWallet();openCoinShop()">Buy Coins</button>
+        </div>
+        <div class="wallet-stats" id="wallet-stats"></div>
+        <div class="wallet-section">
+          <h3>Transaction History</h3>
+          <div class="tx-list" id="tx-list"></div>
+        </div>
       </div>
 
       <!-- COIN SHOP -->
@@ -1099,6 +1165,9 @@ function openLive(streamer){
   liveViewers=Math.floor(Math.random()*2000)+500;
   document.getElementById('lv-count').textContent=fmt(liveViewers);
   document.getElementById('live-chat').innerHTML='';
+  sessionDiamonds=0;
+  const leCount=document.getElementById('le-count');
+  if(leCount)leCount.textContent='0';
   nav('live');
   addLiveChatMsg('system','Welcome to the live stream! 🎉');
   liveChatInterval=setInterval(()=>{
@@ -1290,6 +1359,7 @@ function confirmSendGift(){
   playGiftAnim(page,selectedGift,'You','https://i.pravatar.cc/150?img=10',true,giftCombo);
   addLiveChatMsg('You','sent '+selectedGift.n+(giftCombo>1?' x'+giftCombo:'')+' (🪙'+selectedGift.p+')');
   addK(selectedGift.p>=200?20:10);
+  addDiamonds(selectedGift.p,'You',selectedGift.n);
 }
 
 // Simulate other viewers sending gifts during live
@@ -1306,9 +1376,79 @@ function startSimGifts(){
     if(!page||!document.getElementById('p-live').classList.contains('active'))return;
     playGiftAnim(page,g,u,`https://i.pravatar.cc/150?img=${avIdx}`,false,1);
     addLiveChatMsg(u,'sent '+g.n+' 🎁');
+    addDiamonds(g.p,u,g.n);
   },8000);
 }
 function stopSimGifts(){clearInterval(simGiftInterval);simGiftInterval=null}
+
+// === DIAMOND EARNINGS SYSTEM ===
+let diamonds=0,sessionDiamonds=0,totalGiftsReceived=0,topGifter='',transactions=[];
+const DIAMOND_RATE=0.5; // 1 coin spent = 0.5 diamonds for host
+const DIAMOND_VALUE=0.79; // 1 diamond ≈ Nu. 0.79
+
+function addDiamonds(coinValue,gifterName,giftName){
+  const earned=Math.floor(coinValue*DIAMOND_RATE);
+  diamonds+=earned;
+  sessionDiamonds+=earned;
+  totalGiftsReceived++;
+  if(!topGifter)topGifter=gifterName;
+
+  // Update live earnings display
+  const el=document.getElementById('le-count');
+  if(el)el.textContent=fmt(sessionDiamonds);
+
+  // Flying diamond animation toward earnings badge
+  const page=document.querySelector('.live-page');
+  if(page&&document.getElementById('p-live').classList.contains('active')){
+    const d=document.createElement('div');
+    d.className='diamond-fly';
+    d.textContent='💎';
+    d.style.cssText=`left:${40+Math.random()*20}%;top:55%;--dx:${Math.random()*40-20}px;--dy:-200px`;
+    page.appendChild(d);
+    setTimeout(()=>d.remove(),1200);
+  }
+
+  // Add to transaction history
+  transactions.unshift({type:'gift',name:giftName,from:gifterName,amount:earned,time:Date.now()});
+  if(transactions.length>50)transactions.pop();
+}
+
+function openWallet(){
+  document.getElementById('wallet-overlay').classList.add('open');
+  document.getElementById('wb-diamonds').textContent=diamonds.toLocaleString();
+  document.getElementById('wb-value').textContent='≈ Nu. '+(diamonds*DIAMOND_VALUE).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+
+  document.getElementById('wallet-stats').innerHTML=`
+    <div class="wallet-stat"><div class="ws-val">${totalGiftsReceived}</div><div class="ws-lbl">Gifts Received</div></div>
+    <div class="wallet-stat"><div class="ws-val">${sessionDiamonds}</div><div class="ws-lbl">Session Diamonds</div></div>
+    <div class="wallet-stat"><div class="ws-val">${fmt(coins)}</div><div class="ws-lbl">Coins Balance</div></div>
+    <div class="wallet-stat"><div class="ws-val">${topGifter||'—'}</div><div class="ws-lbl">Top Gifter</div></div>`;
+
+  const tl=document.getElementById('tx-list');
+  if(!transactions.length){tl.innerHTML='<div style="text-align:center;padding:20px;color:var(--w3);font-size:12px">No transactions yet.<br>Earn diamonds by going live!</div>';return}
+  tl.innerHTML=transactions.map(tx=>{
+    const ago=Math.floor((Date.now()-tx.time)/60000);
+    const timeStr=ago<1?'Just now':ago<60?ago+'m ago':Math.floor(ago/60)+'h ago';
+    if(tx.type==='gift')return `<div class="tx-item"><div class="tx-icon" style="background:rgba(116,185,255,.1)">🎁</div><div class="tx-info"><div class="tx-name">${tx.from} sent ${tx.name}</div><div class="tx-time">${timeStr}</div></div><div class="tx-amount plus">+${tx.amount} 💎</div></div>`;
+    if(tx.type==='cashout')return `<div class="tx-item"><div class="tx-icon" style="background:rgba(0,184,148,.1)">💰</div><div class="tx-info"><div class="tx-name">Cash Out</div><div class="tx-time">${timeStr}</div></div><div class="tx-amount minus">-${tx.amount} 💎</div></div>`;
+    return '';
+  }).join('');
+}
+function closeWallet(){document.getElementById('wallet-overlay').classList.remove('open')}
+
+function cashOut(){
+  if(diamonds<100){toast('Need at least 100 💎 to cash out');return}
+  const amount=diamonds;
+  const value=(amount*DIAMOND_VALUE).toFixed(0);
+  transactions.unshift({type:'cashout',amount,time:Date.now()});
+  diamonds=0;
+  openWallet();
+  toast('💰 Nu. '+value+' sent to your account!');
+  const di=document.querySelector('.dynamic-island');
+  di.classList.add('expand');
+  di.querySelector('.di-content').innerHTML='<span style="font-size:14px">💰</span>Nu. '+value+' cashed out!';
+  setTimeout(()=>di.classList.remove('expand'),3000);
+}
 
 function openGoLive(){document.getElementById('go-live-overlay').classList.remove('hidden')}
 function cancelGoLive(){document.getElementById('go-live-overlay').classList.add('hidden');document.getElementById('gl-title-input').value=''}

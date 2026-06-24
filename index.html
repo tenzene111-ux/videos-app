@@ -458,6 +458,60 @@
     .gift-popup .gp-emoji{font-size:28px;animation:giftBounce .5s var(--bounce)}
     @keyframes giftBounce{0%{transform:scale(0) rotate(-30deg)}50%{transform:scale(1.3) rotate(10deg)}100%{transform:scale(1) rotate(0)}}
 
+    /* Coin wallet badge */
+    .coin-badge{display:flex;align-items:center;gap:4px;background:linear-gradient(135deg,rgba(212,164,76,.2),rgba(212,164,76,.05));backdrop-filter:blur(20px);border:1px solid rgba(212,164,76,.2);border-radius:14px;padding:5px 10px;cursor:pointer;font-size:11px;font-weight:700;color:var(--g1);transition:all .2s var(--spring)}
+    .coin-badge:active{transform:scale(.9)}
+    .coin-badge .coin-icon{font-size:14px}
+
+    /* Gift shop panel */
+    .gift-shop{position:absolute;bottom:0;left:0;right:0;z-index:100;background:var(--glass2);backdrop-filter:blur(30px);border-top:1px solid var(--w5);border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform .4s var(--spring);padding:0 0 20px}
+    .gift-shop.open{transform:translateY(0)}
+    .gift-shop-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 8px}
+    .gift-shop-head h3{font-size:15px;font-weight:700}
+    .gift-shop-head .gs-close{width:28px;height:28px;border-radius:50%;background:var(--b4);border:none;color:var(--w3);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}
+    .gs-wallet{display:flex;align-items:center;justify-content:space-between;margin:0 16px 12px;padding:10px 14px;background:linear-gradient(135deg,rgba(212,164,76,.12),rgba(212,164,76,.03));border:1px solid rgba(212,164,76,.15);border-radius:14px}
+    .gs-wallet-left{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--g1)}
+    .gs-wallet-left .coin-icon{font-size:16px}
+    .gs-recharge{background:linear-gradient(135deg,var(--g1),var(--g3));border:none;color:var(--b1);padding:6px 14px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit}
+    .gs-recharge:active{transform:scale(.92)}
+    .gs-tabs{display:flex;gap:0;padding:0 16px;margin-bottom:10px}
+    .gs-tab{flex:1;padding:8px;text-align:center;font-size:11px;font-weight:600;color:var(--w3);border-bottom:2px solid transparent;cursor:pointer;transition:all .2s}
+    .gs-tab.active{color:var(--g1);border-color:var(--g1)}
+    .gift-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 16px;max-height:200px;overflow-y:auto;scrollbar-width:none}
+    .gift-grid::-webkit-scrollbar{display:none}
+    .gift-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;border-radius:14px;cursor:pointer;transition:all .2s var(--spring);border:2px solid transparent;background:var(--b3)}
+    .gift-item:active{transform:scale(.9)}
+    .gift-item.selected{border-color:var(--g1);background:rgba(212,164,76,.08)}
+    .gift-item .gi-emoji{font-size:28px}
+    .gift-item .gi-name{font-size:9px;font-weight:600;color:var(--w3)}
+    .gift-item .gi-price{display:flex;align-items:center;gap:2px;font-size:10px;font-weight:700;color:var(--g1)}
+    .gs-send{margin:12px 16px 0;width:calc(100% - 32px);padding:12px;border-radius:14px;border:none;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,var(--g1),var(--g3));color:var(--b1);transition:all .2s var(--spring);box-shadow:0 4px 16px rgba(212,164,76,.25)}
+    .gs-send:active{transform:scale(.96)}
+    .gs-send:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+    /* Coin purchase overlay */
+    .coin-shop{position:absolute;inset:0;z-index:200;background:rgba(0,0,0,.92);backdrop-filter:blur(20px);display:flex;flex-direction:column;transform:translateY(100%);transition:transform .4s var(--spring)}
+    .coin-shop.open{transform:translateY(0)}
+    .coin-shop-head{display:flex;align-items:center;justify-content:space-between;padding:50px 16px 12px}
+    .coin-shop-head h2{font-size:18px;font-weight:800}
+    .coin-shop-head .cs-close{width:32px;height:32px;border-radius:50%;background:var(--b4);border:none;color:var(--w);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px}
+    .coin-balance{text-align:center;padding:16px 0 20px}
+    .coin-balance .cb-amount{font-size:42px;font-weight:900;background:linear-gradient(135deg,var(--g1),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .coin-balance .cb-label{font-size:12px;color:var(--w3);margin-top:2px}
+    .coin-packages{padding:0 16px;display:flex;flex-direction:column;gap:8px;flex:1;overflow-y:auto}
+    .coin-pkg{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--b3);border:1px solid var(--w5);border-radius:16px;cursor:pointer;transition:all .2s var(--spring)}
+    .coin-pkg:active{transform:scale(.97)}
+    .coin-pkg.popular{border-color:rgba(212,164,76,.3);background:linear-gradient(135deg,rgba(212,164,76,.08),var(--b3))}
+    .coin-pkg.popular::after{content:'BEST VALUE';position:absolute;right:14px;top:-8px;background:linear-gradient(135deg,var(--g1),var(--g3));color:var(--b1);font-size:8px;font-weight:800;padding:2px 8px;border-radius:6px}
+    .coin-pkg{position:relative}
+    .cp-left{display:flex;align-items:center;gap:10px}
+    .cp-coins{font-size:24px}
+    .cp-info{display:flex;flex-direction:column}
+    .cp-amount{font-size:15px;font-weight:700;color:var(--g1)}
+    .cp-bonus{font-size:10px;color:var(--teal);font-weight:600;margin-top:1px}
+    .cp-price{background:linear-gradient(135deg,var(--g1),var(--g3));border:none;color:var(--b1);padding:8px 18px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+    .cp-price:active{transform:scale(.92)}
+
     /* Live streams in explore */
     .live-row{display:flex;gap:10px;padding:0 16px 16px;overflow-x:auto;scrollbar-width:none}
     .live-row::-webkit-scrollbar{display:none}
@@ -693,8 +747,20 @@
           <div class="live-bottom">
             <input class="live-comment-input" placeholder="Say something..." id="live-input" onkeydown="if(event.key==='Enter')sendLiveMsg()">
             <button class="live-action" onclick="sendLiveReaction('❤️')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
-            <button class="live-action" onclick="sendGift()">🎁</button>
-            <button class="live-action" onclick="sendLiveReaction('🔥')">🔥</button>
+            <button class="live-action gift" onclick="openGiftShop()">🎁</button>
+            <div class="coin-badge" onclick="openCoinShop()"><span class="coin-icon">🪙</span><span id="live-coins">0</span></div>
+          </div>
+          <!-- Gift Shop Panel -->
+          <div class="gift-shop" id="gift-shop">
+            <div class="gift-shop-head"><h3>Send a Gift</h3><button class="gs-close" onclick="closeGiftShop()">✕</button></div>
+            <div class="gs-wallet"><div class="gs-wallet-left"><span class="coin-icon">🪙</span><span id="gs-balance">0</span> coins</div><button class="gs-recharge" onclick="closeGiftShop();openCoinShop()">+ Recharge</button></div>
+            <div class="gs-tabs">
+              <div class="gs-tab active" onclick="switchGiftTab(this,0)">Popular</div>
+              <div class="gs-tab" onclick="switchGiftTab(this,1)">Luxury</div>
+              <div class="gs-tab" onclick="switchGiftTab(this,2)">Special</div>
+            </div>
+            <div class="gift-grid" id="gift-grid"></div>
+            <button class="gs-send" id="gs-send-btn" disabled onclick="confirmSendGift()">Select a gift</button>
           </div>
         </div>
       </div>
@@ -707,6 +773,13 @@
         <input class="gl-title" placeholder="Add a title for your live..." id="gl-title-input">
         <button class="gl-start" onclick="startLive()">Start Live Video</button>
         <button class="gl-cancel" onclick="cancelGoLive()">Cancel</button>
+      </div>
+
+      <!-- COIN SHOP -->
+      <div class="coin-shop" id="coin-shop">
+        <div class="coin-shop-head"><h2>🪙 Coin Store</h2><button class="cs-close" onclick="closeCoinShop()">✕</button></div>
+        <div class="coin-balance"><div class="cb-amount" id="cs-balance">0</div><div class="cb-label">Your Coin Balance</div></div>
+        <div class="coin-packages" id="coin-packages"></div>
       </div>
 
       <!-- DOCK -->
@@ -1049,19 +1122,89 @@ function sendLiveReaction(emoji){
   addK(1);
 }
 
-function sendGift(){
-  const gifts=['🎁','💎','🌟','👑','🏆','🎪'];
-  const g=gifts[Math.floor(Math.random()*gifts.length)];
+// === COIN & GIFT SYSTEM ===
+let coins=0,selectedGift=null,giftTab=0;
+const GIFTS=[
+  [{e:'🌹',n:'Rose',p:10},{e:'❤️',n:'Heart',p:20},{e:'🔥',n:'Fire',p:30},{e:'⭐',n:'Star',p:50},{e:'🎵',n:'Music',p:40},{e:'🎉',n:'Party',p:25},{e:'💫',n:'Sparkle',p:35},{e:'🦋',n:'Butterfly',p:45}],
+  [{e:'💎',n:'Diamond',p:200},{e:'👑',n:'Crown',p:500},{e:'🏆',n:'Trophy',p:300},{e:'🎪',n:'Circus',p:150},{e:'🚀',n:'Rocket',p:400},{e:'🌈',n:'Rainbow',p:250},{e:'🦄',n:'Unicorn',p:350},{e:'🐉',n:'Dragon',p:1000}],
+  [{e:'🏯',n:'Dzong',p:2000},{e:'🐅',n:'Tiger',p:1500},{e:'🙏',n:'Blessing',p:800},{e:'🪷',n:'Lotus',p:600},{e:'🎭',n:'Tshechu',p:3000},{e:'⚡',n:'Thunder',p:5000},{e:'🌸',n:'Sakura',p:750},{e:'🎆',n:'Firework',p:1200}]
+];
+const COIN_PKGS=[
+  {coins:100,price:'$0.99',bonus:''},
+  {coins:500,price:'$4.99',bonus:'+50 bonus'},
+  {coins:1200,price:'$9.99',bonus:'+200 bonus',popular:true},
+  {coins:3000,price:'$19.99',bonus:'+600 bonus'},
+  {coins:6500,price:'$39.99',bonus:'+1500 bonus'},
+  {coins:15000,price:'$89.99',bonus:'+5000 bonus'}
+];
+
+function updateCoinUI(){
+  document.getElementById('live-coins').textContent=fmt(coins);
+  const gsb=document.getElementById('gs-balance');if(gsb)gsb.textContent=fmt(coins);
+  const csb=document.getElementById('cs-balance');if(csb)csb.textContent=coins.toLocaleString();
+}
+
+function openCoinShop(){
+  const shop=document.getElementById('coin-shop');shop.classList.add('open');
+  updateCoinUI();
+  document.getElementById('coin-packages').innerHTML=COIN_PKGS.map(p=>`<div class="coin-pkg${p.popular?' popular':''}" onclick="buyCoins(${p.coins}${p.bonus?','+parseInt(p.bonus):',0'})"><div class="cp-left"><span class="cp-coins">🪙</span><div class="cp-info"><div class="cp-amount">${p.coins.toLocaleString()} Coins</div>${p.bonus?`<div class="cp-bonus">${p.bonus}</div>`:''}</div></div><button class="cp-price">${p.price}</button></div>`).join('');
+}
+function closeCoinShop(){document.getElementById('coin-shop').classList.remove('open')}
+
+function buyCoins(amount,bonus){
+  coins+=amount+(bonus||0);
+  updateCoinUI();
+  toast('🪙 +'+(amount+(bonus||0))+' coins added!');
+  const di=document.querySelector('.dynamic-island');
+  di.classList.add('expand');
+  di.querySelector('.di-content').innerHTML='<span style="font-size:14px">🪙</span>+'+(amount+(bonus||0))+' coins';
+  setTimeout(()=>di.classList.remove('expand'),2500);
+  addK(5);
+}
+
+function openGiftShop(){
+  document.getElementById('gift-shop').classList.add('open');
+  selectedGift=null;
+  updateCoinUI();
+  renderGifts();
+}
+function closeGiftShop(){document.getElementById('gift-shop').classList.remove('open');selectedGift=null}
+
+function switchGiftTab(el,tab){
+  document.querySelectorAll('.gs-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');giftTab=tab;selectedGift=null;renderGifts();
+  document.getElementById('gs-send-btn').disabled=true;
+  document.getElementById('gs-send-btn').textContent='Select a gift';
+}
+
+function renderGifts(){
+  document.getElementById('gift-grid').innerHTML=GIFTS[giftTab].map((g,i)=>`<div class="gift-item" onclick="selectGift(${giftTab},${i})"><div class="gi-emoji">${g.e}</div><div class="gi-name">${g.n}</div><div class="gi-price">🪙 ${g.p}</div></div>`).join('');
+}
+
+function selectGift(tab,idx){
+  selectedGift=GIFTS[tab][idx];
+  document.querySelectorAll('.gift-item').forEach((el,i)=>{el.classList.toggle('selected',i===idx)});
+  const btn=document.getElementById('gs-send-btn');
+  btn.disabled=false;
+  btn.textContent=coins>=selectedGift.p?`Send ${selectedGift.e} ${selectedGift.n} · 🪙 ${selectedGift.p}`:'Not enough coins — Recharge';
+}
+
+function confirmSendGift(){
+  if(!selectedGift)return;
+  if(coins<selectedGift.p){closeGiftShop();openCoinShop();return}
+  coins-=selectedGift.p;
+  updateCoinUI();
+  closeGiftShop();
   const page=document.querySelector('.live-page');
   const popup=document.createElement('div');
   popup.className='gift-popup';
-  popup.innerHTML=`<span style="font-size:32px">${g}</span><div style="font-size:12px;font-weight:700;color:var(--g1)">Gift Sent!</div>`;
+  popup.innerHTML=`<span class="gp-emoji">${selectedGift.e}</span><div class="gp-info"><b>You</b> sent <b>${selectedGift.n}</b><br>🪙 ${selectedGift.p} coins</div>`;
   page.appendChild(popup);
-  setTimeout(()=>popup.remove(),2500);
-  sendLiveReaction(g);
-  addLiveChatMsg('You','sent a gift '+g);
-  addK(10);
-  toast('🎁 Gift sent!');
+  setTimeout(()=>popup.remove(),3000);
+  sendLiveReaction(selectedGift.e);
+  addLiveChatMsg('You','sent '+selectedGift.e+' '+selectedGift.n+' (🪙'+selectedGift.p+')');
+  addK(selectedGift.p>=200?20:10);
+  toast(selectedGift.e+' Gift sent!');
 }
 
 function openGoLive(){document.getElementById('go-live-overlay').classList.remove('hidden')}

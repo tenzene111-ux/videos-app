@@ -695,6 +695,87 @@
       .ex-head,.inb-head,.prof-header,.studio-top{padding-top:16px}
       .swipe-hint{display:none}
     }
+
+    /* === DM CHAT === */
+    .chat-overlay{position:absolute;inset:0;z-index:800;background:var(--b1);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s var(--ease)}
+    .chat-overlay.show{transform:translateX(0)}
+    .chat-head{display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--b2);border-bottom:1px solid var(--w5)}
+    .chat-head .ch-back{background:none;border:none;color:var(--w);cursor:pointer;padding:4px}
+    .chat-head .ch-back svg{width:22px;height:22px}
+    .chat-head .ch-av{width:36px;height:36px;border-radius:50%;object-fit:cover}
+    .chat-head .ch-info{flex:1}
+    .chat-head .ch-name{font-size:14px;font-weight:700;color:var(--w)}
+    .chat-head .ch-status{font-size:11px;color:#2ecc71}
+    .chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px}
+    .chat-bubble{max-width:75%;padding:10px 14px;border-radius:18px;font-size:13px;line-height:1.4;word-wrap:break-word;animation:cmSlide .3s var(--ease)}
+    .chat-bubble.sent{align-self:flex-end;background:linear-gradient(135deg,var(--g1),var(--g2));color:var(--b1);border-bottom-right-radius:4px}
+    .chat-bubble.received{align-self:flex-start;background:var(--b3);color:var(--w);border-bottom-left-radius:4px}
+    .chat-bubble .cb-time{font-size:9px;opacity:.5;margin-top:4px;text-align:right}
+    .chat-input{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--b2);border-top:1px solid var(--w5)}
+    .chat-input input{flex:1;background:var(--b3);border:none;border-radius:20px;padding:10px 16px;color:var(--w);font-size:13px;font-family:inherit;outline:none}
+    .chat-input button{background:none;border:none;color:var(--w3);font-size:18px;cursor:pointer;padding:4px}
+    .chat-input .ci-send{color:var(--g1);font-size:20px}
+
+    /* === DZONGKHA TOGGLE === */
+    .lang-toggle{background:none;border:1px solid var(--w5);border-radius:8px;padding:4px 8px;font-size:16px;cursor:pointer;color:var(--w)}
+
+    /* === GNH METER === */
+    .gnh-meter{margin:12px 24px;position:relative}
+    .gnh-bar{height:8px;border-radius:4px;background:linear-gradient(90deg,#e74c3c,#f1c40f,#2ecc71);overflow:hidden;position:relative}
+    .gnh-fill{position:absolute;right:0;top:0;bottom:0;background:var(--b3);transition:width .5s var(--ease)}
+    .gnh-marker{position:absolute;top:-4px;width:16px;height:16px;border-radius:50%;background:var(--w);border:2px solid var(--g1);transform:translateX(-50%);transition:left .5s var(--ease);box-shadow:0 2px 6px rgba(0,0,0,.3)}
+    .gnh-label{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:11px;color:var(--w3)}
+    .gnh-label .gnh-emoji{font-size:18px}
+    .gnh-badge{position:absolute;top:88px;right:16px;z-index:21;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--w5);border-radius:10px;padding:4px 8px;font-size:10px;font-weight:700;color:var(--g1);pointer-events:none}
+
+    /* === CREATOR DASHBOARD === */
+    .dashboard-overlay{position:absolute;inset:0;z-index:800;background:var(--b1);overflow-y:auto;transform:translateY(100%);transition:transform .35s var(--ease)}
+    .dashboard-overlay.show{transform:translateY(0)}
+    .dash-head{display:flex;align-items:center;justify-content:space-between;padding:16px;position:sticky;top:0;background:var(--b1);z-index:2;border-bottom:1px solid var(--w5)}
+    .dash-head h2{font-size:17px;font-weight:800;color:var(--w)}
+    .dash-head button{background:none;border:none;color:var(--w);font-size:22px;cursor:pointer}
+    .dash-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px}
+    .dash-card{background:var(--b2);border-radius:14px;padding:16px;border:1px solid var(--w5)}
+    .dash-card .dc-val{font-size:22px;font-weight:800;color:var(--w)}
+    .dash-card .dc-lbl{font-size:11px;color:var(--w3);margin-top:2px}
+    .dash-card .dc-chg{font-size:10px;color:#2ecc71;margin-top:4px}
+    .dash-section{padding:0 16px 16px}
+    .dash-section h3{font-size:14px;font-weight:700;color:var(--w);margin-bottom:10px}
+    .dash-chart{display:flex;align-items:flex-end;gap:6px;height:120px;background:var(--b2);border-radius:14px;padding:16px;border:1px solid var(--w5)}
+    .chart-bar{flex:1;border-radius:6px 6px 0 0;background:linear-gradient(180deg,var(--g1),var(--g2));min-width:0;transition:height .5s var(--ease);position:relative}
+    .chart-bar span{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--w3);white-space:nowrap}
+    .dash-audience .da-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .dash-audience .da-name{font-size:12px;color:var(--w);width:70px}
+    .dash-audience .da-bar{flex:1;height:6px;border-radius:3px;background:var(--b3)}
+    .dash-audience .da-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--g1),var(--g2))}
+    .dash-audience .da-pct{font-size:11px;color:var(--w3);width:35px;text-align:right}
+    .dash-tips{background:var(--b2);border-radius:14px;padding:16px;border:1px solid var(--w5);margin-top:10px}
+    .dash-tips p{font-size:12px;color:var(--w3);margin:6px 0;line-height:1.5}
+    .dash-top-vid{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--w5)}
+    .dash-top-vid:last-child{border:none}
+    .dash-top-vid .dtv-rank{font-size:18px;font-weight:800;color:var(--g1);width:24px}
+    .dash-top-vid .dtv-info{flex:1}
+    .dash-top-vid .dtv-title{font-size:12px;color:var(--w);font-weight:600}
+    .dash-top-vid .dtv-stats{font-size:10px;color:var(--w3);margin-top:2px}
+
+    /* === DUET === */
+    .duet-overlay{position:absolute;inset:0;z-index:800;background:var(--b1);display:flex;flex-direction:column;transform:translateY(100%);transition:transform .35s var(--ease)}
+    .duet-overlay.show{transform:translateY(0)}
+    .duet-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--b2)}
+    .duet-head span{font-size:13px;font-weight:700;color:var(--w)}
+    .duet-head button{background:none;border:none;color:var(--w);font-size:20px;cursor:pointer}
+    .duet-split{flex:1;display:flex;gap:2px;padding:2px}
+    .duet-original,.duet-camera{flex:1;border-radius:12px;overflow:hidden;position:relative;background:var(--b3)}
+    .duet-original video{width:100%;height:100%;object-fit:cover}
+    .duet-camera{display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--w3);font-size:13px}
+    .duet-camera svg{width:48px;height:48px;margin-bottom:8px;opacity:.4}
+    .duet-controls{padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px;background:var(--b2)}
+    .duet-rec{width:64px;height:64px;border-radius:50%;border:4px solid var(--w);background:var(--r1);cursor:pointer;transition:all .3s}
+    .duet-rec.recording{border-radius:12px;width:40px;height:40px}
+    .duet-timer{font-size:14px;font-weight:700;color:var(--r1);display:none}
+    .duet-timer.show{display:block}
+    .duet-post{display:none;background:linear-gradient(135deg,var(--g1),var(--g2));color:var(--b1);border:none;padding:12px 32px;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer}
+    .duet-post.show{display:block}
   </style>
 </head>
 <body>
@@ -725,6 +806,7 @@
             <button class="share-action" onclick="shareAction('Save Video')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Save Video</button>
             <button class="share-action" onclick="shareAction('Report')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>Report</button>
             <button class="share-action" onclick="shareAction('Not Interested')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>Not Interested</button>
+            <button class="share-action" onclick="openDuet()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="9" height="18" rx="1"/><rect x="14" y="3" width="9" height="18" rx="1"/></svg>Duet</button>
           </div>
         </div>
         <!-- Comments -->
@@ -859,6 +941,7 @@
             <button class="settings" onclick="nav('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
             <span class="handle">zhingkham_user <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px;vertical-align:middle;opacity:.5"><path d="M6 9l6 6 6-6"/></svg></span>
             <div class="h-right">
+              <button class="lang-toggle" onclick="toggleLang()">🇧🇹</button>
               <button class="settings" onclick="toast('🔔 Notifications')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></button>
               <button class="settings" onclick="toast('⚙️ Settings')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
             </div>
@@ -886,8 +969,13 @@
               <span id="kv">0 Karma</span>
             </div>
             <div class="level-bar"><div class="level-fill" id="level-fill"></div></div>
+            <div class="gnh-meter" title="Your Gross National Happiness score">
+              <div class="gnh-bar"><div class="gnh-fill" id="gnh-fill" style="width:25%"></div><div class="gnh-marker" id="gnh-marker" style="left:75%"></div></div>
+              <div class="gnh-label"><span id="gnh-text">GNH: 75/100</span><span class="gnh-emoji" id="gnh-emoji">😊</span></div>
+            </div>
             <div class="prof-btns">
               <button class="edit-btn" onclick="openWallet()">💎 Wallet</button>
+              <button class="edit-btn" onclick="openDashboard()">📊 Dashboard</button>
               <button class="edit-btn" onclick="toast('✏️ Coming soon!')">Edit Profile</button>
               <button class="sq-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></button>
               <button class="sq-btn" onclick="openShare()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
@@ -981,6 +1069,51 @@
         <div class="coin-shop-head"><h2>🪙 Coin Store</h2><button class="cs-close" onclick="closeCoinShop()">✕</button></div>
         <div class="coin-balance"><div class="cb-amount" id="cs-balance">0</div><div class="cb-label">Your Coin Balance</div></div>
         <div class="coin-packages" id="coin-packages"></div>
+      </div>
+
+      <!-- CHAT OVERLAY -->
+      <div class="chat-overlay" id="chat-overlay">
+        <div class="chat-head">
+          <button class="ch-back" onclick="closeChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+          <img class="ch-av" id="ch-av" src="">
+          <div class="ch-info"><div class="ch-name" id="ch-name"></div><div class="ch-status" id="ch-status">Online</div></div>
+        </div>
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-input">
+          <button onclick="addChatEmoji()">😊</button>
+          <input type="text" id="chat-input-field" placeholder="Message..." onkeydown="if(event.key==='Enter')sendChatMsg()">
+          <button onclick="toast('📷 Camera')">📷</button>
+          <button class="ci-send" onclick="sendChatMsg()">➤</button>
+        </div>
+      </div>
+
+      <!-- DASHBOARD OVERLAY -->
+      <div class="dashboard-overlay" id="dashboard-overlay">
+        <div class="dash-head"><h2>Creator Dashboard</h2><button onclick="closeDashboard()">✕</button></div>
+        <div class="dash-cards">
+          <div class="dash-card"><div class="dc-val">259.4K</div><div class="dc-lbl">Total Views</div><div class="dc-chg">+12.3%</div></div>
+          <div class="dash-card"><div class="dc-val">1,842h</div><div class="dc-lbl">Watch Time</div><div class="dc-chg">+8.7%</div></div>
+          <div class="dash-card"><div class="dc-val">3,291</div><div class="dc-lbl">New Followers</div><div class="dc-chg">+24.1%</div></div>
+          <div class="dash-card"><div class="dc-val">6.8%</div><div class="dc-lbl">Engagement Rate</div><div class="dc-chg">+2.1%</div></div>
+        </div>
+        <div class="dash-section"><h3>Views — Last 7 Days</h3><div class="dash-chart" id="dash-chart"></div></div>
+        <div class="dash-section"><h3>Top Videos</h3><div id="dash-top-vids"></div></div>
+        <div class="dash-section dash-audience"><h3>Audience</h3><div id="dash-audience"></div></div>
+        <div class="dash-section"><h3>Content Tips</h3><div class="dash-tips"><p>💡 Post during 6-8 PM for max reach</p><p>🎵 Videos with trending audio get 2.3x more views</p><p>🏔️ Bhutan travel content is trending this week</p><p>🤝 Collabs boost followers by 40%</p></div></div>
+      </div>
+
+      <!-- DUET OVERLAY -->
+      <div class="duet-overlay" id="duet-overlay">
+        <div class="duet-head"><span id="duet-title">Duet with @user</span><button onclick="closeDuet()">✕</button></div>
+        <div class="duet-split">
+          <div class="duet-original"><video id="duet-video" muted loop playsinline></video></div>
+          <div class="duet-camera"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>Your Camera</div>
+        </div>
+        <div class="duet-controls">
+          <div class="duet-timer" id="duet-timer">00:00</div>
+          <button class="duet-rec" id="duet-rec" onclick="toggleDuetRec()"></button>
+          <button class="duet-post" id="duet-post" onclick="postDuet()">Post Duet</button>
+        </div>
       </div>
 
       <!-- DOCK -->
@@ -1282,7 +1415,7 @@ const MESSAGES=[
   {name:'dechen_zam',av:AVS[6],preview:'See you tomorrow!',time:'1d',online:false,cam:true},
   {name:'ugyen_dorji',av:AVS[7],preview:'🙏🙏🙏',time:'2d',online:false,cam:false}
 ];
-document.getElementById('inbox-messages').innerHTML=MESSAGES.map((m,i)=>`<div class="msg-item" style="animation:cmSlide .3s ${i*.04}s var(--ease) both" onclick="toast('Chat with @${m.name}')"><div class="msg-av"><img src="${m.av}">${m.online?'<div class="msg-online"></div>':''}</div><div class="msg-body"><div class="msg-name">${m.name}</div><div class="msg-preview">${m.preview}</div></div><div class="msg-meta"><div class="msg-time">${m.time}</div>${m.cam?'<div class="msg-cam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>':''}</div></div>`).join('');
+document.getElementById('inbox-messages').innerHTML=MESSAGES.map((m,i)=>`<div class="msg-item" style="animation:cmSlide .3s ${i*.04}s var(--ease) both" onclick="openChat('${m.name}')"><div class="msg-av"><img src="${m.av}">${m.online?'<div class="msg-online"></div>':''}</div><div class="msg-body"><div class="msg-name">${m.name}</div><div class="msg-preview">${m.preview}</div></div><div class="msg-meta"><div class="msg-time">${m.time}</div>${m.cam?'<div class="msg-cam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>':''}</div></div>`).join('');
 
 // Activity tab (old notifications)
 document.getElementById('inbox-activity').innerHTML=NOTIFS.map((n,i)=>`<div class="noti" style="animation:cmSlide .3s ${i*.04}s var(--ease) both"><div class="noti-av"><img src="${n.av}"><div class="noti-icon" style="background:${n.bg}">${n.icon}</div></div><div class="noti-body"><div class="noti-text"><b>${n.u}</b> ${n.t}</div><div class="noti-time">${n.w}</div></div></div>`).join('');
@@ -1641,6 +1774,198 @@ function startLive(){
 
 // Live streams row in Explore
 document.getElementById('live-row').innerHTML=V.slice(0,4).map((v,i)=>`<div class="live-card" onclick="openLive(V[${i}])"><video src="${v.src}" muted preload="metadata"></video><div class="lc-live">LIVE</div><div class="lc-info"><div class="lc-name">@${v.u.name}</div><div class="lc-topic">${v.loc}</div></div></div>`).join('');
+
+// === FEATURE 1: DM CHAT SYSTEM ===
+const CHATS={
+  dorji_wangmo:[
+    {from:'them',text:'Hey! Did you see the sunrise at Tiger\'s Nest today? 🏔️',time:'10:30 AM'},
+    {from:'me',text:'Yes! It was absolutely stunning 😍',time:'10:32 AM'},
+    {from:'them',text:'I got some amazing shots, want to see?',time:'10:33 AM'},
+    {from:'me',text:'Please send them! I\'d love to use them for my next video',time:'10:35 AM'},
+    {from:'them',text:'Sending now! 📸',time:'10:36 AM'}
+  ],
+  pema_tshering:[
+    {from:'them',text:'Are you coming to the festival this weekend?',time:'9:15 AM'},
+    {from:'me',text:'Wouldn\'t miss it! 🎉',time:'9:20 AM'},
+    {from:'them',text:'Great! I\'m making ema datshi for everyone',time:'9:22 AM'},
+    {from:'me',text:'That sounds amazing, your cooking is the best 🍲',time:'9:25 AM'}
+  ],
+  karma_dancer:[
+    {from:'them',text:'That dance tutorial was amazing! 🔥',time:'Yesterday'},
+    {from:'me',text:'Thank you so much! Took me 3 days to learn 💃',time:'Yesterday'},
+    {from:'them',text:'Can you teach me the footwork part?',time:'Yesterday'},
+    {from:'me',text:'Of course! Let\'s do a collab video',time:'Yesterday'},
+    {from:'them',text:'Yes!! Let\'s plan it this week 🙏',time:'Yesterday'}
+  ],
+  thinley_adventures:[
+    {from:'them',text:'Check out this trail I found near Laya 🏔️',time:'2 days ago'},
+    {from:'me',text:'Wow that looks incredible!',time:'2 days ago'},
+    {from:'them',text:'You should join me on the next trek',time:'2 days ago'}
+  ]
+};
+const CHAT_REPLIES=['That\'s awesome! 😊','Haha love it 🔥','Let me think about it','Sure! 🙏','Sounds great!','Tashi Delek! 🇧🇹','Amazing!','I\'ll send you more later','Can\'t wait!','See you soon! ✨'];
+let currentChat=null;
+
+function openChat(name){
+  currentChat=name;
+  const msg=MESSAGES.find(m=>m.name===name);
+  document.getElementById('ch-av').src=msg?msg.av:AVS[1];
+  document.getElementById('ch-name').textContent='@'+name;
+  document.getElementById('ch-status').textContent=msg&&msg.online?'Online':'Last seen recently';
+  document.getElementById('ch-status').style.color=msg&&msg.online?'#2ecc71':'var(--w3)';
+  renderChat(name);
+  document.getElementById('chat-overlay').classList.add('show');
+}
+function closeChat(){document.getElementById('chat-overlay').classList.remove('show');currentChat=null}
+function renderChat(name){
+  const msgs=CHATS[name]||[];
+  document.getElementById('chat-messages').innerHTML=msgs.map(m=>`<div class="chat-bubble ${m.from==='me'?'sent':'received'}">${m.text}<div class="cb-time">${m.time}</div></div>`).join('');
+  const el=document.getElementById('chat-messages');el.scrollTop=el.scrollHeight;
+}
+function sendChatMsg(){
+  const inp=document.getElementById('chat-input-field');
+  const t=inp.value.trim();if(!t||!currentChat)return;inp.value='';
+  if(!CHATS[currentChat])CHATS[currentChat]=[];
+  CHATS[currentChat].push({from:'me',text:t,time:'now'});
+  renderChat(currentChat);
+  addGNH(1);
+  setTimeout(()=>{
+    if(!currentChat)return;
+    const reply=CHAT_REPLIES[Math.floor(Math.random()*CHAT_REPLIES.length)];
+    CHATS[currentChat].push({from:'them',text:reply,time:'now'});
+    renderChat(currentChat);
+  },2000);
+}
+function addChatEmoji(){
+  const inp=document.getElementById('chat-input-field');
+  inp.value+=EMOJIS[Math.floor(Math.random()*EMOJIS.length)];inp.focus();
+}
+
+// === FEATURE 2: DZONGKHA LANGUAGE TOGGLE ===
+const LANG={
+  en:{home:'Home',discover:'Discover',inbox:'Inbox',me:'Me',trending:'Trending',following:'Following',messages:'Messages',activity:'Activity',profile:'Profile',editProfile:'Edit Profile',followers:'Followers',following2:'Following',zaps:'Zaps',create:'Create',search:'Search creators, sounds...',comments:'Comments',share:'Share',live:'LIVE',goLive:'Go Live',wallet:'Wallet',cashOut:'Cash Out',send:'Send',reply:'Reply'},
+  dz:{home:'མདུན་ངོས',discover:'འཚོལ་ཞིབ',inbox:'འཕྲིན་སྒམ',me:'ང',trending:'དར་ཁྱབ',following:'རྗེས་འབྲང',messages:'འཕྲིན་ཐུང',activity:'བྱ་བ',profile:'ངའི་ཐོ',editProfile:'ཐོ་བཟོ་བཅོས',followers:'རྗེས་འབྲངས་པ',following2:'རྗེས་འབྲང',zaps:'མཐོངས',create:'གསར་བཟོ',search:'འཚོལ་ཞིབ...',comments:'བསམ་འཆར',share:'མཉམ་སྤྱོད',live:'ཐད་གཏོང',goLive:'ཐད་གཏོང་འགོ་བཙུགས',wallet:'དངུལ་ཁུག',cashOut:'དངུལ་ལེན',send:'གཏོང',reply:'ལན་སློག'}
+};
+let curLang='en';
+function toggleLang(){
+  curLang=curLang==='en'?'dz':'en';
+  const L=LANG[curLang];
+  const labels=document.querySelectorAll('.dock .d-label');
+  if(labels[0])labels[0].textContent=L.home;
+  if(labels[1])labels[1].textContent=L.discover;
+  if(labels[2])labels[2].textContent=L.inbox;
+  if(labels[3])labels[3].textContent=L.me;
+  const inbHead=document.querySelector('.inb-head h1');if(inbHead)inbHead.textContent=L.messages;
+  const exHead=document.querySelector('.ex-head h1');if(exHead)exHead.innerHTML=L.discover+'<div style="width:40px;height:3px;background:linear-gradient(90deg,var(--g1),var(--g3));border-radius:2px;margin-top:4px"></div>';
+  const inbTabs=document.querySelectorAll('.inbox-tab');
+  if(inbTabs[0])inbTabs[0].innerHTML=L.messages;
+  if(inbTabs[1])inbTabs[1].innerHTML=L.activity+'<span class="tab-dot"></span>';
+  toast(curLang==='dz'?'རྗོང་ཁ གཞི་བཞག 🇧🇹':'English enabled 🌐');
+}
+
+// === FEATURE 3: GNH SCORE ===
+let gnhScore=75;
+function addGNH(n){
+  gnhScore=Math.min(100,gnhScore+n);
+  updateGNH();
+}
+function updateGNH(){
+  const pct=gnhScore;
+  document.getElementById('gnh-fill').style.width=(100-pct)+'%';
+  document.getElementById('gnh-marker').style.left=pct+'%';
+  const emoji=pct>=90?'🥰':pct>=75?'😊':pct>=50?'🙂':'😐';
+  document.getElementById('gnh-emoji').textContent=emoji;
+  document.getElementById('gnh-text').textContent='GNH: '+pct+'/100';
+  const badge=document.getElementById('gnh-feed-badge');
+  if(badge)badge.textContent='GNH '+pct+' '+emoji;
+}
+// Wire GNH into existing functions
+const _origAddK=addK;
+// We patch postCM, confirmSendGift, startLive inline via the GNH calls
+const _origPostCM=postCM;
+postCM=function(){_origPostCM();addGNH(1)};
+const _origConfirmSendGift=confirmSendGift;
+confirmSendGift=function(){const before=coins;_origConfirmSendGift();if(coins<before)addGNH(3)};
+const _origStartLive=startLive;
+startLive=function(){_origStartLive();addGNH(10)};
+// Gift receive already calls addDiamonds, patch it
+const _origAddDiamonds=addDiamonds;
+addDiamonds=function(cv,gn,gname){_origAddDiamonds(cv,gn,gname);addGNH(2)};
+
+// Add GNH badge to feed
+(function(){
+  const slides=document.querySelectorAll('.slide');
+  slides.forEach(s=>{
+    const existing=s.querySelector('.gnh-badge');
+    if(!existing){
+      const b=document.createElement('div');b.className='gnh-badge';b.id='gnh-feed-badge';
+      b.textContent='GNH 75 😊';
+      s.appendChild(b);
+    }
+  });
+})();
+
+// === FEATURE 4: CREATOR DASHBOARD ===
+function openDashboard(){
+  document.getElementById('dashboard-overlay').classList.add('show');
+  const weekData=[1200,3400,2800,5600,4200,7800,6100];
+  const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const maxV=Math.max(...weekData);
+  document.getElementById('dash-chart').innerHTML=weekData.map((v,i)=>`<div class="chart-bar" style="height:${(v/maxV)*100}%"><span>${days[i]}</span></div>`).join('');
+  document.getElementById('dash-top-vids').innerHTML=V.slice(0,3).map((v,i)=>`<div class="dash-top-vid"><div class="dtv-rank">${i+1}</div><div class="dtv-info"><div class="dtv-title">${v.cap.substring(0,40)}...</div><div class="dtv-stats">${fmt(v.likes)} views · ${fmt(v.shares)} shares</div></div></div>`).join('');
+  const audience=[{n:'Thimphu',p:45},{n:'Paro',p:20},{n:'Punakha',p:15},{n:'Other',p:20}];
+  document.getElementById('dash-audience').innerHTML=audience.map(a=>`<div class="da-row"><div class="da-name">${a.n}</div><div class="da-bar"><div class="da-fill" style="width:${a.p}%"></div></div><div class="da-pct">${a.p}%</div></div>`).join('');
+}
+function closeDashboard(){document.getElementById('dashboard-overlay').classList.remove('show')}
+
+// === FEATURE 5: DUETS ===
+let duetRecording=false,duetInterval=null,duetSec=0;
+function openDuet(){
+  closeShare();
+  const activeSlide=document.querySelector('.slide video');
+  const vid=document.getElementById('duet-video');
+  if(activeSlide)vid.src=activeSlide.src;
+  const activeV=V[0];
+  document.getElementById('duet-title').textContent='Duet with @'+activeV.u.name;
+  vid.play().catch(()=>{});
+  document.getElementById('duet-overlay').classList.add('show');
+  document.getElementById('duet-rec').classList.remove('recording');
+  document.getElementById('duet-timer').classList.remove('show');
+  document.getElementById('duet-post').classList.remove('show');
+  duetRecording=false;duetSec=0;
+  clearInterval(duetInterval);
+}
+function closeDuet(){
+  document.getElementById('duet-overlay').classList.remove('show');
+  document.getElementById('duet-video').pause();
+  clearInterval(duetInterval);duetRecording=false;
+}
+function toggleDuetRec(){
+  const btn=document.getElementById('duet-rec');
+  const timer=document.getElementById('duet-timer');
+  if(!duetRecording){
+    duetRecording=true;duetSec=0;
+    btn.classList.add('recording');
+    timer.classList.add('show');
+    document.getElementById('duet-post').classList.remove('show');
+    duetInterval=setInterval(()=>{
+      duetSec++;
+      const m=Math.floor(duetSec/60).toString().padStart(2,'0');
+      const s=(duetSec%60).toString().padStart(2,'0');
+      timer.textContent=m+':'+s;
+    },1000);
+  }else{
+    duetRecording=false;
+    clearInterval(duetInterval);
+    btn.classList.remove('recording');
+    document.getElementById('duet-post').classList.add('show');
+  }
+}
+function postDuet(){
+  closeDuet();
+  toast('Duet posted! 🎬');
+  addK(10);addGNH(5);
+}
 
 </script>
 </body>

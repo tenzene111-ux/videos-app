@@ -448,15 +448,29 @@
     .float-reaction{position:absolute;z-index:15;pointer-events:none;font-size:24px;animation:floatUp 2.5s ease-out forwards}
     @keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}50%{opacity:.8;transform:translateY(-120px) scale(1.2) translateX(var(--drift))}100%{opacity:0;transform:translateY(-250px) scale(.6) translateX(var(--drift2))}}
 
-    /* Gift animation */
-    .gift-popup{position:absolute;left:12px;bottom:160px;z-index:20;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(212,164,76,.2),rgba(0,0,0,.5));backdrop-filter:blur(16px);padding:8px 14px;border-radius:16px;border:1px solid rgba(212,164,76,.2);animation:giftIn .5s var(--spring),giftOut .5s 2.5s var(--ease) forwards}
-    @keyframes giftIn{from{opacity:0;transform:translateX(-40px) scale(.8)}to{opacity:1;transform:translateX(0) scale(1)}}
-    @keyframes giftOut{to{opacity:0;transform:translateX(-20px)}}
-    .gift-popup img{width:28px;height:28px;border-radius:50%;object-fit:cover}
-    .gift-popup .gp-info{font-size:11px;line-height:15px}
-    .gift-popup .gp-info b{color:var(--g1)}
-    .gift-popup .gp-emoji{font-size:28px;animation:giftBounce .5s var(--bounce)}
-    @keyframes giftBounce{0%{transform:scale(0) rotate(-30deg)}50%{transform:scale(1.3) rotate(10deg)}100%{transform:scale(1) rotate(0)}}
+    /* Gift animation — TikTok style */
+    .gift-banner{position:absolute;left:0;bottom:200px;z-index:25;display:flex;align-items:center;gap:10px;padding:8px 16px 8px 8px;background:linear-gradient(135deg,rgba(212,164,76,.25),rgba(0,0,0,.6));backdrop-filter:blur(16px);border-radius:0 28px 28px 0;border:1px solid rgba(212,164,76,.15);border-left:none;animation:gBannerIn .5s var(--spring),gBannerOut .4s 3.5s var(--ease) forwards;max-width:70%}
+    @keyframes gBannerIn{from{opacity:0;transform:translateX(-100%)}to{opacity:1;transform:translateX(0)}}
+    @keyframes gBannerOut{to{opacity:0;transform:translateX(-100%)}}
+    .gift-banner .gb-av{width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid var(--g1);flex-shrink:0}
+    .gift-banner .gb-info{flex:1;min-width:0}
+    .gift-banner .gb-name{font-size:12px;font-weight:700;color:var(--w)}
+    .gift-banner .gb-text{font-size:10px;color:var(--g1);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .gift-banner .gb-gift{width:52px;height:52px;border-radius:14px;overflow:hidden;flex-shrink:0;position:relative;background:rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center}
+    .gift-banner .gb-gift img{width:100%;height:100%;object-fit:cover}
+    .gift-banner .gb-combo{position:absolute;right:-8px;top:-8px;background:linear-gradient(135deg,var(--r1),var(--coral));color:white;font-size:14px;font-weight:900;min-width:28px;height:28px;border-radius:14px;display:flex;align-items:center;justify-content:center;padding:0 6px;animation:comboScale .3s var(--bounce);font-style:italic}
+    @keyframes comboScale{from{transform:scale(0)}to{transform:scale(1)}}
+
+    .gift-fly{position:absolute;z-index:30;pointer-events:none;left:50%;top:50%;transform:translate(-50%,-50%) scale(0);animation:gFlyIn .6s var(--bounce) forwards,gFlyOut .5s 2.2s var(--ease) forwards}
+    .gift-fly img{width:120px;height:120px;object-fit:contain;filter:drop-shadow(0 0 30px rgba(212,164,76,.5))}
+    @keyframes gFlyIn{0%{transform:translate(-50%,-50%) scale(0) rotate(-20deg);opacity:0}60%{transform:translate(-50%,-50%) scale(1.3) rotate(5deg);opacity:1}100%{transform:translate(-50%,-50%) scale(1) rotate(0);opacity:1}}
+    @keyframes gFlyOut{to{transform:translate(-50%,-80%) scale(.3);opacity:0}}
+
+    .gift-sparkle{position:absolute;z-index:29;pointer-events:none;width:8px;height:8px;border-radius:50%;animation:sparkle 1s ease-out forwards}
+    @keyframes sparkle{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--sx),var(--sy)) scale(0)}}
+
+    .gift-streak{position:absolute;left:50%;bottom:140px;transform:translateX(-50%);z-index:26;font-size:11px;font-weight:800;color:var(--g1);text-transform:uppercase;letter-spacing:2px;animation:streakIn .3s var(--spring),gBannerOut .4s 2.5s var(--ease) forwards;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+    @keyframes streakIn{from{opacity:0;transform:translateX(-50%) translateY(10px) scale(.8)}to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}}
 
     /* Coin wallet badge */
     .coin-badge{display:flex;align-items:center;gap:4px;background:linear-gradient(135deg,rgba(212,164,76,.2),rgba(212,164,76,.05));backdrop-filter:blur(20px);border:1px solid rgba(212,164,76,.2);border-radius:14px;padding:5px 10px;cursor:pointer;font-size:11px;font-weight:700;color:var(--g1);transition:all .2s var(--spring)}
@@ -482,7 +496,7 @@
     .gift-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;border-radius:14px;cursor:pointer;transition:all .2s var(--spring);border:2px solid transparent;background:var(--b3)}
     .gift-item:active{transform:scale(.9)}
     .gift-item.selected{border-color:var(--g1);background:rgba(212,164,76,.08)}
-    .gift-item .gi-emoji{font-size:28px}
+    .gift-item .gi-img{width:44px;height:44px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(212,164,76,.3))}
     .gift-item .gi-name{font-size:9px;font-weight:600;color:var(--w3)}
     .gift-item .gi-price{display:flex;align-items:center;gap:2px;font-size:10px;font-weight:700;color:var(--g1)}
     .gs-send{margin:12px 16px 0;width:calc(100% - 32px);padding:12px;border-radius:14px;border:none;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,var(--g1),var(--g3));color:var(--b1);transition:all .2s var(--spring);box-shadow:0 4px 16px rgba(212,164,76,.25)}
@@ -1126,10 +1140,11 @@ function sendLiveReaction(emoji){
 
 // === COIN & GIFT SYSTEM ===
 let coins=0,selectedGift=null,giftTab=0;
+const GI='https://cdn-icons-png.flaticon.com/128/';
 const GIFTS=[
-  [{e:'🌹',n:'Rose',p:10},{e:'❤️',n:'Heart',p:20},{e:'🔥',n:'Fire',p:30},{e:'⭐',n:'Star',p:50},{e:'🎵',n:'Music',p:40},{e:'🎉',n:'Party',p:25},{e:'💫',n:'Sparkle',p:35},{e:'🦋',n:'Butterfly',p:45}],
-  [{e:'💎',n:'Diamond',p:200},{e:'👑',n:'Crown',p:500},{e:'🏆',n:'Trophy',p:300},{e:'🎪',n:'Circus',p:150},{e:'🚀',n:'Rocket',p:400},{e:'🌈',n:'Rainbow',p:250},{e:'🦄',n:'Unicorn',p:350},{e:'🐉',n:'Dragon',p:1000}],
-  [{e:'🏯',n:'Dzong',p:2000},{e:'🐅',n:'Tiger',p:1500},{e:'🙏',n:'Blessing',p:800},{e:'🪷',n:'Lotus',p:600},{e:'🎭',n:'Tshechu',p:3000},{e:'⚡',n:'Thunder',p:5000},{e:'🌸',n:'Sakura',p:750},{e:'🎆',n:'Firework',p:1200}]
+  [{i:GI+'1041/1041916.png',n:'Rose',p:10,c:'#e74c3c'},{i:GI+'833/833472.png',n:'Heart',p:20,c:'#e84393'},{i:GI+'785/785116.png',n:'Fire',p:30,c:'#e17055'},{i:GI+'1828/1828884.png',n:'Star',p:50,c:'#f9ca24'},{i:GI+'3659/3659784.png',n:'Music',p:40,c:'#6c5ce7'},{i:GI+'4105/4105461.png',n:'Party',p:25,c:'#00b894'},{i:GI+'3004/3004613.png',n:'Kiss',p:35,c:'#fd79a8'},{i:GI+'616/616554.png',n:'Butterfly',p:45,c:'#0984e3'}],
+  [{i:GI+'2913/2913109.png',n:'Diamond',p:200,c:'#74b9ff'},{i:GI+'2910/2910756.png',n:'Crown',p:500,c:'#f9ca24'},{i:GI+'548/548481.png',n:'Trophy',p:300,c:'#fdcb6e'},{i:GI+'3176/3176293.png',n:'Perfume',p:150,c:'#a29bfe'},{i:GI+'3031/3031760.png',n:'Rocket',p:400,c:'#e17055'},{i:GI+'1531/1531908.png',n:'Rainbow',p:250,c:'#00cec9'},{i:GI+'2949/2949402.png',n:'Unicorn',p:350,c:'#fd79a8'},{i:GI+'2260/2260451.png',n:'Dragon',p:1000,c:'#e04b3a'}],
+  [{i:GI+'7067/7067360.png',n:'Castle',p:2000,c:'#d4a44c'},{i:GI+'1998/1998679.png',n:'Tiger',p:1500,c:'#e17055'},{i:GI+'3814/3814446.png',n:'Pray',p:800,c:'#f9ca24'},{i:GI+'2684/2684843.png',n:'Lotus',p:600,c:'#fd79a8'},{i:GI+'3655/3655883.png',n:'Theater',p:3000,c:'#6c5ce7'},{i:GI+'4925/4925592.png',n:'Thunder',p:5000,c:'#f9ca24'},{i:GI+'2278/2278992.png',n:'Sakura',p:750,c:'#fd79a8'},{i:GI+'1055/1055218.png',n:'Firework',p:1200,c:'#e04b3a'}]
 ];
 const COIN_PKGS=[
   {coins:100,price:'Nu. 79',bonus:''},
@@ -1180,7 +1195,7 @@ function switchGiftTab(el,tab){
 }
 
 function renderGifts(){
-  document.getElementById('gift-grid').innerHTML=GIFTS[giftTab].map((g,i)=>`<div class="gift-item" onclick="selectGift(${giftTab},${i})"><div class="gi-emoji">${g.e}</div><div class="gi-name">${g.n}</div><div class="gi-price">🪙 ${g.p}</div></div>`).join('');
+  document.getElementById('gift-grid').innerHTML=GIFTS[giftTab].map((g,i)=>`<div class="gift-item" onclick="selectGift(${giftTab},${i})"><img class="gi-img" src="${g.i}" alt="${g.n}"><div class="gi-name">${g.n}</div><div class="gi-price">🪙 ${g.p}</div></div>`).join('');
 }
 
 function selectGift(tab,idx){
@@ -1188,25 +1203,59 @@ function selectGift(tab,idx){
   document.querySelectorAll('.gift-item').forEach((el,i)=>{el.classList.toggle('selected',i===idx)});
   const btn=document.getElementById('gs-send-btn');
   btn.disabled=false;
-  btn.textContent=coins>=selectedGift.p?`Send ${selectedGift.e} ${selectedGift.n} · 🪙 ${selectedGift.p}`:'Not enough coins — Recharge';
+  btn.textContent=coins>=selectedGift.p?`Send ${selectedGift.n} · 🪙 ${selectedGift.p}`:'Not enough coins — Recharge';
 }
 
+let giftCombo=0,giftComboTimer=null,lastGiftName='';
 function confirmSendGift(){
   if(!selectedGift)return;
   if(coins<selectedGift.p){closeGiftShop();openCoinShop();return}
   coins-=selectedGift.p;
   updateCoinUI();
   closeGiftShop();
+  if(selectedGift.n===lastGiftName&&giftComboTimer){giftCombo++}else{giftCombo=1}
+  lastGiftName=selectedGift.n;
+  clearTimeout(giftComboTimer);
+  giftComboTimer=setTimeout(()=>{giftCombo=0;lastGiftName='';giftComboTimer=null},5000);
   const page=document.querySelector('.live-page');
-  const popup=document.createElement('div');
-  popup.className='gift-popup';
-  popup.innerHTML=`<span class="gp-emoji">${selectedGift.e}</span><div class="gp-info"><b>You</b> sent <b>${selectedGift.n}</b><br>🪙 ${selectedGift.p} coins</div>`;
-  page.appendChild(popup);
-  setTimeout(()=>popup.remove(),3000);
-  sendLiveReaction(selectedGift.e);
-  addLiveChatMsg('You','sent '+selectedGift.e+' '+selectedGift.n+' (🪙'+selectedGift.p+')');
+
+  // Banner slide in from left
+  const banner=document.createElement('div');
+  banner.className='gift-banner';
+  banner.innerHTML=`<img class="gb-av" src="https://i.pravatar.cc/150?img=10"><div class="gb-info"><div class="gb-name">You</div><div class="gb-text">sent ${selectedGift.n}</div></div><div class="gb-gift"><img src="${selectedGift.i}" alt="${selectedGift.n}">${giftCombo>1?`<div class="gb-combo">x${giftCombo}</div>`:''}</div>`;
+  page.appendChild(banner);
+  setTimeout(()=>banner.remove(),4500);
+
+  // Big gift flies to center
+  const fly=document.createElement('div');
+  fly.className='gift-fly';
+  fly.innerHTML=`<img src="${selectedGift.i}" alt="${selectedGift.n}">`;
+  page.appendChild(fly);
+  setTimeout(()=>fly.remove(),3500);
+
+  // Sparkle burst
+  const colors=[selectedGift.c,'#f9ca24','#ffffff','#fd79a8','#6c5ce7'];
+  for(let i=0;i<16;i++){
+    const s=document.createElement('div');
+    s.className='gift-sparkle';
+    const angle=(i/16)*Math.PI*2;
+    const dist=60+Math.random()*60;
+    s.style.cssText=`left:50%;top:50%;background:${colors[i%colors.length]};--sx:${Math.cos(angle)*dist}px;--sy:${Math.sin(angle)*dist}px;animation-delay:${Math.random()*0.3}s`;
+    page.appendChild(s);
+    setTimeout(()=>s.remove(),1500);
+  }
+
+  // Streak text for combos
+  if(giftCombo>1){
+    const streak=document.createElement('div');
+    streak.className='gift-streak';
+    streak.textContent=giftCombo>=5?'GIFT STORM ⚡':giftCombo>=3?'COMBO x'+giftCombo+' 🔥':'x'+giftCombo;
+    page.appendChild(streak);
+    setTimeout(()=>streak.remove(),3500);
+  }
+
+  addLiveChatMsg('You','sent '+selectedGift.n+(giftCombo>1?' x'+giftCombo:'')+' (🪙'+selectedGift.p+')');
   addK(selectedGift.p>=200?20:10);
-  toast(selectedGift.e+' Gift sent!');
 }
 
 function openGoLive(){document.getElementById('go-live-overlay').classList.remove('hidden')}

@@ -307,7 +307,7 @@
     .studio-tools .st-tool .st-ico{width:38px;height:38px;border-radius:50%;background:var(--b3);border:1px solid var(--w5);display:flex;align-items:center;justify-content:center;transition:all .2s}
     .studio-tools .st-tool:active .st-ico{transform:scale(.85);background:rgba(212,164,76,.1)}
     .studio-tools .st-tool svg{width:18px;height:18px}
-    .studio-foot{padding:12px 16px 20px;display:flex;flex-direction:column;align-items:center;gap:14px}
+    .studio-foot{padding:12px 16px 70px;display:flex;flex-direction:column;align-items:center;gap:14px}
     .dur-pills{display:flex;gap:12px}
     .dur-pills span{font-size:12px;font-weight:600;color:var(--w3);cursor:pointer;padding:4px 8px;border-radius:8px;transition:all .2s}
     .dur-pills span.active{color:var(--g1);background:rgba(212,164,76,.08)}
@@ -316,6 +316,9 @@
     .rec-dot{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--g1),var(--r1));transition:all .4s var(--spring);box-shadow:0 4px 16px rgba(212,164,76,.2)}
     .rec-ring.on{border-color:var(--r1);box-shadow:0 0 0 6px rgba(224,75,58,.1),0 0 20px rgba(224,75,58,.15)}
     .rec-ring.on .rec-dot{border-radius:12px;width:28px;height:28px;background:var(--r1)}
+    .go-live-btn{display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--r1),var(--coral));border:none;color:white;padding:10px 28px;border-radius:16px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.5px;box-shadow:0 4px 20px rgba(224,75,58,.35);transition:all .3s var(--spring);animation:livePulse 2s ease infinite}
+    .go-live-btn:active{transform:scale(.92)}
+    .glb-dot{width:8px;height:8px;border-radius:50%;background:white;animation:blink 1s step-end infinite}
 
     /* === INBOX === */
     .inbox-page{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--b1)}
@@ -602,7 +605,8 @@
           <div class="studio-foot">
             <div class="dur-pills"><span>15s</span><span class="active">60s</span><span>3m</span><span>10m</span></div>
             <button class="rec-ring" id="recBtn" onclick="toggleRec()"><div class="rec-dot"></div></button>
-            <div class="dur-pills"><span>Photo</span><span class="active" style="color:var(--w)">Video</span><span>Live</span></div>
+            <div class="dur-pills"><span>Photo</span><span class="active" style="color:var(--w)">Video</span></div>
+            <button class="go-live-btn" onclick="openGoLive()"><span class="glb-dot"></span>Go Live</button>
           </div>
         </div>
       </div>
@@ -1075,8 +1079,6 @@ function startLive(){
 // Live streams row in Explore
 document.getElementById('live-row').innerHTML=V.slice(0,4).map((v,i)=>`<div class="live-card" onclick="openLive(V[${i}])"><video src="${v.src}" muted preload="metadata"></video><div class="lc-live">LIVE</div><div class="lc-info"><div class="lc-name">@${v.u.name}</div><div class="lc-topic">${v.loc}</div></div></div>`).join('');
 
-// Studio Live button
-document.querySelector('.dur-pills:last-child span:last-child')?.addEventListener('click',function(){openGoLive()});
 </script>
 </body>
 </html>

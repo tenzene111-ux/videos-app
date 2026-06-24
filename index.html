@@ -2240,6 +2240,206 @@ function postDuet(){
   addK(10);addGNH(5);
 }
 
+// === FEATURE: SETTINGS ===
+function openSettings(){document.getElementById('settings-overlay').classList.add('show')}
+function closeSettings(){document.getElementById('settings-overlay').classList.remove('show')}
+function toggleSettingCycle(el,label,options){
+  const val=el.querySelector('.si-value');
+  const cur=val.textContent;
+  const idx=options.indexOf(cur);
+  const next=options[(idx+1)%options.length];
+  val.textContent=next;
+  toast(label+': '+next);
+}
+
+// === FEATURE: ONBOARDING ===
+(function(){
+  if(!localStorage.getItem('zhingkham_onboarded')){
+    const ol=document.getElementById('onboard-overlay');
+    ol.style.display='flex';
+    const interests=['Dance','Food','Travel','Heritage','Art','Music','Nature','Fashion','Comedy','Sports'];
+    document.getElementById('interest-grid').innerHTML=interests.map(i=>'<div class="interest-chip" onclick="this.classList.toggle(\'selected\')">'+i+'</div>').join('');
+  }
+})();
+function obNext(step){
+  document.querySelectorAll('.onboard-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('ob-step-'+step).classList.add('active');
+}
+function obFinish(){
+  localStorage.setItem('zhingkham_onboarded','1');
+  const ol=document.getElementById('onboard-overlay');
+  ol.classList.add('hide');
+  setTimeout(()=>{ol.style.display='none'},400);
+  toast('Welcome to Zhingkham! 🐉');
+}
+
+// === FEATURE: SEARCH WITH RESULTS ===
+function doSearchLive(){
+  const q=document.getElementById('q').value.toLowerCase().trim();
+  const sr=document.getElementById('search-results');
+  doSearch();
+  if(!q){sr.classList.remove('show');return}
+  const users=V.filter(v=>v.u.name.toLowerCase().includes(q));
+  const videos=V.filter(v=>v.cap.toLowerCase().includes(q));
+  if(!users.length&&!videos.length){
+    sr.innerHTML='<div class="sr-empty">No results for "'+q+'"</div>';
+    sr.classList.add('show');return;
+  }
+  let html='';
+  if(users.length){
+    html+='<div class="sr-section">Users</div>';
+    html+=users.map(v=>'<div class="sr-item" onclick="document.getElementById(\'search-results\').classList.remove(\'show\');document.getElementById(\'q\').value=\'\';goVid(\''+v.id+'\')"><img src="'+v.u.av+'"><div class="sr-info"><div class="sr-name">@'+v.u.name+'</div><div class="sr-sub">'+v.u.fans+' followers</div></div></div>').join('');
+  }
+  if(videos.length){
+    html+='<div class="sr-section">Videos</div>';
+    html+=videos.map(v=>'<div class="sr-item" onclick="document.getElementById(\'search-results\').classList.remove(\'show\');document.getElementById(\'q\').value=\'\';goVid(\''+v.id+'\')"><img src="'+v.u.av+'" style="border-radius:8px"><div class="sr-info"><div class="sr-name">'+v.cap.substring(0,40)+'</div><div class="sr-sub">@'+v.u.name+'</div></div></div>').join('');
+  }
+  sr.innerHTML=html;
+  sr.classList.add('show');
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.search-pill'))document.getElementById('search-results').classList.remove('show');
+});
+
+// === FEATURE: REPORT/BLOCK ===
+function openReportModal(){document.getElementById('report-modal').style.display='flex'}
+function submitReport(reason){
+  document.getElementById('report-modal').style.display='none';
+  toast('Report submitted. Thank you. 🙏');
+}
+let blockTarget='';
+function openBlockConfirm(){
+  const activeSlide=document.querySelector('.slide video');
+  const sl=activeSlide?activeSlide.closest('.slide'):null;
+  const vid=sl?V.find(v=>v.id===sl.dataset.id):V[0];
+  blockTarget=vid.u.name;
+  document.getElementById('block-text').textContent='Block @'+blockTarget+'? They won\'t be able to see your profile or content.';
+  document.getElementById('block-confirm').style.display='flex';
+}
+function confirmBlock(){
+  document.getElementById('block-confirm').style.display='none';
+  toast('User @'+blockTarget+' blocked');
+  blockTarget='';
+}
+
+// === FEATURE: VIDEO SPEED CONTROL ===
+let speedIdx=1;
+const SPEEDS=[0.5,1,1.5,2];
+(function(){
+  document.querySelectorAll('.slide').forEach(s=>{
+    const pill=document.createElement('div');
+    pill.className='speed-pill';
+    pill.textContent='1x';
+    pill.onclick=function(e){
+      e.stopPropagation();
+      speedIdx=(speedIdx+1)%SPEEDS.length;
+      const spd=SPEEDS[speedIdx];
+      this.textContent=spd+'x';
+      const vid=s.querySelector('video');
+      if(vid)vid.playbackRate=spd;
+      toast('Speed: '+spd+'x');
+      document.querySelectorAll('.speed-pill').forEach(p=>{p.textContent=spd+'x'});
+      document.querySelectorAll('.slide video').forEach(v=>{v.playbackRate=spd});
+    };
+    s.appendChild(pill);
+  });
+})();
+
+// === FEATURE: SCREEN TIME REMINDER ===
+let screenTimeMinutes=0,screenTimeInterval=null,screenTimeEnabled=true;
+function startScreenTime(){
+  if(screenTimeInterval)return;
+  screenTimeInterval=setInterval(function(){
+    if(!screenTimeEnabled)return;
+    screenTimeMinutes++;
+    if(screenTimeMinutes%30===0){
+      document.getElementById('screentime-overlay').style.display='flex';
+    }
+  },60000);
+}
+function dismissScreenTime(){document.getElementById('screentime-overlay').style.display='none'}
+function toggleScreenTime(on){
+  screenTimeEnabled=on;
+  toast(on?'Screen time reminder on':'Screen time reminder off');
+}
+startScreenTime();
+
+// === FEATURE: QR PROFILE ===
+function openQR(){
+  document.getElementById('qr-overlay').style.display='flex';
+  const grid=document.getElementById('qr-pattern');
+  if(!grid.children.length){
+    const pattern=[];
+    for(let i=0;i<64;i++){
+      const isCorner=(i<3||(i>=5&&i<8)||(i>=16&&i<19)||(i>=21&&i<24)||(i>=40&&i<43)||(i>=45&&i<48));
+      const isBorder=(i%8===0||i%8===7||i<8||i>=56);
+      const filled=isCorner||isBorder||Math.random()>.45;
+      pattern.push(filled);
+    }
+    grid.innerHTML=pattern.map(f=>'<span style="background:'+(f?'var(--g1)':'var(--b4)')+'"></span>').join('');
+  }
+}
+
+// === FEATURE: PRAYER WHEEL ===
+let prayerSpins=0,prayerSpinning=false;
+// Add floating prayer button to feed
+(function(){
+  const home=document.getElementById('p-home');
+  const btn=document.createElement('div');
+  btn.className='prayer-float';
+  btn.textContent='🙏';
+  btn.onclick=function(){document.getElementById('prayer-overlay').style.display='flex'};
+  home.appendChild(btn);
+})();
+function spinPrayerWheel(){
+  if(prayerSpinning)return;
+  prayerSpinning=true;
+  prayerSpins++;
+  const wheel=document.getElementById('prayer-wheel');
+  const mantra=document.getElementById('po-mantra');
+  wheel.style.setProperty('--spin-dur','0.4s');
+  wheel.classList.add('spinning');
+  mantra.classList.add('show');
+  addK(1);addGNH(1);
+  document.getElementById('po-count').textContent=prayerSpins+' spins today';
+  setTimeout(function(){
+    wheel.style.setProperty('--spin-dur','1.5s');
+  },600);
+  setTimeout(function(){
+    wheel.classList.remove('spinning');
+    mantra.classList.remove('show');
+    prayerSpinning=false;
+  },2500);
+  if(prayerSpins===108){
+    setTimeout(function(){toast('☸️ 108 prayers complete! Blessings upon you')},500);
+  }
+}
+
+// === FEATURE: FESTIVAL CALENDAR ===
+const FESTIVALS=[
+  {emoji:'🎭',name:'Paro Tshechu',date:'March/April',desc:'Sacred mask dances at Paro Dzong',month:3},
+  {emoji:'🏰',name:'Thimphu Tshechu',date:'September/October',desc:'Biggest festival in the capital',month:9},
+  {emoji:'⚔️',name:'Punakha Drubchen',date:'February/March',desc:'Warriors reenact historic battles',month:2},
+  {emoji:'🔥',name:'Jambay Lhakhang Drup',date:'October/November',desc:'Fire festival in Bumthang',month:10},
+  {emoji:'🎊',name:'Losar (New Year)',date:'February',desc:'Bhutanese New Year celebrations',month:2},
+  {emoji:'🦅',name:'Black-necked Crane Festival',date:'November',desc:'Celebrating sacred cranes in Gangtey',month:11}
+];
+function openFestival(){
+  document.getElementById('festival-overlay').classList.add('show');
+  // Find next festival
+  const now=new Date();
+  const curMonth=now.getMonth()+1;
+  let next=FESTIVALS.find(f=>f.month>=curMonth)||FESTIVALS[0];
+  let targetMonth=next.month;
+  let targetYear=now.getFullYear();
+  if(targetMonth<curMonth)targetYear++;
+  const target=new Date(targetYear,targetMonth-1,15);
+  const daysLeft=Math.ceil((target-now)/(1000*60*60*24));
+  document.getElementById('festival-countdown').innerHTML='<div class="fc-label">Next Festival</div><div class="fc-name">'+next.name+'</div><div class="fc-days">'+daysLeft+' days away</div>';
+  document.getElementById('festival-list').innerHTML=FESTIVALS.map(f=>'<div class="festival-item"><div class="fi-emoji">'+f.emoji+'</div><div class="fi-info"><div class="fi-name">'+f.name+'</div><div class="fi-date">'+f.date+'</div><div class="fi-desc">'+f.desc+'</div></div></div>').join('');
+}
+function closeFestival(){document.getElementById('festival-overlay').classList.remove('show')}
+
 </script>
 </body>
 </html>

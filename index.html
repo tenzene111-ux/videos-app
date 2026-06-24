@@ -1150,11 +1150,13 @@ function sendLiveReaction(emoji){
 
 // === COIN & GIFT SYSTEM ===
 let coins=0,selectedGift=null,giftTab=0;
-const G3=n=>'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/'+n+'.png';
+const GR='https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/';
+const G3=(folder,file)=>GR+encodeURIComponent(folder)+'/3D/'+file+'_3d.png';
+const G3S=(folder,file)=>GR+encodeURIComponent(folder)+'/Default/3D/'+file+'_3d_default.png';
 const GIFTS=[
-  [{i:G3('Animals/Rose'),n:'Rose',p:10,c:'#e74c3c'},{i:G3('Smilies/Red Heart'),n:'Heart',p:20,c:'#e84393'},{i:G3('Travel and places/Fire'),n:'Fire',p:30,c:'#e17055'},{i:G3('Travel and places/Star'),n:'Star',p:50,c:'#f9ca24'},{i:G3('Objects/Musical Notes'),n:'Music',p:40,c:'#6c5ce7'},{i:G3('Activities/Party Popper'),n:'Party',p:25,c:'#00b894'},{i:G3('Smilies/Kiss Mark'),n:'Kiss',p:35,c:'#fd79a8'},{i:G3('Animals/Butterfly'),n:'Butterfly',p:45,c:'#0984e3'}],
-  [{i:G3('Objects/Gem Stone'),n:'Diamond',p:200,c:'#74b9ff'},{i:G3('Objects/Crown'),n:'Crown',p:500,c:'#f9ca24'},{i:G3('Activities/Trophy'),n:'Trophy',p:300,c:'#fdcb6e'},{i:G3('Activities/Sparkles'),n:'Sparkle',p:150,c:'#a29bfe'},{i:G3('Travel and places/Rocket'),n:'Rocket',p:400,c:'#e17055'},{i:G3('Travel and places/Rainbow'),n:'Rainbow',p:250,c:'#00cec9'},{i:G3('Animals/Unicorn'),n:'Unicorn',p:350,c:'#fd79a8'},{i:G3('Animals/Dragon'),n:'Dragon',p:1000,c:'#e04b3a'}],
-  [{i:G3('Travel and places/Castle'),n:'Castle',p:2000,c:'#d4a44c'},{i:G3('Animals/Tiger Face'),n:'Tiger',p:1500,c:'#e17055'},{i:G3('Hand gestures/Folded Hands'),n:'Blessing',p:800,c:'#f9ca24'},{i:G3('Animals/Hibiscus'),n:'Lotus',p:600,c:'#fd79a8'},{i:G3('Activities/Performing Arts'),n:'Tshechu',p:3000,c:'#6c5ce7'},{i:G3('Travel and places/High Voltage'),n:'Thunder',p:5000,c:'#f9ca24'},{i:G3('Animals/Cherry Blossom'),n:'Sakura',p:750,c:'#fd79a8'},{i:G3('Activities/Fireworks'),n:'Firework',p:1200,c:'#e04b3a'}]
+  [{i:G3('Rose','rose'),n:'Rose',p:10,c:'#e74c3c'},{i:G3('Red heart','red_heart'),n:'Heart',p:20,c:'#e84393'},{i:G3('Fire','fire'),n:'Fire',p:30,c:'#e17055'},{i:G3('Star','star'),n:'Star',p:50,c:'#f9ca24'},{i:G3('Musical notes','musical_notes'),n:'Music',p:40,c:'#6c5ce7'},{i:G3('Party popper','party_popper'),n:'Party',p:25,c:'#00b894'},{i:G3('Kiss mark','kiss_mark'),n:'Kiss',p:35,c:'#fd79a8'},{i:G3('Butterfly','butterfly'),n:'Butterfly',p:45,c:'#0984e3'}],
+  [{i:G3('Gem stone','gem_stone'),n:'Diamond',p:200,c:'#74b9ff'},{i:G3('Crown','crown'),n:'Crown',p:500,c:'#f9ca24'},{i:G3('Trophy','trophy'),n:'Trophy',p:300,c:'#fdcb6e'},{i:G3('Sparkles','sparkles'),n:'Sparkle',p:150,c:'#a29bfe'},{i:G3('Rocket','rocket'),n:'Rocket',p:400,c:'#e17055'},{i:G3('Rainbow','rainbow'),n:'Rainbow',p:250,c:'#00cec9'},{i:G3('Unicorn','unicorn'),n:'Unicorn',p:350,c:'#fd79a8'},{i:G3('Dragon','dragon'),n:'Dragon',p:1000,c:'#e04b3a'}],
+  [{i:G3('Castle','castle'),n:'Castle',p:2000,c:'#d4a44c'},{i:G3('Tiger face','tiger_face'),n:'Tiger',p:1500,c:'#e17055'},{i:G3S('Folded hands','folded_hands'),n:'Blessing',p:800,c:'#f9ca24'},{i:G3('Hibiscus','hibiscus'),n:'Lotus',p:600,c:'#fd79a8'},{i:G3('Performing arts','performing_arts'),n:'Tshechu',p:3000,c:'#6c5ce7'},{i:G3('High voltage','high_voltage'),n:'Thunder',p:5000,c:'#f9ca24'},{i:G3('Cherry blossom','cherry_blossom'),n:'Sakura',p:750,c:'#fd79a8'},{i:G3('Fireworks','fireworks'),n:'Firework',p:1200,c:'#e04b3a'}]
 ];
 const COIN_PKGS=[
   {coins:100,price:'Nu. 79',bonus:''},

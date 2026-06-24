@@ -32,25 +32,16 @@
     .hidden{display:none!important}
 
     /* ============================================
-       HOME — HORIZONTAL CARD SWIPE (NOT TIKTOK)
+       HOME — VERTICAL SCROLL FEED
        ============================================ */
-    .card-deck{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;perspective:800px}
+    .feed{flex:1;scroll-snap-type:y mandatory;overflow-y:scroll;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .feed::-webkit-scrollbar{display:none}
 
-    .v-card{position:absolute;width:calc(100% - 32px);height:calc(100% - 100px);top:16px;border-radius:24px;overflow:hidden;background:var(--bark);
-      transition:transform .45s cubic-bezier(.4,.0,.2,1),opacity .4s;will-change:transform,opacity;touch-action:pan-y}
-    .v-card video{width:100%;height:100%;object-fit:cover;border-radius:24px;display:block}
-    .v-card.current{transform:translateX(0) scale(1);opacity:1;z-index:10}
-    .v-card.left{transform:translateX(-115%) scale(.88) rotateY(8deg);opacity:.4;z-index:5;pointer-events:none}
-    .v-card.right{transform:translateX(115%) scale(.88) rotateY(-8deg);opacity:.4;z-index:5;pointer-events:none}
-    .v-card.far{transform:translateX(200%) scale(.7);opacity:0;z-index:1;pointer-events:none}
-
-    /* Swipe hint arrows */
-    .swipe-hint{position:absolute;top:50%;z-index:20;color:rgba(245,240,232,.15);font-size:28px;pointer-events:none;transition:opacity .3s}
-    .swipe-hint.l{left:4px;transform:translateY(-50%)}
-    .swipe-hint.r{right:4px;transform:translateY(-50%)}
+    .v-card{height:100%;scroll-snap-align:start;position:relative;background:var(--bark);flex-shrink:0;overflow:hidden}
+    .v-card video{width:100%;height:100%;object-fit:cover;display:block}
 
     /* Card gradient overlay */
-    .card-gradient{position:absolute;inset:0;border-radius:24px;background:linear-gradient(0deg,rgba(18,16,14,.85) 0%,transparent 40%,transparent 70%,rgba(18,16,14,.4) 100%);pointer-events:none;z-index:2}
+    .card-gradient{position:absolute;inset:0;background:linear-gradient(0deg,rgba(18,16,14,.85) 0%,transparent 40%,transparent 70%,rgba(18,16,14,.4) 100%);pointer-events:none;z-index:2}
 
     /* Top bar on card */
     .card-top{position:absolute;top:16px;left:16px;right:16px;z-index:12;display:flex;align-items:center;justify-content:space-between}
@@ -248,7 +239,7 @@
       .device{width:100vw;height:100dvh;border-radius:0;border:none;box-shadow:none;display:flex;flex-direction:column}
       .notch,.home-ind{display:none}
       .app{width:100vw;height:100dvh}
-      .v-card{width:calc(100% - 24px);height:calc(100% - 90px);top:12px}
+      .v-card{height:100dvh;min-height:100dvh}
       .mandala-menu{position:fixed;bottom:20px;bottom:max(20px,env(safe-area-inset-bottom));z-index:9999}
       .menu-backdrop{position:fixed;z-index:9998}
       .toast{position:fixed}
@@ -267,12 +258,9 @@
     <div class="app">
       <div class="toast" id="toast"></div>
 
-      <!-- HOME — Card Deck -->
+      <!-- HOME — Vertical Feed -->
       <div id="view-home" class="view active">
-        <div class="card-deck" id="card-deck">
-          <div class="swipe-hint l">&lsaquo;</div>
-          <div class="swipe-hint r">&rsaquo;</div>
-        </div>
+        <div class="feed" id="feed"></div>
         <div class="drawer-bg hidden" id="comments-modal">
           <div class="drawer">
             <div class="drawer-bar"></div>
@@ -422,14 +410,14 @@ function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).t
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show';setTimeout(()=>t.className='toast',2500)}
 function addKarma(pts){karma+=pts;document.getElementById('karma-val').textContent=karma+' Karma'}
 
-// ===== CARD DECK =====
-const deck=document.getElementById('card-deck');
+// ===== VERTICAL FEED =====
+const feed=document.getElementById('feed');
 const cards=[];
 
 VIDEOS.forEach((v,i)=>{
   const c=document.createElement('div');
-  c.className='v-card '+(i===0?'current':i===1?'right':'far');
-  c.dataset.idx=i;
+  c.className='v-card';
+  c.dataset.id=v.id;
   c.innerHTML=`
     <video src="${v.src}" loop muted playsinline preload="${i<2?'auto':'metadata'}"></video>
     <div class="card-gradient"></div>
@@ -468,7 +456,7 @@ VIDEOS.forEach((v,i)=>{
       </button>
     </div>`;
 
-  deck.appendChild(c);
+  feed.appendChild(c);
   cards.push(c);
 
   // Double-tap like
@@ -489,66 +477,15 @@ VIDEOS.forEach((v,i)=>{
   });
 });
 
-function layoutCards(){
-  cards.forEach((c,i)=>{
-    c.classList.remove('current','left','right','far');
-    if(i===currentIdx)c.classList.add('current');
-    else if(i===currentIdx-1)c.classList.add('left');
-    else if(i===currentIdx+1)c.classList.add('right');
-    else c.classList.add('far');
-  });
-  // Play current, pause others
-  cards.forEach((c,i)=>{
-    const v=c.querySelector('video');
-    if(i===currentIdx){v.play().catch(()=>{});c.querySelector('.card-pause').classList.add('hidden')}
+// Auto-play with IntersectionObserver
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    const v=e.target.querySelector('video');
+    if(e.isIntersecting){v.play().catch(()=>{});e.target.querySelector('.card-pause')?.classList.add('hidden')}
     else v.pause();
   });
-  // Update counter
-  cards.forEach((c,i)=>{
-    const counter=c.querySelector('.counter');
-    if(counter)counter.textContent=(i+1)+'/'+VIDEOS.length;
-  });
-}
-
-// Horizontal swipe on deck
-let sx=0,sy=0,swiping=false,dx=0;
-deck.addEventListener('touchstart',(e)=>{
-  if(e.target.closest('.card-actions'))return;
-  sx=e.touches[0].clientX;sy=e.touches[0].clientY;swiping=true;dx=0;
-},{passive:true});
-deck.addEventListener('touchmove',(e)=>{
-  if(!swiping)return;
-  dx=e.touches[0].clientX-sx;
-  const dy=Math.abs(e.touches[0].clientY-sy);
-  if(dy>Math.abs(dx)){swiping=false;return}
-  const cur=cards[currentIdx];
-  if(cur)cur.style.transform=`translateX(${dx}px) scale(${1-Math.abs(dx)/2000}) rotate(${dx/60}deg)`;
-},{passive:true});
-deck.addEventListener('touchend',()=>{
-  if(!swiping){cards[currentIdx].style.transform='';return}
-  swiping=false;
-  const cur=cards[currentIdx];
-  cur.style.transform='';
-  if(Math.abs(dx)>70){
-    if(dx<0&&currentIdx<VIDEOS.length-1){currentIdx++;layoutCards()}
-    else if(dx>0&&currentIdx>0){currentIdx--;layoutCards()}
-  }
-});
-
-// Mouse drag for desktop
-let md=false,msx=0;
-deck.addEventListener('mousedown',(e)=>{if(!e.target.closest('.card-actions')){md=true;msx=e.clientX}});
-deck.addEventListener('mousemove',(e)=>{if(!md)return;const d=e.clientX-msx;cards[currentIdx].style.transform=`translateX(${d}px) scale(${1-Math.abs(d)/2000}) rotate(${d/60}deg)`});
-deck.addEventListener('mouseup',(e)=>{if(!md)return;md=false;const d=e.clientX-msx;cards[currentIdx].style.transform='';if(Math.abs(d)>70){if(d<0&&currentIdx<VIDEOS.length-1){currentIdx++;layoutCards()}else if(d>0&&currentIdx>0){currentIdx--;layoutCards()}}});
-deck.addEventListener('mouseleave',()=>{if(md){md=false;cards[currentIdx].style.transform=''}});
-
-// Keyboard
-document.addEventListener('keydown',(e)=>{
-  if(e.key==='ArrowRight'&&currentIdx<VIDEOS.length-1){currentIdx++;layoutCards()}
-  if(e.key==='ArrowLeft'&&currentIdx>0){currentIdx--;layoutCards()}
-});
-
-layoutCards();
+},{threshold:.6});
+document.querySelectorAll('.v-card').forEach(c=>obs.observe(c));
 
 function spawnMandala(card,e){
   const rect=card.getBoundingClientRect();
@@ -628,7 +565,6 @@ function goTo(name){
   const map={home:0,explore:1,inbox:2,profile:3};
   document.querySelectorAll('.orbit-item')[map[name]]?.classList.add('active');
   if(name!=='home')cards.forEach(c=>c.querySelector('video').pause());
-  else layoutCards();
   if(name==='studio'){
     document.getElementById('view-studio').classList.add('active');
     document.querySelectorAll('.orbit-item').forEach(o=>o.classList.remove('active'));
@@ -663,8 +599,9 @@ function handleSearch(){
   if(!f.length)document.getElementById('explore-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:30px;color:rgba(245,240,232,.2);font-size:13px">No results</div>';
 }
 function goToCard(id){
-  const idx=VIDEOS.findIndex(v=>v.id===id);
-  if(idx>=0){currentIdx=idx;layoutCards();goTo('home')}
+  goTo('home');
+  const card=document.querySelector(`.v-card[data-id="${id}"]`);
+  if(card)card.scrollIntoView({behavior:'smooth'});
 }
 
 // ===== INBOX =====

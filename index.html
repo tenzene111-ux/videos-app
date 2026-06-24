@@ -6,331 +6,282 @@
   <title>Zhingkham — Land of Paradise</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐉</text></svg>">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
-    *{margin:0;padding:0;box-sizing:border-box}
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap');
+    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     :root{
-      --saffron:#E8A838;--vermillion:#D4442A;--jade:#2D8B6F;--lapis:#2E4A7A;
-      --gold:#C9A84C;--snow:#F7F5F0;--ink:#1A1714;--parchment:#F0E8D8;
-      --mist:rgba(26,23,20,.7);--glow:rgba(232,168,56,.15);
-      --radius:16px;--radius-lg:24px;--radius-xl:32px;
+      --saffron:#E8A838;--vermillion:#C7392F;--jade:#2A7D62;--lapis:#2B4270;
+      --gold:#B8943F;--snow:#F5F0E8;--ink:#12100E;--bark:#1E1B17;--stone:#2A2621;
+      --ember:rgba(232,168,56,.12);
     }
-    html,body{height:100%}
-    body{font-family:'DM Sans',sans-serif;background:#0D0B09;color:var(--snow);-webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;min-height:100vh;overflow:hidden}
+    html,body{height:100%;overflow:hidden;touch-action:none}
+    body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--snow);-webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center}
 
-    /* PHONE FRAME */
-    .phone-wrapper{display:flex;flex-direction:column;align-items:center;gap:16px;max-height:100vh;max-height:100dvh;padding:10px}
-    .phone-brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
-    .phone-brand .logo{font-family:'Playfair Display',serif;font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--saffron),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .phone-brand .tag{font-size:12px;color:var(--gold);opacity:.6;letter-spacing:2px;text-transform:uppercase}
-    .phone-frame{width:375px;height:min(812px,calc(100vh - 80px));height:min(812px,calc(100dvh - 80px));border-radius:50px;border:5px solid #2A2520;overflow:hidden;position:relative;background:var(--ink);box-shadow:0 0 0 1px rgba(201,168,76,.15),0 30px 80px rgba(0,0,0,.7),0 0 120px rgba(232,168,56,.06);transition:all .5s}
-    .phone-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:150px;height:32px;background:#2A2520;border-radius:0 0 18px 18px;z-index:999}
-    .phone-notch::after{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:50px;height:6px;background:#1A1714;border-radius:3px}
-    .phone-home{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:130px;height:4px;background:var(--snow);border-radius:2px;z-index:999;opacity:.2}
-    .phone-inner{width:100%;height:100%;overflow:hidden;position:relative;display:flex;flex-direction:column}
+    /* PHONE FRAME (desktop only) */
+    .phone-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;max-height:100dvh;padding:10px}
+    .brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+    .brand .logo{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;background:linear-gradient(135deg,var(--saffron),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .brand .sub{font-size:11px;color:var(--gold);opacity:.5;letter-spacing:2px;text-transform:uppercase}
+    .device{width:375px;height:min(812px,calc(100dvh - 70px));border-radius:48px;border:5px solid #2A2520;overflow:hidden;position:relative;background:var(--ink);box-shadow:0 0 0 1px rgba(184,148,63,.1),0 24px 64px rgba(0,0,0,.7)}
+    .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:140px;height:30px;background:#2A2520;border-radius:0 0 16px 16px;z-index:999}
+    .notch::after{content:'';position:absolute;top:9px;left:50%;transform:translateX(-50%);width:48px;height:5px;background:var(--ink);border-radius:3px}
+    .home-ind{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:120px;height:4px;background:var(--snow);border-radius:2px;z-index:999;opacity:.15}
+    .app{width:100%;height:100%;overflow:hidden;position:relative;display:flex;flex-direction:column}
 
-    .screen{display:none;flex:1;overflow:hidden;position:relative;flex-direction:column}
-    .screen.active{display:flex}
+    .view{display:none;position:absolute;inset:0;flex-direction:column;overflow:hidden}
+    .view.active{display:flex}
     .hidden{display:none!important}
 
-    /* AMBIENT BORDER GLOW */
-    .ambient-glow{position:absolute;inset:0;pointer-events:none;z-index:800;opacity:0;transition:opacity .5s}
-    .ambient-glow.saffron{box-shadow:inset 0 0 80px rgba(232,168,56,.25);opacity:1}
-    .ambient-glow.jade{box-shadow:inset 0 0 80px rgba(45,139,111,.25);opacity:1}
-    .ambient-glow.vermillion{box-shadow:inset 0 0 80px rgba(212,68,42,.25);opacity:1}
-    .ambient-glow.lapis{box-shadow:inset 0 0 80px rgba(46,74,122,.25);opacity:1}
+    /* ============================================
+       HOME — HORIZONTAL CARD SWIPE (NOT TIKTOK)
+       ============================================ */
+    .card-deck{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;perspective:800px}
 
-    /* NAV BAR — Floating Pill at bottom */
-    .nav-pill{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);height:56px;display:flex;align-items:center;gap:2px;padding:4px;background:rgba(26,23,20,.92);backdrop-filter:blur(24px) saturate(180%);border-radius:28px;border:1px solid rgba(201,168,76,.12);z-index:1000;box-shadow:0 8px 32px rgba(0,0,0,.4)}
-    .nav-item{width:52px;height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:24px;border:none;background:none;color:rgba(247,245,240,.4);cursor:pointer;transition:all .3s;position:relative}
-    .nav-item svg{width:22px;height:22px;transition:all .3s}
-    .nav-item span{font-size:8px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;opacity:0;transition:all .3s;position:absolute;bottom:3px}
-    .nav-item.active{color:var(--saffron);background:rgba(232,168,56,.1)}
-    .nav-item.active span{opacity:1}
-    .nav-item.active svg{transform:scale(1.1)}
-    .create-orb{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--saffron),var(--vermillion));display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(232,168,56,.4);transition:all .2s}
-    .create-orb:active{transform:scale(.9)}
-    .create-orb svg{width:20px;height:20px;color:white}
+    .v-card{position:absolute;width:calc(100% - 32px);height:calc(100% - 100px);top:16px;border-radius:24px;overflow:hidden;background:var(--bark);
+      transition:transform .45s cubic-bezier(.4,.0,.2,1),opacity .4s;will-change:transform,opacity;touch-action:pan-y}
+    .v-card video{width:100%;height:100%;object-fit:cover;border-radius:24px;display:block}
+    .v-card.current{transform:translateX(0) scale(1);opacity:1;z-index:10}
+    .v-card.left{transform:translateX(-115%) scale(.88) rotateY(8deg);opacity:.4;z-index:5;pointer-events:none}
+    .v-card.right{transform:translateX(115%) scale(.88) rotateY(-8deg);opacity:.4;z-index:5;pointer-events:none}
+    .v-card.far{transform:translateX(200%) scale(.7);opacity:0;z-index:1;pointer-events:none}
 
-    /* HOME — The Scroll */
-    .scroll-header{position:absolute;top:40px;left:0;right:0;z-index:20;display:flex;justify-content:center;padding:0 20px}
-    .scroll-tabs{display:flex;background:rgba(26,23,20,.6);backdrop-filter:blur(16px);border-radius:20px;padding:3px;border:1px solid rgba(201,168,76,.1)}
-    .scroll-tab{padding:6px 18px;border-radius:17px;font-size:13px;font-weight:600;color:rgba(247,245,240,.5);cursor:pointer;transition:all .3s;border:none;background:none}
-    .scroll-tab.active{background:var(--saffron);color:var(--ink)}
+    /* Swipe hint arrows */
+    .swipe-hint{position:absolute;top:50%;z-index:20;color:rgba(245,240,232,.15);font-size:28px;pointer-events:none;transition:opacity .3s}
+    .swipe-hint.l{left:4px;transform:translateY(-50%)}
+    .swipe-hint.r{right:4px;transform:translateY(-50%)}
 
-    /* Stories — Scroll Rings */
-    .tale-bar{display:flex;gap:12px;padding:8px 16px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;position:absolute;top:80px;left:0;right:0;z-index:15}
-    .tale-bar::-webkit-scrollbar{display:none}
-    .tale-item{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;cursor:pointer}
-    .tale-ring{width:54px;height:54px;border-radius:50%;padding:3px;background:conic-gradient(var(--saffron),var(--vermillion),var(--jade),var(--lapis),var(--saffron));position:relative}
-    .tale-ring img{width:100%;height:100%;border-radius:50%;border:2px solid var(--ink);object-fit:cover}
-    .tale-ring.seen{background:rgba(247,245,240,.15)}
-    .tale-name{font-size:9px;color:rgba(247,245,240,.6);max-width:56px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
-    .tale-add{position:relative}
-    .tale-add::after{content:'+';position:absolute;bottom:0;right:0;width:16px;height:16px;background:var(--saffron);color:var(--ink);border-radius:50%;border:2px solid var(--ink);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1}
+    /* Card gradient overlay */
+    .card-gradient{position:absolute;inset:0;border-radius:24px;background:linear-gradient(0deg,rgba(18,16,14,.85) 0%,transparent 40%,transparent 70%,rgba(18,16,14,.4) 100%);pointer-events:none;z-index:2}
 
-    /* Tale Viewer */
-    .tale-viewer{position:absolute;inset:0;z-index:900;background:var(--ink);display:flex;flex-direction:column}
-    .tale-progress{display:flex;gap:3px;padding:8px 10px;position:absolute;top:36px;left:0;right:0;z-index:10}
-    .tale-progress .seg{flex:1;height:2.5px;background:rgba(247,245,240,.2);border-radius:2px;overflow:hidden}
-    .tale-progress .seg .fill{height:100%;background:var(--saffron);width:0%;border-radius:2px;transition:width .05s linear}
-    .tale-user{position:absolute;top:50px;left:12px;z-index:10;display:flex;align-items:center;gap:8px}
-    .tale-user img{width:32px;height:32px;border-radius:50%;border:2px solid var(--saffron)}
-    .tale-user span{font-size:13px;font-weight:600}
-    .tale-close{position:absolute;top:50px;right:12px;z-index:10;background:none;border:none;color:var(--snow);cursor:pointer}
-    .tale-close svg{width:24px;height:24px}
-    .tale-content{flex:1;display:flex;align-items:center;justify-content:center;padding:40px;text-align:center}
-    .tale-text{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;line-height:1.4}
-    .tale-reply{position:absolute;bottom:20px;left:12px;right:12px;display:flex;gap:8px;align-items:center}
-    .tale-reply input{flex:1;background:rgba(247,245,240,.08);border:1px solid rgba(201,168,76,.2);border-radius:24px;padding:10px 16px;color:var(--snow);font-size:13px;outline:none;backdrop-filter:blur(10px)}
-    .tale-reply input::placeholder{color:rgba(247,245,240,.3)}
-    .tale-reply button{background:none;border:none;font-size:20px;cursor:pointer}
+    /* Top bar on card */
+    .card-top{position:absolute;top:16px;left:16px;right:16px;z-index:12;display:flex;align-items:center;justify-content:space-between}
+    .card-top .location{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;background:rgba(18,16,14,.5);padding:5px 10px;border-radius:12px;backdrop-filter:blur(8px)}
+    .card-top .location svg{width:12px;height:12px}
+    .card-top .counter{font-size:11px;font-weight:600;background:rgba(18,16,14,.5);padding:5px 10px;border-radius:12px;backdrop-filter:blur(8px)}
 
-    /* VIDEO SCROLL */
-    .feed{flex:1;scroll-snap-type:y mandatory;overflow-y:scroll;scrollbar-width:none;position:relative;-webkit-overflow-scrolling:touch}
-    .feed::-webkit-scrollbar{display:none}
-    .video-slide{height:100%;min-height:100%;scroll-snap-align:start;position:relative;background:var(--ink);flex-shrink:0;overflow:hidden}
-    .video-slide video{width:100%;height:100%;object-fit:cover;display:block}
+    /* Creator info on card */
+    .card-creator{position:absolute;bottom:80px;left:16px;right:16px;z-index:12}
+    .card-creator .who{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .card-creator .who img{width:36px;height:36px;border-radius:50%;border:2px solid var(--saffron);object-fit:cover}
+    .card-creator .who .info .name{font-weight:700;font-size:14px;display:flex;align-items:center;gap:5px}
+    .card-creator .who .info .name .v{width:14px;height:14px;background:var(--saffron);border-radius:50%;font-size:8px;display:inline-flex;align-items:center;justify-content:center;color:var(--ink);font-weight:800}
+    .card-creator .who .info .song{font-size:11px;opacity:.6;margin-top:1px}
+    .card-creator .desc{font-size:13px;line-height:19px;opacity:.85;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-    /* Video Info — Card style at bottom */
-    .vid-info{position:absolute;bottom:80px;left:14px;right:70px;z-index:10}
-    .vid-info .creator{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-    .vid-info .creator img{width:32px;height:32px;border-radius:50%;border:2px solid var(--saffron);object-fit:cover}
-    .vid-info .creator .name{font-weight:700;font-size:14px;text-shadow:0 2px 8px rgba(0,0,0,.5)}
-    .vid-info .creator .badge{width:14px;height:14px;background:var(--saffron);border-radius:50%;font-size:8px;display:inline-flex;align-items:center;justify-content:center;color:var(--ink);font-weight:800}
-    .vid-info .caption{font-size:13px;line-height:19px;margin-bottom:6px;text-shadow:0 1px 4px rgba(0,0,0,.5);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;opacity:.9}
-    .vid-info .music-row{display:flex;align-items:center;gap:6px;font-size:11px;opacity:.7;text-shadow:0 1px 3px rgba(0,0,0,.5)}
-    .vid-info .music-row .note{animation:bounce .6s ease infinite alternate}
-    @keyframes bounce{to{transform:translateY(-2px)}}
+    /* HORIZONTAL ACTION BAR (not side column like TikTok) */
+    .card-actions{position:absolute;bottom:16px;left:16px;right:16px;z-index:12;display:flex;align-items:center;justify-content:space-around;background:rgba(18,16,14,.5);backdrop-filter:blur(16px);border-radius:20px;padding:8px 4px;border:1px solid rgba(184,148,63,.08)}
+    .card-act{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;color:var(--snow);cursor:pointer;padding:4px 8px;transition:transform .15s;position:relative}
+    .card-act:active{transform:scale(.85)}
+    .card-act svg{width:22px;height:22px;transition:all .25s}
+    .card-act .num{font-size:9px;font-weight:600;opacity:.7}
+    .card-act.liked svg{fill:var(--vermillion);stroke:var(--vermillion)}
+    .card-act.saved svg{fill:var(--saffron);stroke:var(--saffron)}
 
-    /* Side Actions — Vertical "Totem" */
-    .action-totem{position:absolute;right:10px;bottom:90px;display:flex;flex-direction:column;align-items:center;gap:16px;z-index:10}
-    .totem-btn{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:var(--snow);cursor:pointer;transition:transform .2s}
-    .totem-btn:active{transform:scale(.85)}
-    .totem-btn svg{width:26px;height:26px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4));transition:all .25s}
-    .totem-btn .cnt{font-size:10px;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.5);opacity:.9}
-    .totem-btn.liked svg{fill:var(--vermillion);stroke:var(--vermillion)}
-    .totem-btn.saved svg{fill:var(--saffron);stroke:var(--saffron)}
+    /* Heart burst on double-tap */
+    .heart-burst{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:50;pointer-events:none;opacity:0}
+    .heart-burst svg{width:90px;height:90px;fill:var(--vermillion)}
+    .heart-burst.pop{animation:burstPop .9s ease forwards}
+    @keyframes burstPop{0%{transform:translate(-50%,-50%) scale(0) rotate(-15deg);opacity:1}30%{transform:translate(-50%,-50%) scale(1.2) rotate(5deg);opacity:1}60%{transform:translate(-50%,-50%) scale(.95) rotate(0);opacity:1}100%{transform:translate(-50%,-50%) scale(1) rotate(0);opacity:0}}
 
-    /* Music Disc — Prayer Wheel style */
-    .prayer-wheel{width:40px;height:40px;border-radius:50%;overflow:hidden;animation:spin 6s linear infinite;border:2px solid rgba(201,168,76,.3)}
-    .prayer-wheel img{width:100%;height:100%;object-fit:cover}
-    @keyframes spin{to{transform:rotate(360deg)}}
+    /* Mandala particles */
+    .m-particle{position:absolute;pointer-events:none;z-index:60;opacity:0;font-size:18px}
+    .m-particle.fly{animation:mFly 1.3s ease-out forwards}
+    @keyframes mFly{0%{opacity:1;transform:translate(0,0) rotate(0) scale(1)}50%{opacity:.8}100%{opacity:0;transform:translate(var(--tx),var(--ty)) rotate(var(--rot)) scale(.3)}}
 
-    /* Mandala Particles on Double-Tap */
-    .mandala-particle{position:absolute;pointer-events:none;z-index:60;opacity:0}
-    .mandala-particle.fly{animation:mandalaFly 1.2s ease-out forwards}
-    @keyframes mandalaFly{0%{opacity:1;transform:translateY(0) rotate(0deg) scale(1)}40%{opacity:1}100%{opacity:0;transform:translateY(-140px) rotate(var(--rot)) scale(.3)}}
+    /* Pause state */
+    .card-pause{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:5;border-radius:24px}
+    .card-pause svg{width:50px;height:50px;fill:rgba(245,240,232,.6)}
 
-    .heart-pop{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);pointer-events:none;z-index:50;opacity:0}
-    .heart-pop.pop{animation:heartPop .9s ease forwards}
-    .heart-pop svg{width:80px;height:80px;fill:var(--vermillion)}
-    @keyframes heartPop{0%{transform:translate(-50%,-50%) scale(0);opacity:1}25%{transform:translate(-50%,-50%) scale(1.3);opacity:1}50%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+    /* ========== FLOATING MANDALA MENU (not tab bar) ========== */
+    .mandala-menu{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:500}
+    .mandala-btn{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--saffron),var(--vermillion));display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(232,168,56,.35);transition:all .3s;position:relative;z-index:10}
+    .mandala-btn svg{width:22px;height:22px;color:white;transition:transform .3s}
+    .mandala-btn.open svg{transform:rotate(45deg)}
+    .mandala-btn.open{box-shadow:0 0 40px rgba(232,168,56,.5)}
 
-    .pause-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.1);z-index:5}
-    .pause-icon svg{width:56px;height:56px;opacity:.6;fill:var(--snow)}
+    .orbit{position:absolute;bottom:0;left:50%;width:0;height:0}
+    .orbit-item{position:absolute;width:44px;height:44px;border-radius:50%;background:rgba(30,27,23,.92);backdrop-filter:blur(16px);border:1px solid rgba(184,148,63,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;transform:translate(-50%,-50%) scale(0);transition:all .35s cubic-bezier(.34,1.56,.64,1);opacity:0;box-shadow:0 4px 16px rgba(0,0,0,.3)}
+    .orbit-item svg{width:18px;height:18px;color:rgba(245,240,232,.6);transition:color .2s}
+    .orbit-item span{font-size:7px;font-weight:600;color:rgba(245,240,232,.4);letter-spacing:.3px}
+    .orbit-item.active svg{color:var(--saffron)}
+    .orbit-item.active span{color:var(--saffron)}
+    .orbit-item:active{transform:translate(-50%,-50%) scale(.9)!important}
 
-    /* Speed Control */
-    .speed-pill{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(26,23,20,.8);padding:8px 24px;border-radius:24px;font-size:16px;font-weight:700;z-index:30;opacity:0;transition:opacity .2s;backdrop-filter:blur(16px);border:1px solid rgba(201,168,76,.2);font-family:'Playfair Display',serif;letter-spacing:1px}
-    .speed-pill.show{opacity:1}
+    .mandala-menu.open .o0{transform:translate(-50%,-50%) scale(1);opacity:1;left:-80px;top:-30px}
+    .mandala-menu.open .o1{transform:translate(-50%,-50%) scale(1);opacity:1;left:-50px;top:-75px}
+    .mandala-menu.open .o2{transform:translate(-50%,-50%) scale(1);opacity:1;left:50px;top:-75px}
+    .mandala-menu.open .o3{transform:translate(-50%,-50%) scale(1);opacity:1;left:80px;top:-30px}
 
-    /* Captions */
-    .caption-box{position:absolute;bottom:180px;left:14px;right:70px;z-index:15;pointer-events:none}
-    .caption-line{background:rgba(26,23,20,.65);color:var(--snow);padding:5px 12px;border-radius:10px;font-size:12px;line-height:1.5;display:inline-block;margin-bottom:4px;backdrop-filter:blur(8px);opacity:0;transform:translateY(6px);animation:capIn .4s ease forwards;border:1px solid rgba(201,168,76,.08)}
-    .caption-line.dz{font-size:13px;border-color:rgba(201,168,76,.15)}
-    @keyframes capIn{to{opacity:1;transform:translateY(0)}}
-    .cap-toggle{position:absolute;left:14px;bottom:180px;z-index:20;background:rgba(26,23,20,.6);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:4px 10px;color:var(--saffron);font-size:10px;font-weight:700;cursor:pointer;backdrop-filter:blur(10px);letter-spacing:.5px}
+    /* Backdrop when menu open */
+    .menu-backdrop{position:absolute;inset:0;background:rgba(18,16,14,.4);z-index:400;opacity:0;pointer-events:none;transition:opacity .3s}
+    .menu-backdrop.show{opacity:1;pointer-events:auto}
 
-    /* Sticker Tray */
-    .sticker-tray{position:absolute;bottom:170px;right:8px;background:rgba(26,23,20,.85);border-radius:var(--radius);padding:10px;display:flex;flex-direction:column;gap:8px;z-index:25;backdrop-filter:blur(16px);transform:scale(0);transform-origin:bottom right;transition:transform .25s cubic-bezier(.34,1.56,.64,1);border:1px solid rgba(201,168,76,.1)}
-    .sticker-tray.open{transform:scale(1)}
-    .sticker-tray span{font-size:24px;cursor:pointer;transition:transform .15s;padding:2px}
-    .sticker-tray span:active{transform:scale(1.4)}
-    .flying-sticker{position:absolute;font-size:30px;pointer-events:none;z-index:55;opacity:0}
-    .flying-sticker.fly{animation:stickerUp 2.5s ease-out forwards}
-    @keyframes stickerUp{0%{opacity:1;transform:translateX(0) translateY(0) scale(1)}30%{opacity:1;transform:translateX(var(--dx1)) translateY(-100px) scale(1.2)}100%{opacity:0;transform:translateX(var(--dx2)) translateY(-280px) scale(.4) rotate(var(--rot))}}
+    /* ========== EXPLORE — MOSAIC LAYOUT ========== */
+    .explore-view{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+    .explore-head{padding:20px 18px 8px;display:flex;align-items:center;justify-content:space-between}
+    .explore-head h1{font-family:'Playfair Display',serif;font-size:24px;font-weight:800}
+    .explore-head svg{width:22px;height:22px;opacity:.5}
+    .search-box{display:flex;align-items:center;gap:8px;background:var(--stone);border-radius:14px;margin:0 16px 12px;padding:0 12px;height:40px;border:1px solid rgba(184,148,63,.06)}
+    .search-box svg{width:16px;height:16px;color:rgba(245,240,232,.3);flex-shrink:0}
+    .search-box input{flex:1;background:none;border:none;color:var(--snow);font-size:14px;outline:none}
+    .search-box input::placeholder{color:rgba(245,240,232,.2)}
 
-    /* Karma */
-    .karma-fly{position:absolute;pointer-events:none;z-index:60;font-size:13px;font-weight:700;color:var(--saffron);opacity:0;font-family:'Playfair Display',serif}
-    .karma-fly.up{animation:karmaUp .9s ease-out forwards}
-    @keyframes karmaUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-45px) scale(.8)}}
+    .realm-scroll{display:flex;gap:8px;padding:0 16px 14px;overflow-x:auto;scrollbar-width:none}
+    .realm-scroll::-webkit-scrollbar{display:none}
+    .realm-tag{padding:7px 14px;border-radius:18px;font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;transition:all .2s;border:1px solid transparent}
+    .realm-tag:active{transform:scale(.95)}
 
-    /* Comments — Drawer */
-    .modal-bg{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:500;display:flex;align-items:flex-end;backdrop-filter:blur(4px)}
-    .comments-drawer{background:var(--ink);border-radius:var(--radius-xl) var(--radius-xl) 0 0;width:100%;max-height:55%;display:flex;flex-direction:column;border-top:1px solid rgba(201,168,76,.1)}
-    .comments-top{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid rgba(247,245,240,.06)}
-    .comments-top h3{font-family:'Playfair Display',serif;font-size:15px;font-weight:700}
-    .comments-top button{background:none;border:none;color:var(--snow);cursor:pointer}
-    .comments-top button svg{width:20px;height:20px}
-    .comments-scroll{flex:1;overflow-y:auto;padding:12px 16px}
-    .c-item{display:flex;gap:10px;margin-bottom:16px;animation:fadeUp .3s ease}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-    .c-item img{width:30px;height:30px;border-radius:50%;object-fit:cover;flex-shrink:0}
-    .c-item .c-body{flex:1}
-    .c-item .c-body .c-user{font-size:11px;font-weight:700;color:var(--saffron);margin-bottom:2px}
-    .c-item .c-body .c-text{font-size:12px;line-height:17px;opacity:.85}
-    .c-item .c-body .c-time{font-size:10px;color:rgba(247,245,240,.3);margin-top:3px}
-    .c-input-row{display:flex;gap:8px;padding:12px 16px;border-top:1px solid rgba(247,245,240,.06);align-items:center}
-    .c-input-row img{width:28px;height:28px;border-radius:50%;object-fit:cover}
-    .c-input-row input{flex:1;background:rgba(247,245,240,.06);border:1px solid rgba(201,168,76,.1);border-radius:20px;padding:9px 14px;color:var(--snow);font-size:13px;outline:none}
-    .c-input-row input::placeholder{color:rgba(247,245,240,.25)}
-    .c-input-row button{color:var(--saffron);font-weight:700;font-size:13px;padding:6px;background:none;border:none;cursor:pointer}
+    .sec-head{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;padding:4px 18px 10px;display:flex;align-items:center;gap:6px}
+    .sec-head::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--saffron)}
 
-    /* DISCOVER — "Explore the Kingdom" */
-    .explore{flex:1;overflow-y:auto;padding-top:44px}
-    .explore-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:800;padding:10px 16px 4px}
-    .search-wrap{display:flex;align-items:center;gap:8px;background:rgba(247,245,240,.06);border:1px solid rgba(201,168,76,.08);border-radius:14px;margin:8px 14px;padding:0 12px;height:40px}
-    .search-wrap svg{width:18px;height:18px;color:rgba(247,245,240,.3);flex-shrink:0}
-    .search-wrap input{flex:1;background:none;border:none;color:var(--snow);font-size:14px;outline:none}
-    .search-wrap input::placeholder{color:rgba(247,245,240,.25)}
-    .realm-bar{display:flex;gap:8px;padding:6px 14px 12px;overflow-x:auto;scrollbar-width:none}
-    .realm-bar::-webkit-scrollbar{display:none}
-    .realm-chip{padding:7px 16px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;transition:all .2s;border:1px solid transparent}
-    .realm-chip:active{transform:scale(.95)}
-    .sec-label{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;margin:6px 14px 10px;display:flex;align-items:center;gap:6px}
-    .sec-label .dot{width:6px;height:6px;border-radius:50%;background:var(--saffron)}
-    .mosaic{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:0 2px}
-    .mosaic-tile{aspect-ratio:3/4;background:rgba(247,245,240,.04);position:relative;overflow:hidden;cursor:pointer;border-radius:4px;transition:transform .2s}
-    .mosaic-tile:active{transform:scale(.97)}
-    .mosaic-tile video,.mosaic-tile img{width:100%;height:100%;object-fit:cover}
-    .mosaic-tile .tile-stat{position:absolute;bottom:6px;left:6px;display:flex;align-items:center;gap:3px;font-size:10px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+    /* Bento Grid — NOT a uniform 3-column TikTok grid */
+    .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:0 3px 90px}
+    .bento-tile{position:relative;overflow:hidden;cursor:pointer;border-radius:8px;transition:transform .2s}
+    .bento-tile:active{transform:scale(.97)}
+    .bento-tile video{width:100%;height:100%;object-fit:cover;display:block}
+    .bento-tile .b-stat{position:absolute;bottom:6px;left:6px;font-size:10px;font-weight:600;display:flex;align-items:center;gap:3px;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+    .bento-tile:nth-child(1){grid-column:span 2;grid-row:span 2;aspect-ratio:1/1;border-radius:12px}
+    .bento-tile:nth-child(n+2):nth-child(-n+3){aspect-ratio:1/1.2}
+    .bento-tile:nth-child(n+4){aspect-ratio:1/1.2}
 
-    /* CREATE — "The Studio" */
-    .studio{flex:1;display:flex;flex-direction:column;background:var(--ink);padding-top:44px}
-    .studio-top{display:flex;justify-content:space-between;align-items:center;padding:8px 16px}
-    .studio-top .title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700}
-    .studio-top svg{width:24px;height:24px;cursor:pointer;color:var(--snow)}
-    .viewfinder{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(247,245,240,.03);margin:12px;border-radius:var(--radius-lg);gap:12px;position:relative;overflow:hidden;border:1px solid rgba(201,168,76,.06)}
-    .viewfinder svg{width:48px;height:48px;color:var(--saffron);opacity:.5}
-    .viewfinder .vf-text{font-size:15px;font-weight:600;color:rgba(247,245,240,.4)}
-    .viewfinder .vf-sub{font-size:12px;color:rgba(247,245,240,.25)}
-    .lens-strip{display:flex;gap:8px;overflow-x:auto;padding:8px 14px;scrollbar-width:none}
-    .lens-strip::-webkit-scrollbar{display:none}
-    .lens-item{width:52px;height:52px;border-radius:14px;flex-shrink:0;cursor:pointer;border:2px solid transparent;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--snow)}
-    .lens-item.active{border-color:var(--saffron)}
-    .studio-controls{padding:10px 16px 16px;display:flex;flex-direction:column;align-items:center;gap:14px}
-    .time-row{display:flex;gap:16px}
-    .time-row span{font-size:12px;font-weight:600;color:rgba(247,245,240,.3);cursor:pointer;transition:color .2s}
-    .time-row span.active{color:var(--saffron)}
-    .rec-btn{width:72px;height:72px;border-radius:50%;border:3px solid var(--saffron);display:flex;align-items:center;justify-content:center;cursor:pointer;background:none;transition:all .3s}
-    .rec-btn-core{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--saffron),var(--vermillion));transition:all .3s}
-    .rec-btn.recording .rec-btn-core{border-radius:10px;width:28px;height:28px}
-    .mode-strip{display:flex;gap:20px}
-    .mode-strip span{font-size:13px;font-weight:600;color:rgba(247,245,240,.3);cursor:pointer;transition:color .2s}
-    .mode-strip span.active{color:var(--snow)}
+    /* ========== STUDIO (Create) ========== */
+    .studio-view{flex:1;display:flex;flex-direction:column;background:var(--ink)}
+    .studio-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 18px}
+    .studio-bar .st-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700}
+    .studio-bar svg{width:22px;height:22px;cursor:pointer;color:var(--snow);opacity:.6}
+    .viewfinder{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--stone);margin:12px 16px;border-radius:20px;gap:10px;border:1px solid rgba(184,148,63,.05)}
+    .viewfinder svg{width:44px;height:44px;color:var(--saffron);opacity:.4}
+    .viewfinder .vf-t{font-size:15px;font-weight:600;color:rgba(245,240,232,.35)}
+    .viewfinder .vf-s{font-size:12px;color:rgba(245,240,232,.2)}
+    .studio-bottom{padding:12px 18px 20px;display:flex;flex-direction:column;align-items:center;gap:14px}
+    .dur-row{display:flex;gap:16px}
+    .dur-row span{font-size:12px;font-weight:600;color:rgba(245,240,232,.25);cursor:pointer}
+    .dur-row span.active{color:var(--saffron)}
+    .rec-orb{width:68px;height:68px;border-radius:50%;border:3px solid var(--saffron);display:flex;align-items:center;justify-content:center;cursor:pointer;background:none;transition:all .3s}
+    .rec-core{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--saffron),var(--vermillion));transition:all .3s}
+    .rec-orb.recording .rec-core{border-radius:8px;width:26px;height:26px}
+    .mode-row{display:flex;gap:20px}
+    .mode-row span{font-size:13px;font-weight:600;color:rgba(245,240,232,.25);cursor:pointer}
+    .mode-row span.active{color:var(--snow)}
 
-    /* INBOX — "Messages from the Kingdom" */
-    .kingdom-inbox{flex:1;overflow-y:auto;padding-top:44px}
-    .inbox-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:800;padding:10px 16px}
-    .inbox-filter{display:flex;gap:8px;padding:4px 16px 12px}
-    .inbox-chip{padding:6px 16px;border-radius:20px;background:rgba(247,245,240,.06);font-size:12px;font-weight:600;color:rgba(247,245,240,.4);border:1px solid transparent;cursor:pointer;transition:all .2s}
-    .inbox-chip.active{background:rgba(232,168,56,.12);color:var(--saffron);border-color:rgba(232,168,56,.3)}
-    .notif-stream{padding:0 16px}
-    .notif-card{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(247,245,240,.04);cursor:pointer;transition:background .2s;animation:fadeUp .3s ease}
-    .notif-card:active{background:rgba(247,245,240,.02)}
-    .notif-card img{width:40px;height:40px;border-radius:50%;object-fit:cover}
-    .notif-card .n-content{flex:1}
-    .notif-card .n-content .n-msg{font-size:13px;line-height:18px}
-    .notif-card .n-content .n-msg strong{font-weight:700;color:var(--saffron)}
-    .notif-card .n-content .n-when{font-size:11px;color:rgba(247,245,240,.25);margin-top:3px}
-    .notif-card .n-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+    /* ========== INBOX ========== */
+    .inbox-view{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+    .inbox-head{padding:20px 18px 6px}
+    .inbox-head h1{font-family:'Playfair Display',serif;font-size:24px;font-weight:800}
+    .inbox-pills{display:flex;gap:8px;padding:10px 18px 14px}
+    .inbox-pill{padding:6px 14px;border-radius:16px;font-size:12px;font-weight:600;background:var(--stone);color:rgba(245,240,232,.35);border:1px solid transparent;cursor:pointer;transition:all .2s}
+    .inbox-pill.active{background:var(--ember);color:var(--saffron);border-color:rgba(232,168,56,.2)}
+    .notif-list{padding:0 18px 90px}
+    .notif-row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid rgba(245,240,232,.03);cursor:pointer;animation:fadeIn .3s ease}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+    .notif-row img{width:42px;height:42px;border-radius:50%;object-fit:cover}
+    .notif-row .n-body{flex:1}
+    .notif-row .n-body .n-text{font-size:13px;line-height:18px}
+    .notif-row .n-body .n-text b{font-weight:700;color:var(--saffron)}
+    .notif-row .n-body .n-time{font-size:11px;color:rgba(245,240,232,.2);margin-top:2px}
+    .notif-row .n-icon{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
-    /* PROFILE — "Your Scroll" */
-    .my-scroll{flex:1;overflow-y:auto;padding-top:44px}
-    .scroll-top{display:flex;justify-content:space-between;align-items:center;padding:8px 16px}
-    .scroll-top .handle{font-family:'Playfair Display',serif;font-size:16px;font-weight:700}
-    .scroll-top svg{width:22px;height:22px;cursor:pointer;color:var(--snow)}
-    .scroll-profile{display:flex;flex-direction:column;align-items:center;padding:10px 16px 16px}
-    .scroll-avatar{width:84px;height:84px;border-radius:50%;object-fit:cover;margin-bottom:12px;border:3px solid var(--saffron);box-shadow:0 0 24px rgba(232,168,56,.15)}
-    .scroll-name{font-size:15px;font-weight:600;margin-bottom:8px}
-    .karma-crest{display:flex;align-items:center;gap:5px;background:linear-gradient(135deg,rgba(232,168,56,.15),rgba(201,168,76,.08));padding:4px 14px;border-radius:14px;font-size:11px;font-weight:700;margin-bottom:14px;border:1px solid rgba(201,168,76,.2);color:var(--saffron)}
-    .karma-crest svg{width:14px;height:14px;fill:var(--saffron)}
-    .scroll-stats{display:flex;align-items:center;gap:24px;margin-bottom:16px}
-    .s-stat{text-align:center}
-    .s-stat .num{font-family:'Playfair Display',serif;font-size:18px;font-weight:700}
-    .s-stat .lbl{font-size:10px;color:rgba(247,245,240,.35);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
-    .s-div{width:1px;height:22px;background:rgba(247,245,240,.08)}
-    .scroll-actions{display:flex;gap:8px;margin-bottom:12px}
-    .edit-scroll{background:rgba(247,245,240,.06);border-radius:8px;padding:9px 36px;font-size:13px;font-weight:600;border:1px solid rgba(201,168,76,.1);color:var(--snow);cursor:pointer;transition:all .2s}
-    .edit-scroll:active{transform:scale(.97)}
-    .sq-btn{background:rgba(247,245,240,.06);width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.1);color:var(--snow);cursor:pointer}
-    .sq-btn svg{width:18px;height:18px}
-    .scroll-bio{font-size:13px;text-align:center;margin-bottom:16px;opacity:.7;line-height:19px}
-    .scroll-grid-tabs{display:flex;border-bottom:1px solid rgba(247,245,240,.06)}
-    .grid-tab{flex:1;text-align:center;padding:11px;border-bottom:2px solid transparent;color:rgba(247,245,240,.3);background:none;border-top:none;border-left:none;border-right:none;cursor:pointer;transition:all .2s}
-    .grid-tab.active{border-bottom-color:var(--saffron);color:var(--saffron)}
-    .grid-tab svg{width:18px;height:18px}
+    /* ========== PROFILE ========== */
+    .profile-view{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+    .prof-top{display:flex;justify-content:space-between;align-items:center;padding:16px 18px 8px}
+    .prof-top .handle{font-family:'Playfair Display',serif;font-size:17px;font-weight:700}
+    .prof-top svg{width:20px;height:20px;cursor:pointer;opacity:.5}
+    .prof-card{margin:0 16px 16px;background:var(--stone);border-radius:20px;padding:20px;display:flex;flex-direction:column;align-items:center;border:1px solid rgba(184,148,63,.06)}
+    .prof-card img{width:72px;height:72px;border-radius:50%;border:3px solid var(--saffron);object-fit:cover;margin-bottom:10px;box-shadow:0 0 20px rgba(232,168,56,.1)}
+    .prof-card .p-name{font-size:15px;font-weight:600;margin-bottom:6px}
+    .karma-gem{display:inline-flex;align-items:center;gap:4px;background:var(--ember);padding:4px 12px;border-radius:12px;font-size:11px;font-weight:700;color:var(--saffron);border:1px solid rgba(232,168,56,.15);margin-bottom:14px}
+    .karma-gem svg{width:12px;height:12px;fill:var(--saffron)}
+    .prof-stats{display:flex;width:100%;justify-content:space-around;margin-bottom:14px}
+    .p-stat{text-align:center}
+    .p-stat .val{font-family:'Playfair Display',serif;font-size:18px;font-weight:700}
+    .p-stat .lbl{font-size:10px;color:rgba(245,240,232,.3);margin-top:1px;text-transform:uppercase;letter-spacing:.5px}
+    .prof-btns{display:flex;gap:8px}
+    .p-edit{background:rgba(245,240,232,.06);border:1px solid rgba(184,148,63,.08);border-radius:10px;padding:9px 28px;font-size:13px;font-weight:600;color:var(--snow);cursor:pointer}
+    .p-sq{width:36px;height:36px;background:rgba(245,240,232,.06);border:1px solid rgba(184,148,63,.08);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--snow)}
+    .p-sq svg{width:16px;height:16px}
+    .prof-bio{font-size:13px;text-align:center;padding:0 18px 14px;opacity:.6;line-height:19px}
+    .prof-section{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;padding:4px 18px 10px;display:flex;align-items:center;gap:6px}
+    .prof-section::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--saffron)}
+    .prof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:0 2px 90px}
+    .prof-grid .pg-tile{aspect-ratio:3/4;background:var(--stone);position:relative;overflow:hidden;border-radius:4px;cursor:pointer}
+    .prof-grid .pg-tile video{width:100%;height:100%;object-fit:cover;display:block}
+    .prof-grid .pg-tile .pg-stat{position:absolute;bottom:5px;left:5px;font-size:10px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+
+    /* Comments Drawer */
+    .drawer-bg{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:600;display:flex;align-items:flex-end;backdrop-filter:blur(3px)}
+    .drawer{background:var(--ink);border-radius:24px 24px 0 0;width:100%;max-height:55%;display:flex;flex-direction:column;border-top:1px solid rgba(184,148,63,.08)}
+    .drawer-bar{display:flex;justify-content:center;padding:10px}<br>    .drawer-bar::after{content:'';width:36px;height:4px;border-radius:2px;background:rgba(245,240,232,.1)}
+    .drawer-head{display:flex;justify-content:space-between;align-items:center;padding:0 16px 10px}
+    .drawer-head h3{font-family:'Playfair Display',serif;font-size:14px;font-weight:700}
+    .drawer-head button{background:none;border:none;color:var(--snow);cursor:pointer;opacity:.5}
+    .drawer-head button svg{width:18px;height:18px}
+    .drawer-body{flex:1;overflow-y:auto;padding:0 16px}
+    .c-row{display:flex;gap:10px;margin-bottom:14px;animation:fadeIn .3s ease}
+    .c-row img{width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0}
+    .c-row .c-content{flex:1}
+    .c-row .c-content .c-name{font-size:11px;font-weight:700;color:var(--saffron);margin-bottom:1px}
+    .c-row .c-content .c-msg{font-size:12px;line-height:17px;opacity:.8}
+    .c-row .c-content .c-when{font-size:10px;color:rgba(245,240,232,.2);margin-top:2px}
+    .drawer-input{display:flex;gap:8px;padding:10px 16px;border-top:1px solid rgba(245,240,232,.05);align-items:center}
+    .drawer-input img{width:26px;height:26px;border-radius:50%;object-fit:cover}
+    .drawer-input input{flex:1;background:rgba(245,240,232,.05);border:1px solid rgba(184,148,63,.08);border-radius:18px;padding:8px 14px;color:var(--snow);font-size:13px;outline:none}
+    .drawer-input input::placeholder{color:rgba(245,240,232,.2)}
+    .drawer-input button{color:var(--saffron);font-weight:700;font-size:13px;background:none;border:none;cursor:pointer}
 
     /* Toast */
-    .toast-msg{position:absolute;top:52px;left:50%;transform:translateX(-50%) translateY(-80px);background:rgba(26,23,20,.9);padding:10px 22px;border-radius:14px;font-size:13px;font-weight:600;z-index:9999;transition:transform .3s;border:1px solid rgba(201,168,76,.12);white-space:nowrap;backdrop-filter:blur(16px)}
-    .toast-msg.show{transform:translateX(-50%) translateY(0)}
-    .toast-msg.success{border-color:var(--jade)}
-    .toast-msg.error{border-color:var(--vermillion)}
+    .toast{position:absolute;top:48px;left:50%;transform:translateX(-50%) translateY(-80px);background:rgba(30,27,23,.92);padding:10px 20px;border-radius:14px;font-size:12px;font-weight:600;z-index:9999;transition:transform .3s;border:1px solid rgba(184,148,63,.1);white-space:nowrap;backdrop-filter:blur(16px)}
+    .toast.show{transform:translateX(-50%) translateY(0)}
 
-    /* Mini Player */
-    .pip{position:absolute;bottom:82px;right:10px;width:105px;height:170px;border-radius:var(--radius);overflow:hidden;z-index:200;box-shadow:0 8px 32px rgba(0,0,0,.5);border:1px solid rgba(201,168,76,.15);cursor:pointer;transition:all .2s}
-    .pip:active{transform:scale(.95)}
-    .pip video{width:100%;height:100%;object-fit:cover}
-    .pip .pip-close{position:absolute;top:4px;right:4px;width:20px;height:20px;background:rgba(26,23,20,.7);border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;color:var(--snow);cursor:pointer;font-size:11px}
+    /* Karma float */
+    .karma-float{position:absolute;pointer-events:none;z-index:60;font-size:13px;font-weight:700;color:var(--saffron);opacity:0;font-family:'Playfair Display',serif}
+    .karma-float.up{animation:kUp .9s ease-out forwards}
+    @keyframes kUp{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-40px)}}
 
-    /* On desktop, constrain nav-pill inside phone frame */
-    @media(min-width:421px){
-      .nav-pill{position:absolute;bottom:16px}
-      .pip{position:absolute}
-      .toast-msg{position:absolute}
-      .ambient-glow{position:absolute}
+    /* ========== MOBILE FULL SCREEN ========== */
+    @media(min-width:769px){
+      .mandala-menu{position:absolute}
+      .menu-backdrop{position:absolute}
     }
-
     @media(max-width:768px){
-      body{background:var(--ink);overflow:hidden;display:block}
-      .phone-wrapper{gap:0;width:100vw;height:100vh;height:100dvh;padding:0;display:block}.phone-brand{display:none}
-      .phone-frame{width:100vw;height:100vh;height:100dvh;border-radius:0;border:none;box-shadow:none;display:flex;flex-direction:column}
-      .phone-notch,.phone-home{display:none}
-      .phone-inner{width:100vw;height:100vh;height:100dvh;display:flex;flex-direction:column}
-      .screen{flex:1;height:0}
-      .screen.active{display:flex;flex-direction:column}
-      .feed{flex:1;height:0}
-      .video-slide{height:100vh;height:100dvh;min-height:100vh;min-height:100dvh}
-      .nav-pill{position:fixed;bottom:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:9999}
-      .pip{position:fixed;z-index:9998}
-      .toast-msg{position:fixed;z-index:99999}
-      .ambient-glow{position:fixed}
-      .explore,.kingdom-inbox,.my-scroll,.studio{padding-top:16px}
-      .tale-bar{top:50px}
-      .scroll-header{top:10px}
+      body{display:block;background:var(--ink)}
+      .phone-wrap{gap:0;width:100vw;height:100dvh;padding:0;display:block}
+      .brand{display:none}
+      .device{width:100vw;height:100dvh;border-radius:0;border:none;box-shadow:none;display:flex;flex-direction:column}
+      .notch,.home-ind{display:none}
+      .app{width:100vw;height:100dvh}
+      .v-card{width:calc(100% - 24px);height:calc(100% - 90px);top:12px}
+      .mandala-menu{position:fixed;bottom:20px;bottom:max(20px,env(safe-area-inset-bottom));z-index:9999}
+      .menu-backdrop{position:fixed;z-index:9998}
+      .toast{position:fixed}
     }
   </style>
 </head>
 <body>
-<div class="phone-wrapper">
-  <div class="phone-brand">
+<div class="phone-wrap">
+  <div class="brand">
     <div class="logo">Zhingkham</div>
-    <div class="tag">Land of Paradise</div>
+    <div class="sub">Land of Paradise</div>
   </div>
-  <div class="phone-frame">
-    <div class="phone-notch"></div>
-    <div class="phone-home"></div>
-    <div class="phone-inner">
-      <div class="toast-msg" id="toast"></div>
-      <div class="ambient-glow" id="ambient-glow"></div>
+  <div class="device">
+    <div class="notch"></div>
+    <div class="home-ind"></div>
+    <div class="app">
+      <div class="toast" id="toast"></div>
 
-      <!-- HOME -->
-      <div id="screen-home" class="screen active">
-        <div class="scroll-header">
-          <div class="scroll-tabs">
-            <button class="scroll-tab" id="tab-following">Following</button>
-            <button class="scroll-tab active" id="tab-foryou">For You</button>
-          </div>
+      <!-- HOME — Card Deck -->
+      <div id="view-home" class="view active">
+        <div class="card-deck" id="card-deck">
+          <div class="swipe-hint l">&lsaquo;</div>
+          <div class="swipe-hint r">&rsaquo;</div>
         </div>
-        <div class="tale-bar" id="tale-bar"></div>
-        <div class="feed" id="feed"></div>
-        <div class="modal-bg hidden" id="comments-modal">
-          <div class="comments-drawer">
-            <div class="comments-top">
+        <div class="drawer-bg hidden" id="comments-modal">
+          <div class="drawer">
+            <div class="drawer-bar"></div>
+            <div class="drawer-head">
               <h3 id="comments-title">Comments</h3>
               <button onclick="closeComments()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
             </div>
-            <div class="comments-scroll" id="comments-list"></div>
-            <div class="c-input-row">
+            <div class="drawer-body" id="comments-list"></div>
+            <div class="drawer-input">
               <img src="https://i.pravatar.cc/150?img=10" alt="">
               <input type="text" placeholder="Share your thoughts..." id="comment-input" onkeydown="if(event.key==='Enter')postComment()">
               <button onclick="postComment()">Send</button>
@@ -339,117 +290,112 @@
         </div>
       </div>
 
-      <!-- TALE VIEWER -->
-      <div id="tale-viewer" class="tale-viewer hidden">
-        <div class="tale-progress" id="tale-progress"></div>
-        <div class="tale-user" id="tale-user"></div>
-        <button class="tale-close" onclick="closeTale()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
-        <div class="tale-content" id="tale-content"></div>
-        <div class="tale-reply">
-          <input placeholder="Reply to tale..." onclick="toast('Replies coming soon!')">
-          <button>🙏</button>
-        </div>
-      </div>
-
-      <!-- DISCOVER -->
-      <div id="screen-discover" class="screen">
-        <div class="explore">
-          <div class="explore-title">Explore</div>
-          <div class="search-wrap">
+      <!-- EXPLORE -->
+      <div id="view-explore" class="view">
+        <div class="explore-view">
+          <div class="explore-head">
+            <h1>Explore</h1>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          </div>
+          <div class="search-box">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
             <input type="text" placeholder="Search the kingdom..." id="search-input" oninput="handleSearch()">
           </div>
-          <div class="realm-bar" id="realm-bar"></div>
-          <div class="sec-label"><span class="dot"></span> Trending Now</div>
-          <div class="mosaic" id="discover-grid"></div>
+          <div class="realm-scroll" id="realm-bar"></div>
+          <div class="sec-head">Trending Now</div>
+          <div class="bento" id="explore-grid"></div>
         </div>
       </div>
 
-      <!-- CREATE -->
-      <div id="screen-create" class="screen">
-        <div class="studio">
-          <div class="studio-top">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" onclick="switchTab('home')"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            <span class="title">Studio</span>
+      <!-- STUDIO -->
+      <div id="view-studio" class="view">
+        <div class="studio-view">
+          <div class="studio-bar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" onclick="goTo('home')"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            <span class="st-title">Studio</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
           </div>
-          <div class="viewfinder" id="viewfinder">
+          <div class="viewfinder">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            <span class="vf-text">Ready to Create</span>
-            <span class="vf-sub">Tap the button below</span>
+            <span class="vf-t">Ready to Create</span>
+            <span class="vf-s">Tap record below</span>
           </div>
-          <div class="lens-strip" id="lens-strip"></div>
-          <div class="studio-controls">
-            <div class="time-row"><span>15s</span><span class="active">60s</span><span>3m</span></div>
-            <button class="rec-btn" id="rec-btn" onclick="toggleRecording()"><div class="rec-btn-core"></div></button>
-            <div class="mode-strip"><span>Photo</span><span class="active">Video</span><span>Live</span></div>
+          <div class="studio-bottom">
+            <div class="dur-row"><span>15s</span><span class="active">60s</span><span>3m</span></div>
+            <button class="rec-orb" id="rec-btn" onclick="toggleRec()"><div class="rec-core"></div></button>
+            <div class="mode-row"><span>Photo</span><span class="active">Video</span><span>Live</span></div>
           </div>
         </div>
       </div>
 
       <!-- INBOX -->
-      <div id="screen-inbox" class="screen">
-        <div class="kingdom-inbox">
-          <div class="inbox-title">Inbox</div>
-          <div class="inbox-filter">
-            <button class="inbox-chip active">All</button>
-            <button class="inbox-chip">Mentions</button>
-            <button class="inbox-chip">Follows</button>
+      <div id="view-inbox" class="view">
+        <div class="inbox-view">
+          <div class="inbox-head"><h1>Inbox</h1></div>
+          <div class="inbox-pills">
+            <button class="inbox-pill active">All</button>
+            <button class="inbox-pill">Mentions</button>
+            <button class="inbox-pill">Follows</button>
           </div>
-          <div class="notif-stream" id="notif-stream"></div>
+          <div class="notif-list" id="notif-list"></div>
         </div>
       </div>
 
       <!-- PROFILE -->
-      <div id="screen-profile" class="screen">
-        <div class="my-scroll">
-          <div class="scroll-top">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+      <div id="view-profile" class="view">
+        <div class="profile-view">
+          <div class="prof-top">
             <span class="handle">@zhingkham_user</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a2 2 0 012 2v2a2 2 0 01-4 0V5a2 2 0 012-2zM12 15a2 2 0 012 2v2a2 2 0 01-4 0v-2a2 2 0 012-2zM12 9a2 2 0 012 2 2 2 0 01-4 0 2 2 0 012-2z"/></svg>
           </div>
-          <div class="scroll-profile">
-            <img class="scroll-avatar" src="https://i.pravatar.cc/150?img=10" alt="">
-            <div class="scroll-name">Zhingkham User</div>
-            <div class="karma-crest" id="karma-crest">
+          <div class="prof-card">
+            <img src="https://i.pravatar.cc/150?img=10" alt="">
+            <div class="p-name">Zhingkham User</div>
+            <div class="karma-gem" id="karma-gem">
               <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               <span id="karma-val">0 Karma</span>
             </div>
-            <div class="scroll-stats">
-              <div class="s-stat"><div class="num">356</div><div class="lbl">Following</div></div>
-              <div class="s-div"></div>
-              <div class="s-stat"><div class="num">1.2K</div><div class="lbl">Followers</div></div>
-              <div class="s-div"></div>
-              <div class="s-stat"><div class="num">8.9K</div><div class="lbl">Likes</div></div>
+            <div class="prof-stats">
+              <div class="p-stat"><div class="val">356</div><div class="lbl">Following</div></div>
+              <div class="p-stat"><div class="val">1.2K</div><div class="lbl">Followers</div></div>
+              <div class="p-stat"><div class="val">8.9K</div><div class="lbl">Likes</div></div>
             </div>
-            <div class="scroll-actions">
-              <button class="edit-scroll" onclick="toast('Edit profile coming soon!')">Edit Profile</button>
-              <button class="sq-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></button>
-              <button class="sq-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
+            <div class="prof-btns">
+              <button class="p-edit" onclick="toast('Coming soon!')">Edit Profile</button>
+              <button class="p-sq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></button>
+              <button class="p-sq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
             </div>
-            <div class="scroll-bio">Welcome to Zhingkham! 🇧🇹<br>Sharing the beauty of the Land of Paradise 🐉</div>
           </div>
-          <div class="scroll-grid-tabs">
-            <button class="grid-tab active"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg></button>
-            <button class="grid-tab"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
-          </div>
-          <div class="mosaic" id="profile-grid"></div>
+          <div class="prof-bio">Welcome to Zhingkham! 🇧🇹<br>Sharing the beauty of the Land of Paradise 🐉</div>
+          <div class="prof-section">My Videos</div>
+          <div class="prof-grid" id="prof-grid"></div>
         </div>
       </div>
 
-      <!-- NAV PILL -->
-      <div class="nav-pill">
-        <button class="nav-item active" onclick="switchTab('home')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg><span>Home</span></button>
-        <button class="nav-item" onclick="switchTab('discover')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><span>Explore</span></button>
-        <button class="create-orb" onclick="switchTab('create')"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></button>
-        <button class="nav-item" onclick="switchTab('inbox')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><span>Inbox</span></button>
-        <button class="nav-item" onclick="switchTab('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Me</span></button>
-      </div>
-
-      <!-- PIP -->
-      <div class="pip hidden" id="pip" onclick="pipTap()">
-        <video id="pip-video" loop muted playsinline></video>
-        <button class="pip-close" onclick="event.stopPropagation();closePip()">✕</button>
+      <!-- MANDALA MENU -->
+      <div class="menu-backdrop" id="menu-bg" onclick="toggleMenu()"></div>
+      <div class="mandala-menu" id="mandala">
+        <div class="orbit">
+          <div class="orbit-item o0 active" onclick="goTo('home')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+            <span>HOME</span>
+          </div>
+          <div class="orbit-item o1" onclick="goTo('explore')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <span>FIND</span>
+          </div>
+          <div class="orbit-item o2" onclick="goTo('inbox')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            <span>INBOX</span>
+          </div>
+          <div class="orbit-item o3" onclick="goTo('profile')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>ME</span>
+          </div>
+        </div>
+        <button class="mandala-btn" id="mandala-btn" onclick="toggleMenu()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
       </div>
     </div>
   </div>
@@ -457,349 +403,275 @@
 
 <script>
 const VIDEOS=[
-  {id:'1',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',user:{username:'dorji_wangmo',avatar:'https://i.pravatar.cc/150?img=1',verified:true},caption:"Sunrise blessing at Tiger's Nest monastery 🏔️ #bhutan #sacred",song:'Original Sound — dorji_wangmo',likes:45200,comments:[],shares:890,saves:2100,
-    captions:[{en:"Morning light kisses the monastery",dz:"དགོང་མོའི་འོད་ཟེར་དགོན་པར་ཕོག"},{en:"Tiger's Nest, Paro, Bhutan",dz:"སྟག་ཚང་ སྤ་རོ་ བྲུག་ཡུལ།"},{en:"3,120 meters above sea level",dz:"རྒྱ་མཚོའི་ངོས་ནས་མི་ཊར ༣༡༢༠"}]},
-  {id:'2',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',user:{username:'pema_tshering',avatar:'https://i.pravatar.cc/150?img=2',verified:false},caption:'Making ema datshi — the soul of Bhutan 🍲 #food',song:'Bhutanese Folk',likes:23100,comments:[],shares:320,saves:890,
-    captions:[{en:"First, slice the chilies",dz:"དང་པོ་ ཨེ་མ་བཅགས།"},{en:"Add fresh cheese and butter",dz:"ཕྱུར་བ་གསར་བ་དང་མར་བཅུག"},{en:"The national dish of Bhutan!",dz:"བྲུག་ཡུལ་གྱི་རྒྱལ་ཁབ་ཀྱི་ཟ་མ!"}]},
-  {id:'3',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',user:{username:'karma_dancer',avatar:'https://i.pravatar.cc/150?img=3',verified:true},caption:'Sacred Cham dance at Paro Tshechu 💃 #dance #culture',song:'Festival Drums',likes:67800,comments:[],shares:1200,saves:4500,
-    captions:[{en:"Sacred mask dance ceremony",dz:"འཆམ་གྱི་ཆོ་ག"},{en:"Performed during Tshechu festival",dz:"ཚེས་བཅུའི་དུས་ཆེན་ལ་འཁྲབ།"},{en:"Centuries-old Buddhist tradition",dz:"ནང་ཆོས་ཀྱི་སྲོལ་རྒྱུན།"}]},
-  {id:'4',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',user:{username:'thinley_adventures',avatar:'https://i.pravatar.cc/150?img=4',verified:false},caption:'Snowman Trek day 15 — the roof of the world 🏔️❄️',song:'Mountain Vibes',likes:89400,comments:[],shares:5600,saves:12000,
-    captions:[{en:"The hardest trek in the world",dz:"འཛམ་གླིང་ནང་གི་འགྲིམས་འགྲུལ་དཀའ་ཤོས།"},{en:"25 days through the Himalayas",dz:"ཧི་མ་ལ་ཡའི་ནང་ཉིན་ ༢༥"},{en:"Views you can't find anywhere else",dz:"གཞན་གང་ན་ཡང་མི་རྙེད་པའི་ལྟ་བ།"}]},
-  {id:'5',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',user:{username:'sonam_arts',avatar:'https://i.pravatar.cc/150?img=5',verified:true},caption:'Painting thangka — each stroke a meditation 🎨',song:'Lo-fi Meditation',likes:34500,comments:[],shares:670,saves:3400,
-    captions:[{en:"Each stroke is a meditation",dz:"རི་མོ་རེ་རེ་བསམ་གཏན་ཡིན།"},{en:"Natural mineral pigments only",dz:"རང་བྱུང་ས་ཁའི་ཚོན་རྫས་ཁོ་ན།"},{en:"This piece took 3 months",dz:"འདི་ཟླ་བ་ ༣ འགོར།"}]},
+  {id:'1',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',user:{username:'dorji_wangmo',avatar:'https://i.pravatar.cc/150?img=1',verified:true},caption:"Sunrise blessing at Tiger's Nest 🏔️",song:'Original Sound',likes:45200,comments:[],shares:890,saves:2100,location:'Paro, Bhutan'},
+  {id:'2',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',user:{username:'pema_tshering',avatar:'https://i.pravatar.cc/150?img=2',verified:false},caption:'Making ema datshi — soul of Bhutan 🍲',song:'Bhutanese Folk',likes:23100,comments:[],shares:320,saves:890,location:'Thimphu'},
+  {id:'3',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',user:{username:'karma_dancer',avatar:'https://i.pravatar.cc/150?img=3',verified:true},caption:'Sacred Cham dance at Paro Tshechu 💃',song:'Festival Drums',likes:67800,comments:[],shares:1200,saves:4500,location:'Paro Dzong'},
+  {id:'4',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',user:{username:'thinley_adventures',avatar:'https://i.pravatar.cc/150?img=4',verified:false},caption:'Snowman Trek day 15 — roof of the world 🏔️',song:'Mountain Vibes',likes:89400,comments:[],shares:5600,saves:12000,location:'Laya'},
+  {id:'5',src:'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',user:{username:'sonam_arts',avatar:'https://i.pravatar.cc/150?img=5',verified:true},caption:'Painting thangka — each stroke a meditation 🎨',song:'Lo-fi Meditation',likes:34500,comments:[],shares:670,saves:3400,location:'Bumthang'},
 ];
-
-VIDEOS[0].comments=[{user:'pema_tshering',avatar:'https://i.pravatar.cc/150?img=2',text:'So beautiful! 😍',time:'2h'},{user:'karma_dancer',avatar:'https://i.pravatar.cc/150?img=3',text:'I need to visit! 🏔️',time:'4h'},{user:'sonam_arts',avatar:'https://i.pravatar.cc/150?img=5',text:'The colors are incredible ✨',time:'6h'}];
+VIDEOS[0].comments=[{user:'pema_tshering',avatar:'https://i.pravatar.cc/150?img=2',text:'So beautiful! 😍',time:'2h'},{user:'karma_dancer',avatar:'https://i.pravatar.cc/150?img=3',text:'I need to visit! 🏔️',time:'4h'},{user:'sonam_arts',avatar:'https://i.pravatar.cc/150?img=5',text:'Incredible colors ✨',time:'6h'}];
 VIDEOS[2].comments=[{user:'dorji_wangmo',avatar:'https://i.pravatar.cc/150?img=1',text:'Your dance is amazing! 🔥',time:'1h'},{user:'thinley_adventures',avatar:'https://i.pravatar.cc/150?img=4',text:'Teach me! 💃',time:'3h'}];
 VIDEOS[3].comments=[{user:'sonam_arts',avatar:'https://i.pravatar.cc/150?img=5',text:'Stay safe! 🙏',time:'5h'}];
 
-const REALMS=[{label:'🔥 Trending',bg:'rgba(212,68,42,.12)',color:'#D4442A'},{label:'💃 Dance',bg:'rgba(46,74,122,.12)',color:'#2E4A7A'},{label:'🍲 Food',bg:'rgba(232,168,56,.12)',color:'#E8A838'},{label:'🏛️ Heritage',bg:'rgba(45,139,111,.12)',color:'#2D8B6F'},{label:'✈️ Travel',bg:'rgba(46,74,122,.12)',color:'#2E4A7A'},{label:'🎵 Music',bg:'rgba(139,92,168,.12)',color:'#8B5CA8'},{label:'🎨 Art',bg:'rgba(201,168,76,.12)',color:'#C9A84C'},{label:'🏹 Sports',bg:'rgba(45,139,111,.12)',color:'#2D8B6F'}];
-const NOTIFS=[{user:'dorji_wangmo',avatar:'https://i.pravatar.cc/150?img=1',text:'liked your video',time:'2h ago',dot:'#D4442A'},{user:'pema_tshering',avatar:'https://i.pravatar.cc/150?img=2',text:'started following you',time:'3h ago',dot:'#2E4A7A'},{user:'karma_dancer',avatar:'https://i.pravatar.cc/150?img=3',text:'commented: "Amazing! 🔥"',time:'5h ago',dot:'#E8A838'},{user:'thinley_adventures',avatar:'https://i.pravatar.cc/150?img=4',text:'and 42 others liked your video',time:'8h ago',dot:'#D4442A'},{user:'sonam_arts',avatar:'https://i.pravatar.cc/150?img=5',text:'mentioned you in a comment',time:'1d ago',dot:'#2D8B6F'},{user:'dorji_wangmo',avatar:'https://i.pravatar.cc/150?img=1',text:'shared your video',time:'1d ago',dot:'#2E4A7A'}];
+const REALMS=[{label:'🔥 Trending',bg:'rgba(199,57,47,.1)',color:'#C7392F'},{label:'💃 Dance',bg:'rgba(43,66,112,.1)',color:'#2B4270'},{label:'🍲 Food',bg:'rgba(232,168,56,.1)',color:'#E8A838'},{label:'🏛️ Heritage',bg:'rgba(42,125,98,.1)',color:'#2A7D62'},{label:'✈️ Travel',bg:'rgba(43,66,112,.1)',color:'#2B4270'},{label:'🎨 Art',bg:'rgba(184,148,63,.1)',color:'#B8943F'},{label:'🏹 Sports',bg:'rgba(42,125,98,.1)',color:'#2A7D62'}];
+const NOTIFS=[{user:'dorji_wangmo',avatar:'https://i.pravatar.cc/150?img=1',text:'liked your video',time:'2h ago',dot:'#C7392F'},{user:'pema_tshering',avatar:'https://i.pravatar.cc/150?img=2',text:'started following you',time:'3h ago',dot:'#2B4270'},{user:'karma_dancer',avatar:'https://i.pravatar.cc/150?img=3',text:'commented: "Amazing! 🔥"',time:'5h ago',dot:'#E8A838'},{user:'thinley_adventures',avatar:'https://i.pravatar.cc/150?img=4',text:'and 42 others liked your video',time:'8h ago',dot:'#C7392F'},{user:'sonam_arts',avatar:'https://i.pravatar.cc/150?img=5',text:'mentioned you in a comment',time:'1d ago',dot:'#2A7D62'}];
+const MANDALA_SYMS='✦ ❋ ◈ ☸ ✿ ◆ ༄ ❤️ 🙏 🐉'.split(' ');
 
-const TALES=[
-  {user:'dorji_wangmo',avatar:'https://i.pravatar.cc/150?img=1',seen:false,slides:[{bg:'linear-gradient(135deg,#D4442A,#E8A838)',text:'Just arrived at Punakha Dzong! 🏯'},{bg:'linear-gradient(135deg,#2D8B6F,#2E4A7A)',text:'The jacaranda trees are blooming 💜'}]},
-  {user:'karma_dancer',avatar:'https://i.pravatar.cc/150?img=3',seen:false,slides:[{bg:'linear-gradient(135deg,#2E4A7A,#8B5CA8)',text:'New dance routine dropping tomorrow 💃'},{bg:'linear-gradient(135deg,#E8A838,#D4442A)',text:'Tshechu preparations 🎭'},{bg:'linear-gradient(135deg,#2D8B6F,#2E4A7A)',text:"Who's coming to the festival?"}]},
-  {user:'pema_tshering',avatar:'https://i.pravatar.cc/150?img=2',seen:true,slides:[{bg:'linear-gradient(135deg,#E8A838,#C9A84C)',text:'Ema datshi recipe of the day 🍲'}]},
-  {user:'thinley',avatar:'https://i.pravatar.cc/150?img=4',seen:false,slides:[{bg:'linear-gradient(135deg,#2E4A7A,#8B5CA8)',text:'Day 16 on the Snowman Trek 🏔️'},{bg:'linear-gradient(135deg,#2D8B6F,#2E4A7A)',text:'The view from Rinchen Zoe La pass ❄️'}]},
-  {user:'sonam_arts',avatar:'https://i.pravatar.cc/150?img=5',seen:true,slides:[{bg:'linear-gradient(135deg,#D4442A,#E8A838)',text:'New thangka painting WIP 🎨'}]},
-];
-
-const MANDALA_CHARS='✦ ❋ ❊ ◈ ◆ ✧ ☸ ༄ ༅ ༆ ❤️ 🙏 🐉 🏔️ ☀ ✿'.split(' ');
-const BHUTAN_STICKERS=['🐉','🏔️','🙏','🇧🇹','🎭','🍲','🏹','🎨','💃','🏯'];
-const LENSES=[{name:'Natural',bg:'rgba(247,245,240,.03)'},{name:'Warm',bg:'linear-gradient(135deg,rgba(232,168,56,.08),rgba(201,168,76,.05))'},{name:'Cool',bg:'linear-gradient(135deg,rgba(46,74,122,.1),rgba(45,139,111,.05))'},{name:'Vivid',bg:'linear-gradient(135deg,rgba(139,92,168,.08),rgba(212,68,42,.05))'},{name:'Mono',bg:'linear-gradient(135deg,rgba(247,245,240,.06),rgba(26,23,20,.3))'},{name:'Sepia',bg:'linear-gradient(135deg,rgba(201,168,76,.1),rgba(232,168,56,.05))'}];
-
-let likedSet=new Set(),savedSet=new Set(),followedSet=new Set(),currentVideoId=null,karma=0,isRecording=false;
-let pipVideoId=null,currentTale=null,taleSlideIdx=0,taleTimer=null;
-let captionStates={};
-
+let likedSet=new Set(),savedSet=new Set(),currentIdx=0,karma=0,menuOpen=false,isRec=false,currentVideoId=null;
 function fmt(n){if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n}
-function toast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast-msg show '+(type||'');setTimeout(()=>t.className='toast-msg',2500)}
-function glow(color){const g=document.getElementById('ambient-glow');g.className='ambient-glow '+color;setTimeout(()=>g.className='ambient-glow',500)}
-function addKarma(pts,el){
-  karma+=pts;document.getElementById('karma-val').textContent=karma+' Karma';
-  if(el){
-    const rect=el.getBoundingClientRect();
-    const phoneRect=document.querySelector('.phone-inner').getBoundingClientRect();
-    const f=document.createElement('div');f.className='karma-fly';
-    f.textContent='+'+pts+' ✦';
-    f.style.left=(rect.left-phoneRect.left+rect.width/2)+'px';
-    f.style.top=(rect.top-phoneRect.top)+'px';
-    document.querySelector('.phone-inner').appendChild(f);
-    requestAnimationFrame(()=>f.classList.add('up'));
-    setTimeout(()=>f.remove(),1000);
-  }
-}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show';setTimeout(()=>t.className='toast',2500)}
+function addKarma(pts){karma+=pts;document.getElementById('karma-val').textContent=karma+' Karma'}
 
-// TALES
-const taleBar=document.getElementById('tale-bar');
-taleBar.innerHTML=`<div class="tale-item" onclick="toast('Create your tale!')"><div class="tale-ring tale-add"><img src="https://i.pravatar.cc/150?img=10" alt=""></div><div class="tale-name">Your tale</div></div>`+
-  TALES.map((s,i)=>`<div class="tale-item" onclick="openTale(${i})"><div class="tale-ring ${s.seen?'seen':''}"><img src="${s.avatar}" alt=""></div><div class="tale-name">${s.user}</div></div>`).join('');
+// ===== CARD DECK =====
+const deck=document.getElementById('card-deck');
+const cards=[];
 
-function openTale(idx){
-  currentTale=idx;taleSlideIdx=0;
-  const s=TALES[idx];s.seen=true;
-  document.getElementById('tale-viewer').classList.remove('hidden');
-  document.getElementById('tale-user').innerHTML=`<img src="${s.avatar}"><span>@${s.user}</span>`;
-  document.getElementById('tale-progress').innerHTML=s.slides.map((_,i)=>`<div class="seg"><div class="fill" id="seg-${i}"></div></div>`).join('');
-  showTaleSlide();
-}
-function showTaleSlide(){
-  const s=TALES[currentTale];
-  if(taleSlideIdx>=s.slides.length){closeTale();return}
-  const slide=s.slides[taleSlideIdx];
-  document.getElementById('tale-content').style.background=slide.bg;
-  document.getElementById('tale-content').innerHTML=`<div class="tale-text">${slide.text}</div>`;
-  for(let i=0;i<s.slides.length;i++){
-    const seg=document.getElementById('seg-'+i);
-    if(seg)seg.style.width=i<taleSlideIdx?'100%':'0%';
-  }
-  let progress=0;
-  clearInterval(taleTimer);
-  taleTimer=setInterval(()=>{
-    progress+=2;
-    const seg=document.getElementById('seg-'+taleSlideIdx);
-    if(seg)seg.style.width=progress+'%';
-    if(progress>=100){taleSlideIdx++;showTaleSlide()}
-  },100);
-  document.getElementById('tale-viewer').onclick=(e)=>{
-    if(e.target.closest('.tale-close')||e.target.closest('.tale-reply'))return;
-    const rect=document.getElementById('tale-viewer').getBoundingClientRect();
-    if(e.clientX>rect.left+rect.width/2){taleSlideIdx++;showTaleSlide()}
-    else if(taleSlideIdx>0){taleSlideIdx--;showTaleSlide()}
-  };
-}
-function closeTale(){clearInterval(taleTimer);document.getElementById('tale-viewer').classList.add('hidden');currentTale=null;
-  taleBar.querySelectorAll('.tale-item').forEach((el,i)=>{if(i>0&&TALES[i-1].seen)el.querySelector('.tale-ring').classList.add('seen')});
-}
-
-// BUILD FEED
-const feed=document.getElementById('feed');
 VIDEOS.forEach((v,i)=>{
-  const s=document.createElement('div');s.className='video-slide';s.dataset.id=v.id;
-  s.innerHTML=`
+  const c=document.createElement('div');
+  c.className='v-card '+(i===0?'current':i===1?'right':'far');
+  c.dataset.idx=i;
+  c.innerHTML=`
     <video src="${v.src}" loop muted playsinline preload="${i<2?'auto':'metadata'}"></video>
-    <div class="pause-icon hidden"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div>
-    <div class="heart-pop"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
-    <div class="speed-pill" id="speed-${v.id}">1.0x</div>
-    <div class="caption-box hidden" id="captions-${v.id}"></div>
-    <button class="cap-toggle" onclick="toggleCaptions('${v.id}')">Aa</button>
-    <div class="sticker-tray" id="stickers-${v.id}">${BHUTAN_STICKERS.map(st=>`<span onclick="launchSticker('${v.id}','${st}')">${st}</span>`).join('')}</div>
-    <div class="action-totem">
-      <button class="totem-btn" data-action="like" onclick="toggleLike('${v.id}',this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-        <span class="cnt">${fmt(v.likes)}</span>
-      </button>
-      <button class="totem-btn" onclick="openComments('${v.id}')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-        <span class="cnt">${v.comments.length}</span>
-      </button>
-      <button class="totem-btn" data-action="save" onclick="toggleSave('${v.id}',this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
-        <span class="cnt">${fmt(v.saves)}</span>
-      </button>
-      <button class="totem-btn" onclick="toggleStickerTray('${v.id}')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>
-        <span class="cnt">${fmt(v.shares)}</span>
-      </button>
-      <div class="prayer-wheel"><img src="${v.user.avatar}" alt=""></div>
+    <div class="card-gradient"></div>
+    <div class="card-pause hidden"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div>
+    <div class="heart-burst"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+    <div class="card-top">
+      <div class="location"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> ${v.location}</div>
+      <div class="counter">${i+1}/${VIDEOS.length}</div>
     </div>
-    <div class="vid-info">
-      <div class="creator">
+    <div class="card-creator">
+      <div class="who">
         <img src="${v.user.avatar}" alt="">
-        <span class="name">@${v.user.username}</span>
-        ${v.user.verified?'<span class="badge">✓</span>':''}
+        <div class="info">
+          <div class="name">@${v.user.username} ${v.user.verified?'<span class="v">✓</span>':''}</div>
+          <div class="song">♫ ${v.song}</div>
+        </div>
       </div>
-      <div class="caption">${v.caption}</div>
-      <div class="music-row"><span class="note">♫</span> ${v.song}</div>
+      <div class="desc">${v.caption}</div>
+    </div>
+    <div class="card-actions">
+      <button class="card-act" data-action="like" onclick="toggleLike(${i},this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        <span class="num">${fmt(v.likes)}</span>
+      </button>
+      <button class="card-act" onclick="openComments('${v.id}')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <span class="num">${v.comments.length}</span>
+      </button>
+      <button class="card-act" data-action="save" onclick="toggleSave(${i},this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        <span class="num">${fmt(v.saves)}</span>
+      </button>
+      <button class="card-act" onclick="shareVideo(${i})">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>
+        <span class="num">${fmt(v.shares)}</span>
+      </button>
     </div>`;
 
-  const video=s.querySelector('video');
-  const pauseEl=s.querySelector('.pause-icon');
-  let lastTap=0,longPressTimer=null,isLongPress=false,startX=0;
+  deck.appendChild(c);
+  cards.push(c);
 
-  s.addEventListener('touchstart',(e)=>{
-    if(e.target.closest('.action-totem')||e.target.closest('.cap-toggle')||e.target.closest('.sticker-tray'))return;
-    startX=e.touches[0].clientX;isLongPress=false;
-    longPressTimer=setTimeout(()=>{isLongPress=true;video.playbackRate=2;showSpeed(v.id,2)},500);
-  });
-  s.addEventListener('touchmove',(e)=>{
-    if(!isLongPress)return;
-    const dx=e.touches[0].clientX-startX;
-    const rate=Math.max(.25,Math.min(3,1+dx/80));
-    video.playbackRate=Math.round(rate*4)/4;
-    showSpeed(v.id,video.playbackRate);
-  });
-  s.addEventListener('touchend',()=>{
-    clearTimeout(longPressTimer);
-    if(isLongPress){video.playbackRate=1;hideSpeed(v.id);isLongPress=false;return}
-  });
-
-  s.addEventListener('click',(e)=>{
-    if(e.target.closest('.action-totem')||e.target.closest('.cap-toggle')||e.target.closest('.sticker-tray')||isLongPress)return;
+  // Double-tap like
+  let lastTap=0;
+  const video=c.querySelector('video');
+  const pauseEl=c.querySelector('.card-pause');
+  c.addEventListener('click',(e)=>{
+    if(e.target.closest('.card-actions')||e.target.closest('.card-top'))return;
     const now=Date.now();
     if(now-lastTap<300){
-      spawnMandala(s,e);
-      const heart=s.querySelector('.heart-pop');heart.classList.remove('pop');void heart.offsetWidth;heart.classList.add('pop');
-      if(!likedSet.has(v.id))toggleLike(v.id,s.querySelector('[data-action="like"]'));
+      spawnMandala(c,e);
+      const hb=c.querySelector('.heart-burst');hb.classList.remove('pop');void hb.offsetWidth;hb.classList.add('pop');
+      if(!likedSet.has(v.id))toggleLike(i,c.querySelector('[data-action="like"]'));
     }else{
       setTimeout(()=>{if(Date.now()-lastTap>=300){if(video.paused){video.play();pauseEl.classList.add('hidden')}else{video.pause();pauseEl.classList.remove('hidden')}}},300);
     }
     lastTap=now;
   });
-
-  feed.appendChild(s);
 });
 
-function showSpeed(id,rate){const el=document.getElementById('speed-'+id);el.textContent=rate.toFixed(2)+'x';el.classList.add('show')}
-function hideSpeed(id){document.getElementById('speed-'+id).classList.remove('show')}
+function layoutCards(){
+  cards.forEach((c,i)=>{
+    c.classList.remove('current','left','right','far');
+    if(i===currentIdx)c.classList.add('current');
+    else if(i===currentIdx-1)c.classList.add('left');
+    else if(i===currentIdx+1)c.classList.add('right');
+    else c.classList.add('far');
+  });
+  // Play current, pause others
+  cards.forEach((c,i)=>{
+    const v=c.querySelector('video');
+    if(i===currentIdx){v.play().catch(()=>{});c.querySelector('.card-pause').classList.add('hidden')}
+    else v.pause();
+  });
+  // Update counter
+  cards.forEach((c,i)=>{
+    const counter=c.querySelector('.counter');
+    if(counter)counter.textContent=(i+1)+'/'+VIDEOS.length;
+  });
+}
 
-function spawnMandala(slide,e){
-  const rect=slide.getBoundingClientRect();
-  for(let i=0;i<10;i++){
-    const p=document.createElement('div');p.className='mandala-particle';
-    p.textContent=MANDALA_CHARS[Math.floor(Math.random()*MANDALA_CHARS.length)];
-    p.style.left=(e.clientX-rect.left+Math.random()*60-30)+'px';
-    p.style.top=(e.clientY-rect.top)+'px';
-    p.style.setProperty('--rot',(Math.random()*360-180)+'deg');
-    p.style.fontSize=(14+Math.random()*16)+'px';
-    slide.appendChild(p);
-    requestAnimationFrame(()=>p.classList.add('fly'));
-    setTimeout(()=>p.remove(),1300);
+// Horizontal swipe on deck
+let sx=0,sy=0,swiping=false,dx=0;
+deck.addEventListener('touchstart',(e)=>{
+  if(e.target.closest('.card-actions'))return;
+  sx=e.touches[0].clientX;sy=e.touches[0].clientY;swiping=true;dx=0;
+},{passive:true});
+deck.addEventListener('touchmove',(e)=>{
+  if(!swiping)return;
+  dx=e.touches[0].clientX-sx;
+  const dy=Math.abs(e.touches[0].clientY-sy);
+  if(dy>Math.abs(dx)){swiping=false;return}
+  const cur=cards[currentIdx];
+  if(cur)cur.style.transform=`translateX(${dx}px) scale(${1-Math.abs(dx)/2000}) rotate(${dx/60}deg)`;
+},{passive:true});
+deck.addEventListener('touchend',()=>{
+  if(!swiping){cards[currentIdx].style.transform='';return}
+  swiping=false;
+  const cur=cards[currentIdx];
+  cur.style.transform='';
+  if(Math.abs(dx)>70){
+    if(dx<0&&currentIdx<VIDEOS.length-1){currentIdx++;layoutCards()}
+    else if(dx>0&&currentIdx>0){currentIdx--;layoutCards()}
+  }
+});
+
+// Mouse drag for desktop
+let md=false,msx=0;
+deck.addEventListener('mousedown',(e)=>{if(!e.target.closest('.card-actions')){md=true;msx=e.clientX}});
+deck.addEventListener('mousemove',(e)=>{if(!md)return;const d=e.clientX-msx;cards[currentIdx].style.transform=`translateX(${d}px) scale(${1-Math.abs(d)/2000}) rotate(${d/60}deg)`});
+deck.addEventListener('mouseup',(e)=>{if(!md)return;md=false;const d=e.clientX-msx;cards[currentIdx].style.transform='';if(Math.abs(d)>70){if(d<0&&currentIdx<VIDEOS.length-1){currentIdx++;layoutCards()}else if(d>0&&currentIdx>0){currentIdx--;layoutCards()}}});
+deck.addEventListener('mouseleave',()=>{if(md){md=false;cards[currentIdx].style.transform=''}});
+
+// Keyboard
+document.addEventListener('keydown',(e)=>{
+  if(e.key==='ArrowRight'&&currentIdx<VIDEOS.length-1){currentIdx++;layoutCards()}
+  if(e.key==='ArrowLeft'&&currentIdx>0){currentIdx--;layoutCards()}
+});
+
+layoutCards();
+
+function spawnMandala(card,e){
+  const rect=card.getBoundingClientRect();
+  for(let i=0;i<8;i++){
+    const p=document.createElement('div');p.className='m-particle';
+    p.textContent=MANDALA_SYMS[Math.floor(Math.random()*MANDALA_SYMS.length)];
+    p.style.left=(e.clientX-rect.left)+'px';p.style.top=(e.clientY-rect.top)+'px';
+    const angle=Math.random()*Math.PI*2;const dist=60+Math.random()*80;
+    p.style.setProperty('--tx',Math.cos(angle)*dist+'px');
+    p.style.setProperty('--ty',Math.sin(angle)*dist+'px');
+    p.style.setProperty('--rot',(Math.random()*360)+'deg');
+    card.appendChild(p);requestAnimationFrame(()=>p.classList.add('fly'));
+    setTimeout(()=>p.remove(),1400);
   }
 }
 
-function toggleCaptions(id){
-  const states=['off','en','dz','both'];
-  captionStates[id]=(captionStates[id]||0)+1;
-  if(captionStates[id]>=states.length)captionStates[id]=0;
-  const state=states[captionStates[id]];
-  const el=document.getElementById('captions-'+id);
-  const v=VIDEOS.find(x=>x.id===id);
-  const btn=el.previousElementSibling;
-  if(state==='off'){el.classList.add('hidden');btn.textContent='Aa';return}
-  el.classList.remove('hidden');
-  btn.textContent=state==='en'?'EN':state==='dz'?'དྲ':'EN/དྲ';
-  showCaptions(id,state,v.captions);
-}
-function showCaptions(id,state,captions){
-  const el=document.getElementById('captions-'+id);el.innerHTML='';
-  captions.forEach((c,i)=>{
-    setTimeout(()=>{
-      if(state==='en'||state==='both')el.innerHTML+=`<div class="caption-line" style="animation-delay:${i*.1}s">${c.en}</div><br>`;
-      if(state==='dz'||state==='both')el.innerHTML+=`<div class="caption-line dz" style="animation-delay:${i*.1}s">${c.dz}</div><br>`;
-    },i*1200);
-  });
-}
-
-function toggleStickerTray(id){
-  const el=document.getElementById('stickers-'+id);el.classList.toggle('open');
-  setTimeout(()=>el.classList.remove('open'),4000);
-}
-function launchSticker(id,emoji){
-  const slide=document.querySelector(`.video-slide[data-id="${id}"]`);
-  const s=document.createElement('div');s.className='flying-sticker';s.textContent=emoji;
-  s.style.right=(20+Math.random()*40)+'px';s.style.bottom='150px';
-  s.style.setProperty('--dx1',(Math.random()*60-30)+'px');
-  s.style.setProperty('--dx2',(Math.random()*80-40)+'px');
-  s.style.setProperty('--rot',(Math.random()*360-180)+'deg');
-  slide.appendChild(s);requestAnimationFrame(()=>s.classList.add('fly'));
-  setTimeout(()=>s.remove(),2600);
-  addKarma(2,null);
-  document.getElementById('stickers-'+id).classList.remove('open');
-}
-
-setInterval(()=>{
-  document.querySelectorAll('.video-slide').forEach(sl=>{
-    if(Math.random()>.75){
-      const emoji=BHUTAN_STICKERS[Math.floor(Math.random()*BHUTAN_STICKERS.length)];
-      const s=document.createElement('div');s.className='flying-sticker';s.textContent=emoji;
-      s.style.left=(10+Math.random()*60)+'px';s.style.bottom='100px';
-      s.style.setProperty('--dx1',(Math.random()*50)+'px');
-      s.style.setProperty('--dx2',(Math.random()*70)+'px');
-      s.style.setProperty('--rot',(Math.random()*180)+'deg');
-      sl.appendChild(s);requestAnimationFrame(()=>s.classList.add('fly'));
-      setTimeout(()=>s.remove(),2600);
-    }
-  });
-},6000);
-
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{const v=e.target.querySelector('video');if(e.isIntersecting){v.play().catch(()=>{});e.target.querySelector('.pause-icon')?.classList.add('hidden')}else v.pause()})},{threshold:.6});
-document.querySelectorAll('.video-slide').forEach(s=>obs.observe(s));
-
-function toggleLike(id,el){
-  const slide=document.querySelector(`.video-slide[data-id="${id}"]`);
-  const btn=el||slide.querySelector('[data-action="like"]');
-  const v=VIDEOS.find(x=>x.id===id);
-  if(likedSet.has(id)){
-    likedSet.delete(id);btn.classList.remove('liked');
+function toggleLike(idx,btn){
+  const v=VIDEOS[idx];
+  if(likedSet.has(v.id)){
+    likedSet.delete(v.id);btn.classList.remove('liked');
     btn.querySelector('svg').setAttribute('fill','none');btn.querySelector('svg').setAttribute('stroke','white');
-    btn.querySelector('.cnt').textContent=fmt(v.likes);
+    btn.querySelector('.num').textContent=fmt(v.likes);
   }else{
-    likedSet.add(id);btn.classList.add('liked');
+    likedSet.add(v.id);btn.classList.add('liked');
     btn.querySelector('svg').setAttribute('fill','var(--vermillion)');btn.querySelector('svg').setAttribute('stroke','var(--vermillion)');
-    btn.querySelector('.cnt').textContent=fmt(v.likes+1);
-    glow('vermillion');addKarma(5,btn);
+    btn.querySelector('.num').textContent=fmt(v.likes+1);
+    addKarma(5);toast('+ 5 Karma ✦');
   }
 }
-
-function toggleSave(id,el){
-  const slide=document.querySelector(`.video-slide[data-id="${id}"]`);
-  const btn=el||slide.querySelector('[data-action="save"]');
-  if(savedSet.has(id)){
-    savedSet.delete(id);btn.classList.remove('saved');
+function toggleSave(idx,btn){
+  const v=VIDEOS[idx];
+  if(savedSet.has(v.id)){
+    savedSet.delete(v.id);btn.classList.remove('saved');
     btn.querySelector('svg').setAttribute('fill','none');btn.querySelector('svg').setAttribute('stroke','white');
     toast('Removed from collection');
   }else{
-    savedSet.add(id);btn.classList.add('saved');
+    savedSet.add(v.id);btn.classList.add('saved');
     btn.querySelector('svg').setAttribute('fill','var(--saffron)');btn.querySelector('svg').setAttribute('stroke','var(--saffron)');
-    toast('Saved to collection','success');glow('saffron');addKarma(3,btn);
+    toast('Saved to collection ✦');addKarma(3);
   }
 }
+function shareVideo(idx){toast('Share link copied!');addKarma(2)}
 
+// Comments
 function openComments(id){
   currentVideoId=id;const v=VIDEOS.find(x=>x.id===id);
   document.getElementById('comments-modal').classList.remove('hidden');
   document.getElementById('comments-title').textContent=v.comments.length+' Comments';
   const list=document.getElementById('comments-list');
-  if(!v.comments.length){list.innerHTML='<div style="text-align:center;padding:30px;color:rgba(247,245,240,.25);font-size:13px">No comments yet. Be the first! 🙏</div>';return}
-  list.innerHTML=v.comments.map(c=>`<div class="c-item"><img src="${c.avatar}"><div class="c-body"><div class="c-user">@${c.user}</div><div class="c-text">${c.text}</div><div class="c-time">${c.time}</div></div></div>`).join('');
+  if(!v.comments.length){list.innerHTML='<div style="text-align:center;padding:30px;color:rgba(245,240,232,.2);font-size:13px">No comments yet 🙏</div>';return}
+  list.innerHTML=v.comments.map(c=>`<div class="c-row"><img src="${c.avatar}"><div class="c-content"><div class="c-name">@${c.user}</div><div class="c-msg">${c.text}</div><div class="c-when">${c.time}</div></div></div>`).join('');
 }
 function postComment(){
   if(!currentVideoId)return;const input=document.getElementById('comment-input');const text=input.value.trim();if(!text)return;input.value='';
   const v=VIDEOS.find(x=>x.id===currentVideoId);
   v.comments.unshift({user:'zhingkham_user',avatar:'https://i.pravatar.cc/150?img=10',text,time:'now'});
   openComments(currentVideoId);
-  const slide=document.querySelector(`.video-slide[data-id="${currentVideoId}"]`);
-  if(slide)slide.querySelectorAll('.totem-btn')[1].querySelector('.cnt').textContent=v.comments.length;
-  toast('Comment posted!','success');glow('jade');addKarma(5,null);
+  const card=cards[VIDEOS.findIndex(x=>x.id===currentVideoId)];
+  if(card)card.querySelectorAll('.card-act')[1].querySelector('.num').textContent=v.comments.length;
+  toast('Comment posted!');addKarma(5);
 }
 function closeComments(){document.getElementById('comments-modal').classList.add('hidden');currentVideoId=null}
 
-// DISCOVER
-document.getElementById('realm-bar').innerHTML=REALMS.map(c=>`<div class="realm-chip" style="background:${c.bg};color:${c.color};border-color:${c.color}33" onclick="searchRealm('${c.label.split(' ')[1]}')">${c.label}</div>`).join('');
-function buildMosaic(cid,vids){document.getElementById(cid).innerHTML=vids.map(v=>`<div class="mosaic-tile" onclick="goToVideo('${v.id}')"><video src="${v.src}" preload="metadata" muted></video><div class="tile-stat">▶ ${fmt(v.likes)}</div></div>`).join('')}
-buildMosaic('discover-grid',[...VIDEOS,...VIDEOS]);buildMosaic('profile-grid',VIDEOS);
-function searchRealm(t){document.getElementById('search-input').value=t;handleSearch()}
-function handleSearch(){const q=document.getElementById('search-input').value.toLowerCase().trim();if(!q){buildMosaic('discover-grid',[...VIDEOS,...VIDEOS]);return}const f=VIDEOS.filter(v=>v.caption.toLowerCase().includes(q)||v.user.username.includes(q)||v.song.toLowerCase().includes(q));buildMosaic('discover-grid',f.length?f:[]);if(!f.length)document.getElementById('discover-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:30px;color:rgba(247,245,240,.25);font-size:13px">No results for "'+q+'"</div>'}
-function goToVideo(id){switchTab('home');const s=document.querySelector(`.video-slide[data-id="${id}"]`);if(s)s.scrollIntoView({behavior:'smooth'})}
-
-// INBOX
-document.getElementById('notif-stream').innerHTML=NOTIFS.map(n=>`<div class="notif-card"><img src="${n.avatar}"><div class="n-content"><div class="n-msg"><strong>${n.user}</strong> ${n.text}</div><div class="n-when">${n.time}</div></div><div class="n-dot" style="background:${n.dot}"></div></div>`).join('');
-
-// CREATE
-document.getElementById('lens-strip').innerHTML=LENSES.map((f,i)=>`<div class="lens-item ${i===0?'active':''}" style="background:${f.bg}" onclick="applyLens(this,'${f.bg}')">${f.name}</div>`).join('');
-function applyLens(el,bg){document.querySelectorAll('.lens-item').forEach(c=>c.classList.remove('active'));el.classList.add('active');document.getElementById('viewfinder').style.background=bg;toast(el.textContent+' lens applied','success')}
-function toggleRecording(){const btn=document.getElementById('rec-btn');isRecording=!isRecording;btn.classList.toggle('recording');toast(isRecording?'Recording started...':'Recording stopped',isRecording?'error':'success')}
-
-// PIP
-function showPip(videoId){
-  const v=VIDEOS.find(x=>x.id===videoId);if(!v)return;
-  pipVideoId=videoId;
-  const mp=document.getElementById('pip');
-  document.getElementById('pip-video').src=v.src;
-  document.getElementById('pip-video').play().catch(()=>{});
-  mp.classList.remove('hidden');
+// ===== MANDALA MENU =====
+function toggleMenu(){
+  menuOpen=!menuOpen;
+  document.getElementById('mandala').classList.toggle('open',menuOpen);
+  document.getElementById('mandala-btn').classList.toggle('open',menuOpen);
+  document.getElementById('menu-bg').classList.toggle('show',menuOpen);
 }
-function closePip(){document.getElementById('pip').classList.add('hidden');document.getElementById('pip-video').pause();pipVideoId=null}
-function pipTap(){if(pipVideoId){closePip();switchTab('home');const s=document.querySelector(`.video-slide[data-id="${pipVideoId}"]`);if(s)s.scrollIntoView({behavior:'smooth'})}}
 
-// TAB NAV
-let currentTab='home';
-function switchTab(name){
-  if(currentTab==='home'&&name!=='home'){
-    const playingSlide=document.querySelector('.video-slide video:not([paused])');
-    if(playingSlide){const id=playingSlide.closest('.video-slide').dataset.id;showPip(id)}
+function goTo(name){
+  if(menuOpen)toggleMenu();
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  document.querySelectorAll('.orbit-item').forEach(o=>o.classList.remove('active'));
+  const map={home:0,explore:1,inbox:2,profile:3};
+  document.querySelectorAll('.orbit-item')[map[name]]?.classList.add('active');
+  if(name!=='home')cards.forEach(c=>c.querySelector('video').pause());
+  else layoutCards();
+  if(name==='studio'){
+    document.getElementById('view-studio').classList.add('active');
+    document.querySelectorAll('.orbit-item').forEach(o=>o.classList.remove('active'));
   }
-  if(name==='home')closePip();
-  currentTab=name;
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(t=>t.classList.remove('active'));
-  document.getElementById('screen-'+name).classList.add('active');
-  const navItems=document.querySelectorAll('.nav-item');
-  const idx={home:0,discover:1,inbox:2,profile:3}[name];
-  if(idx!==undefined)navItems[idx]?.classList.add('active');
-  if(name!=='home')document.querySelectorAll('.video-slide video').forEach(v=>v.pause());
 }
+
+// Long-press mandala button = create
+let mLongPress=null;
+document.getElementById('mandala-btn').addEventListener('touchstart',()=>{
+  mLongPress=setTimeout(()=>{goTo('studio');mLongPress=null},600);
+},{passive:true});
+document.getElementById('mandala-btn').addEventListener('touchend',()=>{if(mLongPress){clearTimeout(mLongPress);mLongPress=null}},{passive:true});
+
+// ===== EXPLORE =====
+document.getElementById('realm-bar').innerHTML=REALMS.map(r=>`<div class="realm-tag" style="background:${r.bg};color:${r.color};border-color:${r.color}33" onclick="searchRealm('${r.label.split(' ')[1]}')">${r.label}</div>`).join('');
+
+function buildBento(id,vids){
+  document.getElementById(id).innerHTML=vids.map((v,i)=>`<div class="bento-tile" onclick="goToCard('${v.id}')"><video src="${v.src}" preload="metadata" muted></video><div class="b-stat">▶ ${fmt(v.likes)}</div></div>`).join('');
+}
+function buildProfGrid(vids){
+  document.getElementById('prof-grid').innerHTML=vids.map(v=>`<div class="pg-tile" onclick="goToCard('${v.id}')"><video src="${v.src}" preload="metadata" muted></video><div class="pg-stat">▶ ${fmt(v.likes)}</div></div>`).join('');
+}
+buildBento('explore-grid',[...VIDEOS,...VIDEOS]);
+buildProfGrid(VIDEOS);
+
+function searchRealm(t){document.getElementById('search-input').value=t;handleSearch()}
+function handleSearch(){
+  const q=document.getElementById('search-input').value.toLowerCase().trim();
+  if(!q){buildBento('explore-grid',[...VIDEOS,...VIDEOS]);return}
+  const f=VIDEOS.filter(v=>v.caption.toLowerCase().includes(q)||v.user.username.includes(q));
+  buildBento('explore-grid',f.length?f:[]);
+  if(!f.length)document.getElementById('explore-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:30px;color:rgba(245,240,232,.2);font-size:13px">No results</div>';
+}
+function goToCard(id){
+  const idx=VIDEOS.findIndex(v=>v.id===id);
+  if(idx>=0){currentIdx=idx;layoutCards();goTo('home')}
+}
+
+// ===== INBOX =====
+document.getElementById('notif-list').innerHTML=NOTIFS.map(n=>`<div class="notif-row"><img src="${n.avatar}"><div class="n-body"><div class="n-text"><b>${n.user}</b> ${n.text}</div><div class="n-time">${n.time}</div></div><div class="n-icon" style="background:${n.dot}"></div></div>`).join('');
+
+// ===== STUDIO =====
+function toggleRec(){const btn=document.getElementById('rec-btn');isRec=!isRec;btn.classList.toggle('recording');toast(isRec?'Recording...':'Recording stopped')}
 </script>
 </body>
 </html>

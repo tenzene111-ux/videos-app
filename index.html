@@ -14,6 +14,7 @@
       --mist:rgba(26,23,20,.7);--glow:rgba(232,168,56,.15);
       --radius:16px;--radius-lg:24px;--radius-xl:32px;
     }
+    html,body{height:100%}
     body{font-family:'DM Sans',sans-serif;background:#0D0B09;color:var(--snow);-webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;min-height:100vh;overflow:hidden}
 
     /* PHONE FRAME */
@@ -39,7 +40,7 @@
     .ambient-glow.lapis{box-shadow:inset 0 0 80px rgba(46,74,122,.25);opacity:1}
 
     /* NAV BAR — Floating Pill at bottom */
-    .nav-pill{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);height:56px;display:flex;align-items:center;gap:2px;padding:4px;background:rgba(26,23,20,.85);backdrop-filter:blur(24px) saturate(180%);border-radius:28px;border:1px solid rgba(201,168,76,.12);z-index:100;box-shadow:0 8px 32px rgba(0,0,0,.4)}
+    .nav-pill{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);height:56px;display:flex;align-items:center;gap:2px;padding:4px;background:rgba(26,23,20,.92);backdrop-filter:blur(24px) saturate(180%);border-radius:28px;border:1px solid rgba(201,168,76,.12);z-index:1000;box-shadow:0 8px 32px rgba(0,0,0,.4)}
     .nav-item{width:52px;height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:24px;border:none;background:none;color:rgba(247,245,240,.4);cursor:pointer;transition:all .3s;position:relative}
     .nav-item svg{width:22px;height:22px;transition:all .3s}
     .nav-item span{font-size:8px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;opacity:0;transition:all .3s;position:absolute;bottom:3px}
@@ -85,10 +86,10 @@
     .tale-reply button{background:none;border:none;font-size:20px;cursor:pointer}
 
     /* VIDEO SCROLL */
-    .feed{flex:1;scroll-snap-type:y mandatory;overflow-y:scroll;scrollbar-width:none;position:relative}
+    .feed{flex:1;scroll-snap-type:y mandatory;overflow-y:scroll;scrollbar-width:none;position:relative;-webkit-overflow-scrolling:touch}
     .feed::-webkit-scrollbar{display:none}
-    .video-slide{height:100%;scroll-snap-align:start;position:relative;background:var(--ink);flex-shrink:0;overflow:hidden}
-    .video-slide video{width:100%;height:100%;object-fit:cover}
+    .video-slide{height:100%;min-height:100%;scroll-snap-align:start;position:relative;background:var(--ink);flex-shrink:0;overflow:hidden}
+    .video-slide video{width:100%;height:100%;object-fit:cover;display:block}
 
     /* Video Info — Card style at bottom */
     .vid-info{position:absolute;bottom:80px;left:14px;right:70px;z-index:10}
@@ -271,11 +272,20 @@
     .pip video{width:100%;height:100%;object-fit:cover}
     .pip .pip-close{position:absolute;top:4px;right:4px;width:20px;height:20px;background:rgba(26,23,20,.7);border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;color:var(--snow);cursor:pointer;font-size:11px}
 
+    /* On desktop, constrain nav-pill inside phone frame */
+    @media(min-width:421px){
+      .nav-pill{position:absolute;bottom:16px}
+    }
+
     @media(max-width:420px){
       body{background:var(--ink)}
-      .phone-wrapper{gap:0}.phone-brand{display:none}
-      .phone-frame{width:100vw;height:100vh;border-radius:0;border:none;box-shadow:none}
+      .phone-wrapper{gap:0;width:100%;height:100%}.phone-brand{display:none}
+      .phone-frame{width:100vw;height:100vh;height:100dvh;border-radius:0;border:none;box-shadow:none}
       .phone-notch,.phone-home{display:none}
+      .phone-inner{height:100vh;height:100dvh}
+      .feed{height:100vh;height:100dvh}
+      .video-slide{height:100vh;height:100dvh}
+      .nav-pill{bottom:12px;bottom:max(12px,env(safe-area-inset-bottom))}
     }
   </style>
 </head>

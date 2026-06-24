@@ -448,29 +448,37 @@
     .float-reaction{position:absolute;z-index:15;pointer-events:none;font-size:24px;animation:floatUp 2.5s ease-out forwards}
     @keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}50%{opacity:.8;transform:translateY(-120px) scale(1.2) translateX(var(--drift))}100%{opacity:0;transform:translateY(-250px) scale(.6) translateX(var(--drift2))}}
 
-    /* Gift animation — TikTok style */
-    .gift-banner{position:absolute;left:0;bottom:200px;z-index:25;display:flex;align-items:center;gap:10px;padding:8px 16px 8px 8px;background:linear-gradient(135deg,rgba(212,164,76,.25),rgba(0,0,0,.6));backdrop-filter:blur(16px);border-radius:0 28px 28px 0;border:1px solid rgba(212,164,76,.15);border-left:none;animation:gBannerIn .5s var(--spring),gBannerOut .4s 3.5s var(--ease) forwards;max-width:70%}
+    /* Gift animation — Full screen TikTok style */
+    .gift-overlay{position:absolute;inset:0;z-index:50;pointer-events:none;perspective:800px;overflow:hidden}
+    .gift-overlay .go-flash{position:absolute;inset:0;background:radial-gradient(circle at 50% 60%,var(--gc),transparent 70%);opacity:0;animation:goFlash .8s ease forwards}
+    @keyframes goFlash{0%{opacity:0}30%{opacity:.5}100%{opacity:0}}
+    .gift-overlay .go-img{position:absolute;left:50%;top:45%;width:160px;height:160px;transform:translate(-50%,-50%) scale(0) rotateY(90deg);animation:goImgIn .8s var(--bounce) .1s forwards;filter:drop-shadow(0 0 40px var(--gc));z-index:2}
+    .gift-overlay .go-img img{width:100%;height:100%;object-fit:contain}
+    @keyframes goImgIn{0%{transform:translate(-50%,-50%) scale(0) rotateY(90deg);opacity:0}50%{transform:translate(-50%,-50%) scale(1.4) rotateY(-10deg);opacity:1}70%{transform:translate(-50%,-50%) scale(.95) rotateY(5deg)}100%{transform:translate(-50%,-50%) scale(1) rotateY(0)}}
+    .gift-overlay .go-img.out{animation:goImgOut .6s var(--ease) forwards}
+    @keyframes goImgOut{to{transform:translate(-50%,-50%) scale(2) rotateY(20deg);opacity:0}}
+    .gift-overlay .go-name{position:absolute;left:50%;top:65%;transform:translateX(-50%) translateY(20px);opacity:0;animation:goNameIn .4s var(--spring) .5s forwards;font-size:18px;font-weight:800;color:white;text-shadow:0 2px 16px rgba(0,0,0,.6);white-space:nowrap;z-index:2}
+    @keyframes goNameIn{to{opacity:1;transform:translateX(-50%) translateY(0)}}
+    .gift-overlay .go-ring{position:absolute;left:50%;top:45%;width:200px;height:200px;border:2px solid var(--gc);border-radius:50%;transform:translate(-50%,-50%) scale(0);opacity:.5;animation:goRing .8s ease .2s forwards;z-index:1}
+    @keyframes goRing{to{transform:translate(-50%,-50%) scale(3);opacity:0}}
+    .gift-overlay .go-ring2{animation-delay:.4s}
+    .gift-overlay .go-sparkle{position:absolute;z-index:3;width:6px;height:6px;border-radius:50%;animation:goSparkle 1.2s ease-out forwards}
+    @keyframes goSparkle{0%{opacity:1;transform:translate(0,0) scale(1.5)}100%{opacity:0;transform:translate(var(--sx),var(--sy)) scale(0)}}
+    .gift-overlay .go-trail{position:absolute;z-index:1;width:3px;height:20px;border-radius:2px;opacity:0;animation:goTrail 1s ease-out .1s forwards}
+    @keyframes goTrail{0%{opacity:.8;transform:translateY(0)}100%{opacity:0;transform:translateY(-200px)}}
+
+    .gift-banner{position:absolute;left:0;bottom:200px;z-index:25;display:flex;align-items:center;gap:10px;padding:8px 16px 8px 8px;background:linear-gradient(135deg,rgba(212,164,76,.25),rgba(0,0,0,.6));backdrop-filter:blur(16px);border-radius:0 28px 28px 0;border:1px solid rgba(212,164,76,.15);border-left:none;animation:gBannerIn .5s var(--spring),gBannerOut .4s 4s var(--ease) forwards;max-width:75%}
     @keyframes gBannerIn{from{opacity:0;transform:translateX(-100%)}to{opacity:1;transform:translateX(0)}}
     @keyframes gBannerOut{to{opacity:0;transform:translateX(-100%)}}
     .gift-banner .gb-av{width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid var(--g1);flex-shrink:0}
     .gift-banner .gb-info{flex:1;min-width:0}
     .gift-banner .gb-name{font-size:12px;font-weight:700;color:var(--w)}
-    .gift-banner .gb-text{font-size:10px;color:var(--g1);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .gift-banner .gb-text{font-size:10px;color:var(--g1);font-weight:600}
     .gift-banner .gb-gift{width:52px;height:52px;border-radius:14px;overflow:hidden;flex-shrink:0;position:relative;background:rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center}
-    .gift-banner .gb-gift img{width:100%;height:100%;object-fit:cover}
+    .gift-banner .gb-gift img{width:44px;height:44px;object-fit:contain}
     .gift-banner .gb-combo{position:absolute;right:-8px;top:-8px;background:linear-gradient(135deg,var(--r1),var(--coral));color:white;font-size:14px;font-weight:900;min-width:28px;height:28px;border-radius:14px;display:flex;align-items:center;justify-content:center;padding:0 6px;animation:comboScale .3s var(--bounce);font-style:italic}
     @keyframes comboScale{from{transform:scale(0)}to{transform:scale(1)}}
-
-    .gift-fly{position:absolute;z-index:30;pointer-events:none;left:50%;top:50%;transform:translate(-50%,-50%) scale(0);animation:gFlyIn .6s var(--bounce) forwards,gFlyOut .5s 2.2s var(--ease) forwards}
-    .gift-fly img{width:120px;height:120px;object-fit:contain;filter:drop-shadow(0 0 30px rgba(212,164,76,.5))}
-    @keyframes gFlyIn{0%{transform:translate(-50%,-50%) scale(0) rotate(-20deg);opacity:0}60%{transform:translate(-50%,-50%) scale(1.3) rotate(5deg);opacity:1}100%{transform:translate(-50%,-50%) scale(1) rotate(0);opacity:1}}
-    @keyframes gFlyOut{to{transform:translate(-50%,-80%) scale(.3);opacity:0}}
-
-    .gift-sparkle{position:absolute;z-index:29;pointer-events:none;width:8px;height:8px;border-radius:50%;animation:sparkle 1s ease-out forwards}
-    @keyframes sparkle{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--sx),var(--sy)) scale(0)}}
-
-    .gift-streak{position:absolute;left:50%;bottom:140px;transform:translateX(-50%);z-index:26;font-size:11px;font-weight:800;color:var(--g1);text-transform:uppercase;letter-spacing:2px;animation:streakIn .3s var(--spring),gBannerOut .4s 2.5s var(--ease) forwards;text-shadow:0 2px 8px rgba(0,0,0,.5)}
-    @keyframes streakIn{from{opacity:0;transform:translateX(-50%) translateY(10px) scale(.8)}to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}}
+    .gift-streak{position:absolute;left:50%;top:72%;transform:translateX(-50%);z-index:52;font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing:3px;background:linear-gradient(135deg,var(--g1),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 8px rgba(212,164,76,.5));opacity:0;animation:goNameIn .4s var(--spring) .7s forwards;white-space:nowrap}
 
     /* Coin wallet badge */
     .coin-badge{display:flex;align-items:center;gap:4px;background:linear-gradient(135deg,rgba(212,164,76,.2),rgba(212,164,76,.05));backdrop-filter:blur(20px);border:1px solid rgba(212,164,76,.2);border-radius:14px;padding:5px 10px;cursor:pointer;font-size:11px;font-weight:700;color:var(--g1);transition:all .2s var(--spring)}
@@ -1102,10 +1110,11 @@ function openLive(streamer){
     if(liveViewers<100)liveViewers=100;
     document.getElementById('lv-count').textContent=fmt(liveViewers);
   },5000);
+  startSimGifts();
 }
 
 function closeLive(){clearLiveChat();nav('home')}
-function clearLiveChat(){clearInterval(liveChatInterval);clearInterval(liveViewerInterval);liveChatInterval=null;liveViewerInterval=null;document.getElementById('live-video').pause()}
+function clearLiveChat(){clearInterval(liveChatInterval);clearInterval(liveViewerInterval);stopSimGifts();liveChatInterval=null;liveViewerInterval=null;document.getElementById('live-video').pause()}
 
 function addLiveChatMsg(user,text){
   const chat=document.getElementById('live-chat');
@@ -1140,11 +1149,12 @@ function sendLiveReaction(emoji){
 
 // === COIN & GIFT SYSTEM ===
 let coins=0,selectedGift=null,giftTab=0;
-const GI='https://cdn-icons-png.flaticon.com/128/';
+const GN='https://fonts.gstatic.com/s/e/notoemoji/latest/';
+const G3=c=>GN+c+'/512.png';
 const GIFTS=[
-  [{i:GI+'1041/1041916.png',n:'Rose',p:10,c:'#e74c3c'},{i:GI+'833/833472.png',n:'Heart',p:20,c:'#e84393'},{i:GI+'785/785116.png',n:'Fire',p:30,c:'#e17055'},{i:GI+'1828/1828884.png',n:'Star',p:50,c:'#f9ca24'},{i:GI+'3659/3659784.png',n:'Music',p:40,c:'#6c5ce7'},{i:GI+'4105/4105461.png',n:'Party',p:25,c:'#00b894'},{i:GI+'3004/3004613.png',n:'Kiss',p:35,c:'#fd79a8'},{i:GI+'616/616554.png',n:'Butterfly',p:45,c:'#0984e3'}],
-  [{i:GI+'2913/2913109.png',n:'Diamond',p:200,c:'#74b9ff'},{i:GI+'2910/2910756.png',n:'Crown',p:500,c:'#f9ca24'},{i:GI+'548/548481.png',n:'Trophy',p:300,c:'#fdcb6e'},{i:GI+'3176/3176293.png',n:'Perfume',p:150,c:'#a29bfe'},{i:GI+'3031/3031760.png',n:'Rocket',p:400,c:'#e17055'},{i:GI+'1531/1531908.png',n:'Rainbow',p:250,c:'#00cec9'},{i:GI+'2949/2949402.png',n:'Unicorn',p:350,c:'#fd79a8'},{i:GI+'2260/2260451.png',n:'Dragon',p:1000,c:'#e04b3a'}],
-  [{i:GI+'7067/7067360.png',n:'Castle',p:2000,c:'#d4a44c'},{i:GI+'1998/1998679.png',n:'Tiger',p:1500,c:'#e17055'},{i:GI+'3814/3814446.png',n:'Pray',p:800,c:'#f9ca24'},{i:GI+'2684/2684843.png',n:'Lotus',p:600,c:'#fd79a8'},{i:GI+'3655/3655883.png',n:'Theater',p:3000,c:'#6c5ce7'},{i:GI+'4925/4925592.png',n:'Thunder',p:5000,c:'#f9ca24'},{i:GI+'2278/2278992.png',n:'Sakura',p:750,c:'#fd79a8'},{i:GI+'1055/1055218.png',n:'Firework',p:1200,c:'#e04b3a'}]
+  [{i:G3('1f339'),n:'Rose',p:10,c:'#e74c3c'},{i:G3('2764_fe0f'),n:'Heart',p:20,c:'#e84393'},{i:G3('1f525'),n:'Fire',p:30,c:'#e17055'},{i:G3('2b50'),n:'Star',p:50,c:'#f9ca24'},{i:G3('1f3b5'),n:'Music',p:40,c:'#6c5ce7'},{i:G3('1f389'),n:'Party',p:25,c:'#00b894'},{i:G3('1f48b'),n:'Kiss',p:35,c:'#fd79a8'},{i:G3('1f98b'),n:'Butterfly',p:45,c:'#0984e3'}],
+  [{i:G3('1f48e'),n:'Diamond',p:200,c:'#74b9ff'},{i:G3('1f451'),n:'Crown',p:500,c:'#f9ca24'},{i:G3('1f3c6'),n:'Trophy',p:300,c:'#fdcb6e'},{i:G3('1f381'),n:'Gift Box',p:150,c:'#a29bfe'},{i:G3('1f680'),n:'Rocket',p:400,c:'#e17055'},{i:G3('1f308'),n:'Rainbow',p:250,c:'#00cec9'},{i:G3('1f984'),n:'Unicorn',p:350,c:'#fd79a8'},{i:G3('1f409'),n:'Dragon',p:1000,c:'#e04b3a'}],
+  [{i:G3('1f3f0'),n:'Castle',p:2000,c:'#d4a44c'},{i:G3('1f42f'),n:'Tiger',p:1500,c:'#e17055'},{i:G3('1f64f'),n:'Blessing',p:800,c:'#f9ca24'},{i:G3('1fab7'),n:'Lotus',p:600,c:'#fd79a8'},{i:G3('1f3ad'),n:'Tshechu',p:3000,c:'#6c5ce7'},{i:G3('26a1'),n:'Thunder',p:5000,c:'#f9ca24'},{i:G3('1f338'),n:'Sakura',p:750,c:'#fd79a8'},{i:G3('1f386'),n:'Firework',p:1200,c:'#e04b3a'}]
 ];
 const COIN_PKGS=[
   {coins:100,price:'Nu. 79',bonus:''},
@@ -1207,6 +1217,63 @@ function selectGift(tab,idx){
 }
 
 let giftCombo=0,giftComboTimer=null,lastGiftName='';
+
+function playGiftAnim(page,gift,senderName,senderAv,isCombo,combo){
+  // Full-screen overlay
+  const ov=document.createElement('div');
+  ov.className='gift-overlay';
+  ov.style.setProperty('--gc',gift.c);
+
+  // Color flash
+  const flash=document.createElement('div');flash.className='go-flash';ov.appendChild(flash);
+
+  // Expanding rings
+  for(let r=0;r<2;r++){const ring=document.createElement('div');ring.className='go-ring'+(r?' go-ring2':'');ring.style.borderColor=gift.c;ov.appendChild(ring)}
+
+  // Main gift image — big 3D entrance
+  const img=document.createElement('div');img.className='go-img';
+  img.innerHTML=`<img src="${gift.i}" alt="${gift.n}">`;
+  ov.appendChild(img);
+
+  // Gift name text
+  const name=document.createElement('div');name.className='go-name';
+  name.textContent=gift.n;ov.appendChild(name);
+
+  // Sparkle burst particles
+  const colors=[gift.c,'#f9ca24','#fff','#fd79a8','#6c5ce7','#00b894'];
+  for(let i=0;i<20;i++){
+    const s=document.createElement('div');s.className='go-sparkle';
+    const angle=(i/20)*Math.PI*2;const dist=80+Math.random()*80;
+    s.style.cssText=`left:50%;top:45%;background:${colors[i%colors.length]};--sx:${Math.cos(angle)*dist}px;--sy:${Math.sin(angle)*dist}px;animation-delay:${.2+Math.random()*.4}s`;
+    ov.appendChild(s);
+  }
+
+  // Vertical light trails
+  for(let i=0;i<8;i++){
+    const t=document.createElement('div');t.className='go-trail';
+    t.style.cssText=`left:${10+Math.random()*80}%;top:${50+Math.random()*40}%;background:${gift.c};animation-delay:${Math.random()*.5}s`;
+    ov.appendChild(t);
+  }
+
+  page.appendChild(ov);
+  setTimeout(()=>{img.classList.add('out')},2200);
+  setTimeout(()=>ov.remove(),3500);
+
+  // Banner slide from left
+  const banner=document.createElement('div');banner.className='gift-banner';
+  banner.innerHTML=`<img class="gb-av" src="${senderAv}"><div class="gb-info"><div class="gb-name">${senderName}</div><div class="gb-text">sent ${gift.n}</div></div><div class="gb-gift"><img src="${gift.i}" alt="${gift.n}">${isCombo&&combo>1?`<div class="gb-combo">x${combo}</div>`:''}</div>`;
+  page.appendChild(banner);
+  setTimeout(()=>banner.remove(),5000);
+
+  // Combo streak
+  if(isCombo&&combo>1){
+    const streak=document.createElement('div');streak.className='gift-streak';
+    streak.textContent=combo>=5?'GIFT STORM ⚡':combo>=3?'COMBO x'+combo+' 🔥':'x'+combo;
+    page.appendChild(streak);
+    setTimeout(()=>streak.remove(),4000);
+  }
+}
+
 function confirmSendGift(){
   if(!selectedGift)return;
   if(coins<selectedGift.p){closeGiftShop();openCoinShop();return}
@@ -1218,45 +1285,28 @@ function confirmSendGift(){
   clearTimeout(giftComboTimer);
   giftComboTimer=setTimeout(()=>{giftCombo=0;lastGiftName='';giftComboTimer=null},5000);
   const page=document.querySelector('.live-page');
-
-  // Banner slide in from left
-  const banner=document.createElement('div');
-  banner.className='gift-banner';
-  banner.innerHTML=`<img class="gb-av" src="https://i.pravatar.cc/150?img=10"><div class="gb-info"><div class="gb-name">You</div><div class="gb-text">sent ${selectedGift.n}</div></div><div class="gb-gift"><img src="${selectedGift.i}" alt="${selectedGift.n}">${giftCombo>1?`<div class="gb-combo">x${giftCombo}</div>`:''}</div>`;
-  page.appendChild(banner);
-  setTimeout(()=>banner.remove(),4500);
-
-  // Big gift flies to center
-  const fly=document.createElement('div');
-  fly.className='gift-fly';
-  fly.innerHTML=`<img src="${selectedGift.i}" alt="${selectedGift.n}">`;
-  page.appendChild(fly);
-  setTimeout(()=>fly.remove(),3500);
-
-  // Sparkle burst
-  const colors=[selectedGift.c,'#f9ca24','#ffffff','#fd79a8','#6c5ce7'];
-  for(let i=0;i<16;i++){
-    const s=document.createElement('div');
-    s.className='gift-sparkle';
-    const angle=(i/16)*Math.PI*2;
-    const dist=60+Math.random()*60;
-    s.style.cssText=`left:50%;top:50%;background:${colors[i%colors.length]};--sx:${Math.cos(angle)*dist}px;--sy:${Math.sin(angle)*dist}px;animation-delay:${Math.random()*0.3}s`;
-    page.appendChild(s);
-    setTimeout(()=>s.remove(),1500);
-  }
-
-  // Streak text for combos
-  if(giftCombo>1){
-    const streak=document.createElement('div');
-    streak.className='gift-streak';
-    streak.textContent=giftCombo>=5?'GIFT STORM ⚡':giftCombo>=3?'COMBO x'+giftCombo+' 🔥':'x'+giftCombo;
-    page.appendChild(streak);
-    setTimeout(()=>streak.remove(),3500);
-  }
-
+  playGiftAnim(page,selectedGift,'You','https://i.pravatar.cc/150?img=10',true,giftCombo);
   addLiveChatMsg('You','sent '+selectedGift.n+(giftCombo>1?' x'+giftCombo:'')+' (🪙'+selectedGift.p+')');
   addK(selectedGift.p>=200?20:10);
 }
+
+// Simulate other viewers sending gifts during live
+let simGiftInterval=null;
+function startSimGifts(){
+  simGiftInterval=setInterval(()=>{
+    if(Math.random()>0.4)return;
+    const tab=Math.random()>.7?(Math.random()>.5?2:1):0;
+    const gifts=GIFTS[tab];
+    const g=gifts[Math.floor(Math.random()*gifts.length)];
+    const u=LIVE_USERS[Math.floor(Math.random()*LIVE_USERS.length)];
+    const avIdx=Math.floor(Math.random()*8)+1;
+    const page=document.querySelector('.live-page');
+    if(!page||!document.getElementById('p-live').classList.contains('active'))return;
+    playGiftAnim(page,g,u,`https://i.pravatar.cc/150?img=${avIdx}`,false,1);
+    addLiveChatMsg(u,'sent '+g.n+' 🎁');
+  },8000);
+}
+function stopSimGifts(){clearInterval(simGiftInterval);simGiftInterval=null}
 
 function openGoLive(){document.getElementById('go-live-overlay').classList.remove('hidden')}
 function cancelGoLive(){document.getElementById('go-live-overlay').classList.add('hidden');document.getElementById('gl-title-input').value=''}

@@ -18,11 +18,11 @@
     body{font-family:'DM Sans',sans-serif;background:#0D0B09;color:var(--snow);-webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;min-height:100vh;overflow:hidden}
 
     /* PHONE FRAME */
-    .phone-wrapper{display:flex;flex-direction:column;align-items:center;gap:24px}
-    .phone-brand{display:flex;align-items:center;gap:12px}
-    .phone-brand .logo{font-family:'Playfair Display',serif;font-size:32px;font-weight:800;background:linear-gradient(135deg,var(--saffron),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .phone-brand .tag{font-size:13px;color:var(--gold);opacity:.6;letter-spacing:2px;text-transform:uppercase}
-    .phone-frame{width:375px;height:812px;border-radius:50px;border:5px solid #2A2520;overflow:hidden;position:relative;background:var(--ink);box-shadow:0 0 0 1px rgba(201,168,76,.15),0 30px 80px rgba(0,0,0,.7),0 0 120px rgba(232,168,56,.06);transition:all .5s}
+    .phone-wrapper{display:flex;flex-direction:column;align-items:center;gap:16px;max-height:100vh;max-height:100dvh;padding:10px}
+    .phone-brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
+    .phone-brand .logo{font-family:'Playfair Display',serif;font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--saffron),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .phone-brand .tag{font-size:12px;color:var(--gold);opacity:.6;letter-spacing:2px;text-transform:uppercase}
+    .phone-frame{width:375px;height:min(812px,calc(100vh - 80px));height:min(812px,calc(100dvh - 80px));border-radius:50px;border:5px solid #2A2520;overflow:hidden;position:relative;background:var(--ink);box-shadow:0 0 0 1px rgba(201,168,76,.15),0 30px 80px rgba(0,0,0,.7),0 0 120px rgba(232,168,56,.06);transition:all .5s}
     .phone-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:150px;height:32px;background:#2A2520;border-radius:0 0 18px 18px;z-index:999}
     .phone-notch::after{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:50px;height:6px;background:#1A1714;border-radius:3px}
     .phone-home{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:130px;height:4px;background:var(--snow);border-radius:2px;z-index:999;opacity:.2}
@@ -275,17 +275,22 @@
     /* On desktop, constrain nav-pill inside phone frame */
     @media(min-width:421px){
       .nav-pill{position:absolute;bottom:16px}
+      .pip{position:absolute}
+      .toast-msg{position:absolute}
+      .ambient-glow{position:absolute}
     }
 
     @media(max-width:420px){
-      body{background:var(--ink)}
-      .phone-wrapper{gap:0;width:100%;height:100%}.phone-brand{display:none}
-      .phone-frame{width:100vw;height:100vh;height:100dvh;border-radius:0;border:none;box-shadow:none}
+      body{background:var(--ink);overflow:hidden}
+      .phone-wrapper{gap:0;width:100%;height:100%;padding:0}.phone-brand{display:none}
+      .phone-frame{width:100%;height:100%;height:100dvh;border-radius:0;border:none;box-shadow:none}
       .phone-notch,.phone-home{display:none}
-      .phone-inner{height:100vh;height:100dvh}
-      .feed{height:100vh;height:100dvh}
-      .video-slide{height:100vh;height:100dvh}
-      .nav-pill{bottom:12px;bottom:max(12px,env(safe-area-inset-bottom))}
+      .phone-inner{height:100%;height:100dvh}
+      .screen{height:100%}
+      .feed{height:100%}
+      .video-slide{height:100dvh;min-height:100dvh}
+      .nav-pill{position:fixed;bottom:12px;bottom:max(12px,env(safe-area-inset-bottom))}
+      .pip{position:fixed}
     }
   </style>
 </head>

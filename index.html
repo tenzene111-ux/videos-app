@@ -995,6 +995,8 @@ function nav(p){
   document.querySelectorAll('.dock-item').forEach(x=>x.classList.remove('active'));
   const map={home:0,explore:1,inbox:2,profile:3};
   if(map[p]!==undefined)document.querySelectorAll('.dock-item')[map[p]]?.classList.add('active');
+  const dock=document.querySelector('.dock');
+  dock.style.display=(p==='live')?'none':'flex';
   if(p!=='home'&&p!=='live')document.querySelectorAll('.slide video').forEach(v=>v.pause());
   if(p==='home'){const active=document.querySelector('.slide');if(active){const v=active.querySelector('video');v&&v.play().catch(()=>{})}}
   if(p==='live'){document.querySelectorAll('.slide video').forEach(v=>v.pause());document.getElementById('live-video').play().catch(()=>{})}

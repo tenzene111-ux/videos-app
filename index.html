@@ -404,6 +404,86 @@
     .ptr-indicator svg{width:24px;height:24px;color:var(--g1);animation:spin 1s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
 
+    /* === LIVE === */
+    .live-page{flex:1;position:relative;overflow:hidden;background:#000}
+    .live-page video{width:100%;height:100%;object-fit:cover}
+    .live-page::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,transparent 20%,transparent 60%,rgba(0,0,0,.7) 100%);pointer-events:none}
+    .live-top{position:absolute;top:44px;left:12px;right:12px;z-index:10;display:flex;align-items:center;justify-content:space-between}
+    .live-host{display:flex;align-items:center;gap:8px;background:var(--glass);backdrop-filter:blur(20px);border-radius:20px;padding:4px;padding-right:12px;border:1px solid var(--w5)}
+    .live-host img{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--r1)}
+    .live-host .lh-info{display:flex;flex-direction:column}
+    .live-host .lh-name{font-size:12px;font-weight:700}
+    .live-host .lh-badge{display:inline-flex;align-items:center;gap:3px;font-size:9px;color:var(--r1);font-weight:700}
+    .live-host .lh-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--r1);animation:blink 1s step-end infinite}
+    .live-top-right{display:flex;align-items:center;gap:6px}
+    .live-viewers{display:flex;align-items:center;gap:4px;background:var(--glass);backdrop-filter:blur(20px);border-radius:12px;padding:5px 10px;border:1px solid var(--w5);font-size:11px;font-weight:600}
+    .live-viewers svg{width:14px;height:14px}
+    .live-close{width:30px;height:30px;border-radius:50%;background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--w5);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--w)}
+    .live-close svg{width:14px;height:14px}
+
+    /* Live chat */
+    .live-chat{position:absolute;bottom:80px;left:12px;right:80px;z-index:10;max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;scrollbar-width:none;mask-image:linear-gradient(transparent,black 30%)}
+    .live-chat::-webkit-scrollbar{display:none}
+    .lc-msg{display:flex;align-items:flex-start;gap:6px;animation:lcSlide .3s var(--spring);padding:4px 10px;background:rgba(0,0,0,.35);backdrop-filter:blur(8px);border-radius:12px;max-width:fit-content}
+    @keyframes lcSlide{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .lc-msg img{width:22px;height:22px;border-radius:50%;object-fit:cover;flex-shrink:0;margin-top:1px}
+    .lc-msg .lc-body{font-size:12px;line-height:16px}
+    .lc-msg .lc-body b{color:var(--g1);font-weight:700;font-size:11px}
+    .lc-msg.system{background:linear-gradient(135deg,rgba(212,164,76,.15),rgba(212,164,76,.05));border:1px solid rgba(212,164,76,.15)}
+    .lc-msg.system .lc-body{color:var(--g1);font-weight:600}
+
+    /* Live bottom bar */
+    .live-bottom{position:absolute;bottom:20px;left:12px;right:12px;z-index:10;display:flex;align-items:center;gap:8px}
+    .live-comment-input{flex:1;background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--w5);border-radius:20px;padding:10px 14px;color:var(--w);font-size:13px;font-family:inherit;outline:none}
+    .live-comment-input::placeholder{color:var(--w3)}
+    .live-action{width:40px;height:40px;border-radius:50%;background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--w5);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--w);transition:all .2s var(--spring);flex-shrink:0;position:relative}
+    .live-action:active{transform:scale(.8)}
+    .live-action svg{width:20px;height:20px}
+    .live-action.gift{background:linear-gradient(135deg,rgba(212,164,76,.2),rgba(212,164,76,.05));border-color:rgba(212,164,76,.2)}
+
+    /* Floating reactions */
+    .float-reaction{position:absolute;z-index:15;pointer-events:none;font-size:24px;animation:floatUp 2.5s ease-out forwards}
+    @keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}50%{opacity:.8;transform:translateY(-120px) scale(1.2) translateX(var(--drift))}100%{opacity:0;transform:translateY(-250px) scale(.6) translateX(var(--drift2))}}
+
+    /* Gift animation */
+    .gift-popup{position:absolute;left:12px;bottom:160px;z-index:20;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(212,164,76,.2),rgba(0,0,0,.5));backdrop-filter:blur(16px);padding:8px 14px;border-radius:16px;border:1px solid rgba(212,164,76,.2);animation:giftIn .5s var(--spring),giftOut .5s 2.5s var(--ease) forwards}
+    @keyframes giftIn{from{opacity:0;transform:translateX(-40px) scale(.8)}to{opacity:1;transform:translateX(0) scale(1)}}
+    @keyframes giftOut{to{opacity:0;transform:translateX(-20px)}}
+    .gift-popup img{width:28px;height:28px;border-radius:50%;object-fit:cover}
+    .gift-popup .gp-info{font-size:11px;line-height:15px}
+    .gift-popup .gp-info b{color:var(--g1)}
+    .gift-popup .gp-emoji{font-size:28px;animation:giftBounce .5s var(--bounce)}
+    @keyframes giftBounce{0%{transform:scale(0) rotate(-30deg)}50%{transform:scale(1.3) rotate(10deg)}100%{transform:scale(1) rotate(0)}}
+
+    /* Live streams in explore */
+    .live-row{display:flex;gap:10px;padding:0 16px 16px;overflow-x:auto;scrollbar-width:none}
+    .live-row::-webkit-scrollbar{display:none}
+    .live-card{flex-shrink:0;width:140px;aspect-ratio:3/4;border-radius:16px;overflow:hidden;position:relative;cursor:pointer;transition:transform .3s var(--spring)}
+    .live-card:active{transform:scale(.95)}
+    .live-card video{width:100%;height:100%;object-fit:cover}
+    .live-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.8))}
+    .live-card .lc-live{position:absolute;top:8px;left:8px;z-index:2;display:flex;align-items:center;gap:3px;background:var(--r1);padding:3px 8px;border-radius:6px;font-size:9px;font-weight:700;text-transform:uppercase}
+    .live-card .lc-live::before{content:'';width:5px;height:5px;border-radius:50%;background:white;animation:blink 1s step-end infinite}
+    .live-card .lc-viewers{position:absolute;top:8px;right:8px;z-index:2;background:rgba(0,0,0,.5);padding:2px 6px;border-radius:4px;font-size:9px;font-weight:600;display:flex;align-items:center;gap:2px}
+    .live-card .lc-viewers svg{width:8px;height:8px}
+    .live-card .lc-info{position:absolute;bottom:8px;left:8px;right:8px;z-index:2}
+    .live-card .lc-info img{width:24px;height:24px;border-radius:50%;object-fit:cover;border:2px solid var(--r1);margin-bottom:4px}
+    .live-card .lc-info .lc-name{font-size:11px;font-weight:700}
+    .live-card .lc-info .lc-topic{font-size:9px;color:var(--w3);margin-top:2px}
+
+    /* Go Live overlay */
+    .go-live-overlay{position:absolute;inset:0;z-index:300;background:rgba(0,0,0,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+    .go-live-overlay .gl-preview{width:160px;height:160px;border-radius:50%;background:var(--b3);border:3px solid var(--r1);display:flex;align-items:center;justify-content:center;animation:glPulse 2s ease infinite}
+    @keyframes glPulse{0%,100%{box-shadow:0 0 0 0 rgba(224,75,58,.3)}50%{box-shadow:0 0 0 20px rgba(224,75,58,0)}}
+    .go-live-overlay .gl-preview svg{width:48px;height:48px;color:var(--r1)}
+    .go-live-overlay h3{font-size:20px;font-weight:700}
+    .go-live-overlay p{font-size:13px;color:var(--w3);text-align:center;padding:0 40px;line-height:20px}
+    .go-live-overlay .gl-title{width:80%;background:var(--b3);border:1px solid var(--w5);border-radius:14px;padding:12px 16px;color:var(--w);font-size:14px;font-family:inherit;outline:none;text-align:center}
+    .go-live-overlay .gl-title::placeholder{color:var(--w3)}
+    .go-live-overlay .gl-start{background:linear-gradient(135deg,var(--r1),var(--coral));border:none;color:white;padding:14px 40px;border-radius:20px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .3s var(--spring);box-shadow:0 4px 20px rgba(224,75,58,.3)}
+    .go-live-overlay .gl-start:active{transform:scale(.92)}
+    .go-live-overlay .gl-cancel{background:none;border:1px solid var(--w5);color:var(--w3);padding:10px 30px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+
     /* === RESPONSIVE === */
     @media(min-width:769px){.dock{position:absolute}}
     @media(max-width:768px){
@@ -487,6 +567,8 @@
           </div>
           <div class="stories" id="stories"></div>
           <div class="tags" id="tags"></div>
+          <div class="section-title">🔴 Live Now <span class="see-all">See all</span></div>
+          <div class="live-row" id="live-row"></div>
           <div class="section-title">Trending Creators <span class="see-all">See all</span></div>
           <div class="trending-row" id="trending-row"></div>
           <div class="section-title">Featured <span class="see-all">See all</span></div>
@@ -587,6 +669,42 @@
         </div>
       </div>
 
+      <!-- LIVE -->
+      <div id="p-live" class="page">
+        <div class="live-page">
+          <video src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" autoplay muted loop playsinline id="live-video"></video>
+          <div class="live-top">
+            <div class="live-host">
+              <img class="av" src="https://i.pravatar.cc/150?img=1" id="lh-av">
+              <div>
+                <div style="font-weight:700;font-size:13px" id="lh-name">dorji_wangmo</div>
+                <div style="font-size:10px;color:var(--w3)">Paro, Bhutan</div>
+              </div>
+              <div class="live-badge">LIVE</div>
+              <div class="live-viewers"><svg viewBox="0 0 24 24" fill="currentColor" width="10" height="10"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span id="lv-count">1.2K</span></div>
+            </div>
+            <button class="live-close" onclick="closeLive()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+          </div>
+          <div class="live-chat" id="live-chat"></div>
+          <div class="live-bottom">
+            <input class="live-comment-input" placeholder="Say something..." id="live-input" onkeydown="if(event.key==='Enter')sendLiveMsg()">
+            <button class="live-action" onclick="sendLiveReaction('❤️')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+            <button class="live-action" onclick="sendGift()">🎁</button>
+            <button class="live-action" onclick="sendLiveReaction('🔥')">🔥</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GO LIVE OVERLAY -->
+      <div class="go-live-overlay hidden" id="go-live-overlay">
+        <div class="gl-preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+        <h3>Go Live</h3>
+        <p>Share moments in real-time with your followers</p>
+        <input class="gl-title" placeholder="Add a title for your live..." id="gl-title-input">
+        <button class="gl-start" onclick="startLive()">Start Live Video</button>
+        <button class="gl-cancel" onclick="cancelGoLive()">Cancel</button>
+      </div>
+
       <!-- DOCK -->
       <div class="dock">
         <button class="dock-item active" onclick="nav('home')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg><span class="d-label">Home</span></button>
@@ -659,7 +777,7 @@ V.forEach((v,i)=>{
     <div class="top-bar">
       <div class="feed-tabs"><button class="feed-tab">Following</button><button class="feed-tab active">For You</button></div>
       <div class="top-right">
-        <button class="live-btn" onclick="toast('🔴 Live coming soon!')">Live</button>
+        <button class="live-btn" onclick="openLive(V[0])">Live</button>
         <button class="search-btn" onclick="nav('explore');document.getElementById('q').focus()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button>
       </div>
     </div>
@@ -800,8 +918,10 @@ function nav(p){
   document.querySelectorAll('.dock-item').forEach(x=>x.classList.remove('active'));
   const map={home:0,explore:1,inbox:2,profile:3};
   if(map[p]!==undefined)document.querySelectorAll('.dock-item')[map[p]]?.classList.add('active');
-  if(p!=='home')document.querySelectorAll('.slide video').forEach(v=>v.pause());
+  if(p!=='home'&&p!=='live')document.querySelectorAll('.slide video').forEach(v=>v.pause());
   if(p==='home'){const active=document.querySelector('.slide');if(active){const v=active.querySelector('video');v&&v.play().catch(()=>{})}}
+  if(p==='live'){document.querySelectorAll('.slide video').forEach(v=>v.pause());document.getElementById('live-video').play().catch(()=>{})}
+  if(p!=='live')clearLiveChat();
 }
 
 // === EXPLORE ===
@@ -863,6 +983,100 @@ document.addEventListener('keydown',e=>{
   if(e.key==='m'){isMuted=!isMuted;document.querySelectorAll('.slide video').forEach(v=>v.muted=isMuted);toast(isMuted?'🔇 Muted':'🔊 Unmuted')}
   if(e.key==='l'){const active=document.querySelector('.slide video:not([paused])');if(active){const sl=active.closest('.slide');const id=sl?.dataset.id;const btn=sl?.querySelector('[data-a="like"]');if(id&&btn&&!liked.has(id))toggleLike(id,btn)}}
 });
+
+// === LIVE ===
+const LIVE_MSGS=['Amazing stream! 🔥','Love this ❤️','Hello from Bhutan! 🇧🇹','So beautiful 😍','First time here!','Tashi Delek! 🙏','Wow incredible!','Keep going! 💪','Love your content','Where is this? 🏔️','Subscribed!','Best live ever!','Greetings from Thimphu','This is amazing 🐉','Can you show more?'];
+const LIVE_USERS=['pema_tshering','karma_dancer','thinley_adventures','sonam_arts','dechen_zam','ugyen_dorji','choden_lhamo','sangay_wangmo'];
+let liveInterval=null,liveChatInterval=null,liveViewerInterval=null,liveViewers=0;
+
+function openLive(streamer){
+  const vid=document.getElementById('live-video');
+  vid.src=streamer.src;
+  document.getElementById('lh-av').src=streamer.u.av;
+  document.getElementById('lh-name').textContent=streamer.u.name;
+  liveViewers=Math.floor(Math.random()*2000)+500;
+  document.getElementById('lv-count').textContent=fmt(liveViewers);
+  document.getElementById('live-chat').innerHTML='';
+  nav('live');
+  addLiveChatMsg('system','Welcome to the live stream! 🎉');
+  liveChatInterval=setInterval(()=>{
+    const u=LIVE_USERS[Math.floor(Math.random()*LIVE_USERS.length)];
+    const m=LIVE_MSGS[Math.floor(Math.random()*LIVE_MSGS.length)];
+    addLiveChatMsg(u,m);
+  },2200);
+  liveViewerInterval=setInterval(()=>{
+    liveViewers+=Math.floor(Math.random()*10)-3;
+    if(liveViewers<100)liveViewers=100;
+    document.getElementById('lv-count').textContent=fmt(liveViewers);
+  },5000);
+}
+
+function closeLive(){clearLiveChat();nav('home')}
+function clearLiveChat(){clearInterval(liveChatInterval);clearInterval(liveViewerInterval);liveChatInterval=null;liveViewerInterval=null;document.getElementById('live-video').pause()}
+
+function addLiveChatMsg(user,text){
+  const chat=document.getElementById('live-chat');
+  const d=document.createElement('div');
+  d.className='lc-msg';
+  const isSystem=user==='system';
+  d.innerHTML=isSystem?`<span style="color:var(--g1);font-weight:600">${text}</span>`:`<span class="lc-name">${user}</span>${text}`;
+  chat.appendChild(d);
+  if(chat.children.length>50)chat.removeChild(chat.firstChild);
+  chat.scrollTop=chat.scrollHeight;
+}
+
+function sendLiveMsg(){
+  const inp=document.getElementById('live-input');
+  const t=inp.value.trim();if(!t)return;inp.value='';
+  addLiveChatMsg('You',t);addK(2);
+}
+
+function sendLiveReaction(emoji){
+  const page=document.querySelector('.live-page');
+  for(let i=0;i<5;i++){
+    const r=document.createElement('div');
+    r.className='float-reaction';
+    r.textContent=emoji;
+    r.style.left=(50+Math.random()*40-20)+'%';
+    r.style.animationDelay=(i*0.15)+'s';
+    page.appendChild(r);
+    setTimeout(()=>r.remove(),3000);
+  }
+  addK(1);
+}
+
+function sendGift(){
+  const gifts=['🎁','💎','🌟','👑','🏆','🎪'];
+  const g=gifts[Math.floor(Math.random()*gifts.length)];
+  const page=document.querySelector('.live-page');
+  const popup=document.createElement('div');
+  popup.className='gift-popup';
+  popup.innerHTML=`<span style="font-size:32px">${g}</span><div style="font-size:12px;font-weight:700;color:var(--g1)">Gift Sent!</div>`;
+  page.appendChild(popup);
+  setTimeout(()=>popup.remove(),2500);
+  sendLiveReaction(g);
+  addLiveChatMsg('You','sent a gift '+g);
+  addK(10);
+  toast('🎁 Gift sent!');
+}
+
+function openGoLive(){document.getElementById('go-live-overlay').classList.remove('hidden')}
+function cancelGoLive(){document.getElementById('go-live-overlay').classList.add('hidden');document.getElementById('gl-title-input').value=''}
+function startLive(){
+  cancelGoLive();
+  toast('🔴 You are now LIVE!');
+  const di=document.querySelector('.dynamic-island');
+  di.classList.add('expand');
+  di.querySelector('.di-content').innerHTML='<div class="di-eq"><span></span><span></span><span></span></div>LIVE • 0 viewers';
+  setTimeout(()=>{di.classList.remove('expand')},4000);
+  addK(20);
+}
+
+// Live streams row in Explore
+document.getElementById('live-row').innerHTML=V.slice(0,4).map((v,i)=>`<div class="live-card" onclick="openLive(V[${i}])"><video src="${v.src}" muted preload="metadata"></video><div class="lc-live">LIVE</div><div class="lc-info"><div class="lc-name">@${v.u.name}</div><div class="lc-topic">${v.loc}</div></div></div>`).join('');
+
+// Studio Live button
+document.querySelector('.dur-pills:last-child span:last-child')?.addEventListener('click',function(){openGoLive()});
 </script>
 </body>
 </html>

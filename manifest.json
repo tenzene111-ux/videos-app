@@ -1,0 +1,28 @@
+{
+  "name": "Zhingkham",
+  "short_name": "Zhingkham",
+  "description": "Bhutan's home for short videos — Watch, Create, Connect",
+  "start_url": "/videos-app/",
+  "scope": "/videos-app/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0A0908",
+  "theme_color": "#D4A44C",
+  "icons": [
+    {
+      "src": "icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["entertainment", "social"],
+  "lang": "en",
+  "dir": "ltr"
+}

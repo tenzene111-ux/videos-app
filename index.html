@@ -914,6 +914,229 @@
     .festival-item .fi-name{font-size:14px;font-weight:700}
     .festival-item .fi-date{font-size:11px;color:var(--g1);font-weight:600;margin:2px 0}
     .festival-item .fi-desc{font-size:12px;color:var(--w3);line-height:18px}
+
+    /* === DAILY REWARDS & STREAKS === */
+    .rewards-overlay{position:absolute;inset:0;z-index:8500;background:rgba(0,0,0,.92);backdrop-filter:blur(20px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:24px}
+    .rewards-overlay .rw-close{position:absolute;top:16px;right:16px;background:var(--glass);border:1px solid var(--w5);color:var(--w);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;z-index:2}
+    .streak-fire{font-size:72px;animation:fireGlow 1.5s ease infinite alternate}
+    @keyframes fireGlow{from{filter:drop-shadow(0 0 20px rgba(255,159,67,.6))}to{filter:drop-shadow(0 0 40px rgba(255,159,67,.9))}}
+    .streak-count{font-size:48px;font-weight:900;background:linear-gradient(135deg,var(--saffron),var(--r1));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .streak-label{font-size:14px;color:var(--w3)}
+    .reward-days{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+    .reward-day{width:44px;height:56px;border-radius:12px;background:var(--b3);border:1px solid var(--w5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:9px;font-weight:600;color:var(--w3);transition:all .3s var(--spring)}
+    .reward-day .rd-emoji{font-size:16px}
+    .reward-day.claimed{background:rgba(212,164,76,.15);border-color:var(--g1);color:var(--g1)}
+    .reward-day.today{border-color:var(--saffron);animation:todayPulse 1.5s ease infinite;cursor:pointer}
+    @keyframes todayPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,159,67,.3)}50%{box-shadow:0 0 0 6px rgba(255,159,67,0)}}
+    .reward-day.today:active{transform:scale(.85)}
+    .rw-claim{padding:14px 48px;border-radius:20px;background:linear-gradient(135deg,var(--saffron),var(--r1));border:none;color:white;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 20px rgba(255,159,67,.4);transition:all .3s var(--spring)}
+    .rw-claim:active{transform:scale(.92)}
+    .rw-claim:disabled{opacity:.4;cursor:not-allowed}
+    .streak-badge{position:absolute;top:44px;left:16px;z-index:21;display:flex;align-items:center;gap:4px;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--w5);border-radius:10px;padding:4px 8px;font-size:10px;font-weight:700;color:var(--saffron);cursor:pointer}
+
+    /* === ACHIEVEMENT BADGES === */
+    .badges-overlay{position:absolute;inset:0;z-index:850;background:var(--b1);overflow-y:auto;transform:translateY(100%);transition:transform .35s var(--ease)}
+    .badges-overlay.show{transform:translateY(0)}
+    .badges-head{display:flex;align-items:center;justify-content:space-between;padding:16px;position:sticky;top:0;background:var(--b1);z-index:2;border-bottom:1px solid var(--w5)}
+    .badges-head h2{font-size:17px;font-weight:800}
+    .badges-head button{background:none;border:none;color:var(--w);font-size:22px;cursor:pointer}
+    .badge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px}
+    .badge-card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 8px;background:var(--b3);border-radius:16px;border:1px solid var(--w5);text-align:center;transition:all .3s}
+    .badge-card.unlocked{border-color:rgba(212,164,76,.3);background:linear-gradient(135deg,rgba(212,164,76,.08),var(--b3))}
+    .badge-card.locked{opacity:.4;filter:grayscale(1)}
+    .badge-card .bc-emoji{font-size:32px}
+    .badge-card .bc-name{font-size:10px;font-weight:700;color:var(--w)}
+    .badge-card .bc-desc{font-size:9px;color:var(--w3)}
+    .badge-card .bc-progress{width:100%;height:4px;border-radius:2px;background:var(--b4);overflow:hidden;margin-top:4px}
+    .badge-card .bc-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--g1),var(--g3));transition:width .5s}
+    .badge-showcase{display:flex;gap:4px;margin-top:6px;justify-content:center}
+    .badge-showcase span{font-size:14px}
+
+    /* === HASHTAG CHALLENGES === */
+    .challenge-overlay{position:absolute;inset:0;z-index:850;background:var(--b1);overflow-y:auto;transform:translateY(100%);transition:transform .35s var(--ease)}
+    .challenge-overlay.show{transform:translateY(0)}
+    .challenge-head{display:flex;align-items:center;justify-content:space-between;padding:16px;position:sticky;top:0;background:var(--b1);z-index:2;border-bottom:1px solid var(--w5)}
+    .challenge-head h2{font-size:17px;font-weight:800}
+    .challenge-head button{background:none;border:none;color:var(--w);font-size:22px;cursor:pointer}
+    .challenge-banner{margin:16px;border-radius:20px;padding:24px;background:linear-gradient(135deg,rgba(212,164,76,.15),rgba(139,92,246,.1));border:1px solid rgba(212,164,76,.15);text-align:center}
+    .challenge-banner .cb-tag{font-size:24px;font-weight:900;background:linear-gradient(135deg,var(--g1),var(--acc));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+    .challenge-banner .cb-prize{font-size:13px;color:var(--g1);font-weight:600}
+    .challenge-banner .cb-count{font-size:11px;color:var(--w3);margin-top:4px}
+    .challenge-banner .cb-join{margin-top:12px;padding:10px 32px;border-radius:14px;background:linear-gradient(135deg,var(--g1),var(--g3));border:none;color:var(--b1);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+    .challenge-list{padding:0 16px 100px}
+    .challenge-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--w5)}
+    .challenge-item .ci-rank{font-size:18px;font-weight:900;color:var(--g1);width:28px;text-align:center}
+    .challenge-item img{width:42px;height:42px;border-radius:50%;object-fit:cover}
+    .challenge-item .ci-info{flex:1}
+    .challenge-item .ci-name{font-size:13px;font-weight:700}
+    .challenge-item .ci-score{font-size:11px;color:var(--w3)}
+
+    /* === SHOPPING / E-COMMERCE === */
+    .shop-overlay{position:absolute;inset:0;z-index:850;background:var(--b1);overflow-y:auto;transform:translateY(100%);transition:transform .35s var(--ease)}
+    .shop-overlay.show{transform:translateY(0)}
+    .shop-head{display:flex;align-items:center;justify-content:space-between;padding:16px;position:sticky;top:0;background:var(--b1);z-index:2;border-bottom:1px solid var(--w5)}
+    .shop-head h2{font-size:17px;font-weight:800}
+    .shop-head button{background:none;border:none;color:var(--w);font-size:22px;cursor:pointer}
+    .shop-cats{display:flex;gap:8px;padding:12px 16px;overflow-x:auto;scrollbar-width:none}
+    .shop-cats::-webkit-scrollbar{display:none}
+    .shop-cat{padding:8px 16px;border-radius:12px;background:var(--b3);border:1px solid var(--w5);font-size:12px;font-weight:600;color:var(--w3);cursor:pointer;white-space:nowrap;transition:all .2s}
+    .shop-cat.active{background:rgba(212,164,76,.1);color:var(--g1);border-color:rgba(212,164,76,.2)}
+    .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 16px 100px}
+    .product-card{background:var(--b3);border-radius:16px;overflow:hidden;border:1px solid var(--w5);cursor:pointer;transition:all .3s var(--spring)}
+    .product-card:active{transform:scale(.95)}
+    .product-card .pc-img{width:100%;aspect-ratio:1;background:var(--b4);display:flex;align-items:center;justify-content:center;font-size:48px;position:relative}
+    .product-card .pc-badge{position:absolute;top:8px;left:8px;background:var(--r1);color:white;font-size:9px;font-weight:700;padding:3px 8px;border-radius:6px}
+    .product-card .pc-info{padding:10px}
+    .product-card .pc-name{font-size:12px;font-weight:600;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .product-card .pc-price{font-size:14px;font-weight:800;color:var(--g1)}
+    .product-card .pc-old{font-size:11px;color:var(--w3);text-decoration:line-through;margin-left:4px}
+    .product-card .pc-rating{display:flex;align-items:center;gap:2px;font-size:10px;color:var(--saffron);margin-top:4px}
+    .product-tag{position:absolute;z-index:15;display:flex;align-items:center;gap:4px;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--w5);border-radius:10px;padding:4px 10px;font-size:10px;font-weight:600;color:var(--w);cursor:pointer;animation:tagBounce 2s ease infinite}
+    @keyframes tagBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+
+    /* === WATCH PARTY === */
+    .watchparty-overlay{position:absolute;inset:0;z-index:850;background:var(--b1);display:flex;flex-direction:column;transform:translateY(100%);transition:transform .35s var(--ease)}
+    .watchparty-overlay.show{transform:translateY(0)}
+    .wp-head{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--w5)}
+    .wp-head h2{font-size:17px;font-weight:800}
+    .wp-head button{background:none;border:none;color:var(--w);font-size:22px;cursor:pointer}
+    .wp-video{flex:1;position:relative;background:#000;max-height:50%}
+    .wp-video video{width:100%;height:100%;object-fit:cover}
+    .wp-avatars{position:absolute;top:12px;right:12px;display:flex;z-index:2}
+    .wp-avatars img{width:28px;height:28px;border-radius:50%;border:2px solid var(--b1);margin-left:-8px;object-fit:cover}
+    .wp-avatars .wp-more{width:28px;height:28px;border-radius:50%;background:var(--glass);border:2px solid var(--b1);margin-left:-8px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--w)}
+    .wp-chat{flex:1;display:flex;flex-direction:column;background:var(--b2)}
+    .wp-chat-msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:6px}
+    .wp-msg{display:flex;align-items:flex-start;gap:6px;animation:cmSlide .3s var(--ease)}
+    .wp-msg img{width:24px;height:24px;border-radius:50%;object-fit:cover}
+    .wp-msg .wpm-body{background:var(--b3);border-radius:12px;padding:6px 10px;font-size:12px}
+    .wp-msg .wpm-body b{color:var(--g1);font-size:11px}
+    .wp-chat-input{display:flex;align-items:center;gap:8px;padding:10px 12px;border-top:1px solid var(--w5)}
+    .wp-chat-input input{flex:1;background:var(--b3);border:none;border-radius:16px;padding:8px 14px;color:var(--w);font-size:12px;font-family:inherit;outline:none}
+    .wp-chat-input button{background:linear-gradient(135deg,var(--g1),var(--g3));border:none;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--b1);font-size:14px}
+
+    /* === STITCH MODE === */
+    .stitch-overlay{position:absolute;inset:0;z-index:800;background:var(--b1);display:flex;flex-direction:column;transform:translateY(100%);transition:transform .35s var(--ease)}
+    .stitch-overlay.show{transform:translateY(0)}
+    .stitch-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--b2)}
+    .stitch-head span{font-size:13px;font-weight:700}
+    .stitch-head button{background:none;border:none;color:var(--w);font-size:20px;cursor:pointer}
+    .stitch-preview{height:40%;position:relative;overflow:hidden}
+    .stitch-preview video{width:100%;height:100%;object-fit:cover}
+    .stitch-preview .sp-trim{position:absolute;bottom:0;left:0;right:0;padding:8px 16px;background:linear-gradient(transparent,rgba(0,0,0,.8));display:flex;align-items:center;gap:8px;font-size:11px;color:var(--w3)}
+    .stitch-preview .sp-trim input[type=range]{flex:1;accent-color:var(--g1)}
+    .stitch-camera{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;background:var(--b3);color:var(--w3);gap:8px;font-size:13px}
+    .stitch-camera svg{width:48px;height:48px;opacity:.4}
+    .stitch-controls{padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px;background:var(--b2)}
+    .stitch-rec{width:64px;height:64px;border-radius:50%;border:4px solid var(--w);background:var(--r1);cursor:pointer;transition:all .3s}
+    .stitch-rec.recording{border-radius:12px;width:40px;height:40px}
+    .stitch-post{display:none;background:linear-gradient(135deg,var(--g1),var(--g2));color:var(--b1);border:none;padding:12px 32px;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer}
+    .stitch-post.show{display:block}
+
+    /* === POLLS === */
+    .poll-container{position:absolute;bottom:160px;left:14px;right:66px;z-index:12;background:var(--glass);backdrop-filter:blur(16px);border-radius:14px;padding:12px;border:1px solid var(--w5)}
+    .poll-q{font-size:13px;font-weight:700;margin-bottom:8px}
+    .poll-option{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--b3);border-radius:10px;margin-bottom:4px;cursor:pointer;border:1px solid var(--w5);transition:all .2s;position:relative;overflow:hidden}
+    .poll-option:active{transform:scale(.97)}
+    .poll-option .po-fill{position:absolute;left:0;top:0;bottom:0;border-radius:10px;transition:width .5s var(--ease);z-index:0}
+    .poll-option .po-text{position:relative;z-index:1;font-size:12px;font-weight:600;flex:1}
+    .poll-option .po-pct{position:relative;z-index:1;font-size:12px;font-weight:700;opacity:0;transition:opacity .3s}
+    .poll-option.voted .po-pct{opacity:1}
+    .poll-option.voted{pointer-events:none}
+    .poll-option.winner{border-color:rgba(212,164,76,.3)}
+    .poll-total{font-size:10px;color:var(--w3);margin-top:6px;text-align:center}
+
+    /* === MEDITATION MODE === */
+    .meditate-overlay{position:absolute;inset:0;z-index:9500;background:radial-gradient(ellipse at 50% 50%,#0a1628,#060504);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:32px}
+    .meditate-overlay .md-close{position:absolute;top:16px;right:16px;background:var(--glass);border:1px solid var(--w5);color:var(--w);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;z-index:2}
+    .breath-circle{width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(212,164,76,.15),transparent);border:2px solid rgba(212,164,76,.2);display:flex;align-items:center;justify-content:center;animation:breathe 8s ease-in-out infinite}
+    @keyframes breathe{0%,100%{transform:scale(.6);border-color:rgba(212,164,76,.15)}50%{transform:scale(1);border-color:rgba(212,164,76,.5);box-shadow:0 0 60px rgba(212,164,76,.2)}}
+    .breath-text{font-size:16px;font-weight:600;color:var(--g1);animation:breathText 8s ease-in-out infinite}
+    @keyframes breathText{0%,100%{opacity:.5}25%{opacity:1}50%{opacity:.5}75%{opacity:1}}
+    .md-timer{font-size:36px;font-weight:900;color:var(--w);font-variant-numeric:tabular-nums}
+    .md-quote{font-size:13px;color:var(--w3);font-style:italic;max-width:260px;line-height:20px}
+    .md-sounds{display:flex;gap:12px;margin-top:8px}
+    .md-sound{width:48px;height:48px;border-radius:50%;background:var(--b3);border:1px solid var(--w5);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;transition:all .2s}
+    .md-sound.active{border-color:var(--g1);background:rgba(212,164,76,.1)}
+    .md-sound:active{transform:scale(.85)}
+
+    /* === TRENDING ANALYTICS === */
+    .analytics-overlay{position:absolute;inset:0;z-index:850;background:var(--b1);overflow-y:auto;transform:translateY(100%);transition:transform .35s var(--ease)}
+    .analytics-overlay.show{transform:translateY(0)}
+    .analytics-head{display:flex;align-items:center;justify-content:space-between;padding:16px;position:sticky;top:0;background:var(--b1);z-index:2;border-bottom:1px solid var(--w5)}
+    .analytics-head h2{font-size:17px;font-weight:800}
+    .analytics-head button{background:none;border:none;color:var(--w);font-size:22px;cursor:pointer}
+    .trend-card{margin:8px 16px;padding:14px;background:var(--b3);border-radius:14px;border:1px solid var(--w5);display:flex;align-items:center;gap:12px}
+    .trend-card .tc-rank{font-size:20px;font-weight:900;color:var(--g1);width:28px}
+    .trend-card .tc-info{flex:1}
+    .trend-card .tc-tag{font-size:14px;font-weight:700}
+    .trend-card .tc-stats{font-size:11px;color:var(--w3);margin-top:2px}
+    .trend-card .tc-spark{display:flex;align-items:flex-end;gap:1px;height:20px}
+    .trend-card .tc-spark span{width:3px;border-radius:1px;background:var(--g1);transition:height .3s}
+    .trend-sound{margin:8px 16px;padding:12px;background:var(--b3);border-radius:14px;border:1px solid var(--w5);display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .2s}
+    .trend-sound:active{transform:scale(.97)}
+    .trend-sound .ts-disc{width:40px;height:40px;border-radius:50%;background:conic-gradient(var(--b1),var(--b3),var(--b1));border:2px solid var(--b5);animation:discSpin 3s linear infinite;display:flex;align-items:center;justify-content:center;font-size:14px}
+    .trend-sound .ts-info{flex:1}
+    .trend-sound .ts-name{font-size:12px;font-weight:700}
+    .trend-sound .ts-artist{font-size:10px;color:var(--w3)}
+    .trend-sound .ts-uses{font-size:10px;color:var(--g1);font-weight:600}
+    .trend-sound .ts-play{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--g1),var(--g3));display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .trend-sound .ts-play svg{width:14px;height:14px;color:var(--b1)}
+
+    /* === SUBSCRIPTION TIERS === */
+    .sub-overlay{position:absolute;inset:0;z-index:850;background:var(--b1);overflow-y:auto;transform:translateY(100%);transition:transform .35s var(--ease)}
+    .sub-overlay.show{transform:translateY(0)}
+    .sub-head{display:flex;align-items:center;justify-content:space-between;padding:16px;position:sticky;top:0;background:var(--b1);z-index:2;border-bottom:1px solid var(--w5)}
+    .sub-head h2{font-size:17px;font-weight:800}
+    .sub-head button{background:none;border:none;color:var(--w);font-size:22px;cursor:pointer}
+    .sub-tier{margin:12px 16px;padding:20px;border-radius:20px;border:1px solid var(--w5);background:var(--b3);position:relative;overflow:hidden}
+    .sub-tier.premium{border-color:rgba(212,164,76,.3);background:linear-gradient(135deg,rgba(212,164,76,.08),var(--b3))}
+    .sub-tier.premium::before{content:'MOST POPULAR';position:absolute;top:12px;right:-28px;transform:rotate(45deg);background:linear-gradient(135deg,var(--g1),var(--g3));color:var(--b1);font-size:8px;font-weight:800;padding:3px 32px;letter-spacing:.5px}
+    .sub-tier .st-name{font-size:18px;font-weight:800;margin-bottom:4px}
+    .sub-tier .st-price{font-size:24px;font-weight:900;color:var(--g1)}
+    .sub-tier .st-price span{font-size:12px;font-weight:500;color:var(--w3)}
+    .sub-tier .st-features{margin:12px 0;display:flex;flex-direction:column;gap:6px}
+    .sub-tier .st-feat{font-size:12px;color:var(--w3);display:flex;align-items:center;gap:6px}
+    .sub-tier .st-feat::before{content:'✓';color:var(--g1);font-weight:700}
+    .sub-tier .st-btn{width:100%;padding:12px;border-radius:14px;border:none;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s var(--spring)}
+    .sub-tier .st-btn:active{transform:scale(.96)}
+    .sub-tier .st-btn.gold{background:linear-gradient(135deg,var(--g1),var(--g3));color:var(--b1)}
+    .sub-tier .st-btn.outline{background:var(--b4);color:var(--w);border:1px solid var(--w5)}
+
+    /* === MINI GAMES === */
+    .minigame-overlay{position:absolute;inset:0;z-index:9200;background:var(--b1);display:flex;flex-direction:column;transform:translateY(100%);transition:transform .35s var(--ease)}
+    .minigame-overlay.show{transform:translateY(0)}
+    .mg-head{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--w5)}
+    .mg-head h2{font-size:17px;font-weight:800}
+    .mg-head button{background:none;border:none;color:var(--w);font-size:22px;cursor:pointer}
+    .mg-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:16px}
+    .mg-score{font-size:14px;font-weight:700;color:var(--g1)}
+    .emoji-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:280px}
+    .emoji-cell{width:60px;height:60px;border-radius:14px;background:var(--b3);border:1px solid var(--w5);display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;transition:all .3s var(--spring);user-select:none}
+    .emoji-cell:active{transform:scale(.85)}
+    .emoji-cell.flipped{background:rgba(212,164,76,.1);border-color:rgba(212,164,76,.2)}
+    .emoji-cell.matched{background:rgba(0,184,148,.15);border-color:rgba(0,184,148,.3);pointer-events:none}
+    .emoji-cell.hidden-card{font-size:0}
+    .mg-restart{padding:10px 24px;border-radius:12px;background:linear-gradient(135deg,var(--g1),var(--g3));border:none;color:var(--b1);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+
+    /* === AI FOR YOU === */
+    .ai-reason{position:absolute;top:80px;left:14px;z-index:15;display:flex;align-items:center;gap:6px;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--w5);border-radius:10px;padding:5px 10px;font-size:10px;font-weight:600;color:var(--acc);cursor:pointer;max-width:200px;opacity:0;transition:opacity .3s;pointer-events:none}
+    .ai-reason.show{opacity:1;pointer-events:auto}
+    .ai-reason svg{width:12px;height:12px;flex-shrink:0}
+
+    /* === EFFECT PANEL === */
+    .effects-panel{position:absolute;bottom:60px;left:0;right:0;z-index:100;background:var(--glass2);backdrop-filter:blur(30px);border-top:1px solid var(--w5);border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform .4s var(--spring);padding:16px 0}
+    .effects-panel.open{transform:translateY(0)}
+    .effects-tabs{display:flex;gap:0;padding:0 16px;margin-bottom:12px}
+    .effects-tab{flex:1;padding:8px;text-align:center;font-size:11px;font-weight:600;color:var(--w3);border-bottom:2px solid transparent;cursor:pointer}
+    .effects-tab.active{color:var(--g1);border-color:var(--g1)}
+    .effects-grid{display:flex;gap:12px;padding:0 16px;overflow-x:auto;scrollbar-width:none}
+    .effects-grid::-webkit-scrollbar{display:none}
+    .effect-item{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
+    .effect-item .ei-icon{width:56px;height:56px;border-radius:14px;background:var(--b3);border:1px solid var(--w5);display:flex;align-items:center;justify-content:center;font-size:24px;transition:all .2s var(--spring)}
+    .effect-item:active .ei-icon{transform:scale(.85)}
+    .effect-item.active .ei-icon{border-color:var(--g1);background:rgba(212,164,76,.1)}
+    .effect-item span{font-size:9px;font-weight:600;color:var(--w3)}
   </style>
 </head>
 <body>
@@ -946,6 +1169,8 @@
             <button class="share-action" onclick="closeShare();openBlockConfirm()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>Block</button>
             <button class="share-action" onclick="shareAction('Not Interested')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.17 14.83a4 4 0 015.66 0"/><circle cx="12" cy="12" r="10"/></svg>Not Interested</button>
             <button class="share-action" onclick="openDuet()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="9" height="18" rx="1"/><rect x="14" y="3" width="9" height="18" rx="1"/></svg>Duet</button>
+            <button class="share-action" onclick="openStitch()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="22" height="10" rx="2"/><rect x="1" y="13" width="22" height="10" rx="2"/></svg>Stitch</button>
+            <button class="share-action" onclick="startWatchParty()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>Watch Party</button>
           </div>
         </div>
         <!-- Comments -->
@@ -994,8 +1219,11 @@
           </div>
           <div class="stories" id="stories"></div>
           <div class="tags" id="tags"></div>
-          <div style="padding:0 16px 10px;display:flex;gap:8px">
-            <button onclick="openFestival()" style="flex:1;padding:10px;border-radius:12px;background:rgba(212,164,76,.1);border:1px solid rgba(212,164,76,.15);color:var(--g1);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit">🎉 Festivals</button>
+          <div style="padding:0 16px 10px;display:flex;gap:8px;flex-wrap:wrap">
+            <button onclick="openFestival()" style="flex:1;min-width:45%;padding:10px;border-radius:12px;background:rgba(212,164,76,.1);border:1px solid rgba(212,164,76,.15);color:var(--g1);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit">🎉 Festivals</button>
+            <button onclick="openChallenges()" style="flex:1;min-width:45%;padding:10px;border-radius:12px;background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.15);color:var(--acc);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit">🏆 Challenges</button>
+            <button onclick="openShop()" style="flex:1;min-width:45%;padding:10px;border-radius:12px;background:rgba(0,184,148,.1);border:1px solid rgba(0,184,148,.15);color:var(--teal);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit">🛍️ Shop</button>
+            <button onclick="openAnalytics()" style="flex:1;min-width:45%;padding:10px;border-radius:12px;background:rgba(253,121,168,.1);border:1px solid rgba(253,121,168,.15);color:var(--coral);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit">📊 Trending</button>
           </div>
           <div class="section-title">🔴 Live Now <span class="see-all">See all</span></div>
           <div class="live-row" id="live-row"></div>
@@ -1116,10 +1344,14 @@
               <div class="gnh-bar"><div class="gnh-fill" id="gnh-fill" style="width:25%"></div><div class="gnh-marker" id="gnh-marker" style="left:75%"></div></div>
               <div class="gnh-label"><span id="gnh-text">GNH: 75/100</span><span class="gnh-emoji" id="gnh-emoji">😊</span></div>
             </div>
-            <div class="prof-btns">
+            <div class="badge-showcase" id="badge-showcase"></div>
+            <div class="prof-btns" style="flex-wrap:wrap">
               <button class="edit-btn" onclick="openWallet()">💎 Wallet</button>
               <button class="edit-btn" onclick="openDashboard()">📊 Dashboard</button>
-              <button class="edit-btn" onclick="toast('✏️ Coming soon!')">Edit Profile</button>
+              <button class="edit-btn" onclick="openBadges()">🏆 Badges</button>
+              <button class="edit-btn" onclick="openSubs()">⭐ Subscribe</button>
+              <button class="edit-btn" onclick="openMeditation()">🧘 Meditate</button>
+              <button class="edit-btn" onclick="openMinigame()">🎮 Games</button>
               <button class="sq-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></button>
               <button class="sq-btn" onclick="openQR()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/><rect x="18" y="18" width="3" height="3"/></svg></button>
               <button class="sq-btn" onclick="openShare()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
@@ -1395,6 +1627,113 @@
         <div class="festival-countdown" id="festival-countdown"></div>
         <div id="festival-list"></div>
         <div style="height:40px"></div>
+      </div>
+
+      <!-- DAILY REWARDS -->
+      <div class="rewards-overlay" id="rewards-overlay" style="display:none">
+        <button class="rw-close" onclick="closeRewards()">✕</button>
+        <div class="streak-fire">🔥</div>
+        <div class="streak-count" id="streak-count">1</div>
+        <div class="streak-label">Day Streak!</div>
+        <div class="reward-days" id="reward-days"></div>
+        <button class="rw-claim" id="rw-claim" onclick="claimDailyReward()">Claim Today's Reward!</button>
+        <p style="font-size:11px;color:var(--w3);margin-top:8px">Come back tomorrow to keep your streak!</p>
+      </div>
+
+      <!-- ACHIEVEMENT BADGES -->
+      <div class="badges-overlay" id="badges-overlay">
+        <div class="badges-head"><h2>🏆 Achievements</h2><button onclick="closeBadges()">✕</button></div>
+        <div style="text-align:center;padding:12px 16px;font-size:12px;color:var(--w3)">Unlock badges by using Zhingkham!</div>
+        <div class="badge-grid" id="badge-grid"></div>
+      </div>
+
+      <!-- HASHTAG CHALLENGES -->
+      <div class="challenge-overlay" id="challenge-overlay">
+        <div class="challenge-head"><h2>🏆 Challenges</h2><button onclick="closeChallenges()">✕</button></div>
+        <div id="challenge-content"></div>
+      </div>
+
+      <!-- SHOPPING -->
+      <div class="shop-overlay" id="shop-overlay">
+        <div class="shop-head"><h2>🛍️ Shop</h2><button onclick="closeShop()">✕</button></div>
+        <div class="shop-cats" id="shop-cats"></div>
+        <div class="product-grid" id="product-grid"></div>
+      </div>
+
+      <!-- WATCH PARTY -->
+      <div class="watchparty-overlay" id="watchparty-overlay">
+        <div class="wp-head"><h2>🎉 Watch Party</h2><button onclick="closeWatchParty()">✕</button></div>
+        <div class="wp-video"><video id="wp-video" muted loop playsinline></video><div class="wp-avatars" id="wp-avatars"></div></div>
+        <div class="wp-chat">
+          <div class="wp-chat-msgs" id="wp-chat-msgs"></div>
+          <div class="wp-chat-input"><input type="text" id="wp-input" placeholder="Say something..." onkeydown="if(event.key==='Enter')sendWPMsg()"><button onclick="sendWPMsg()">➤</button></div>
+        </div>
+      </div>
+
+      <!-- STITCH -->
+      <div class="stitch-overlay" id="stitch-overlay">
+        <div class="stitch-head"><span id="stitch-title">Stitch with @user</span><button onclick="closeStitch()">✕</button></div>
+        <div class="stitch-preview"><video id="stitch-video" muted loop playsinline></video><div class="sp-trim"><span>Trim:</span><input type="range" min="0" max="100" value="100"><span>5s</span></div></div>
+        <div class="stitch-camera"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>Your Reaction</div>
+        <div class="stitch-controls">
+          <button class="stitch-rec" id="stitch-rec" onclick="toggleStitchRec()"></button>
+          <button class="stitch-post" id="stitch-post" onclick="postStitch()">Post Stitch</button>
+        </div>
+      </div>
+
+      <!-- MEDITATION MODE -->
+      <div class="meditate-overlay" id="meditate-overlay" style="display:none">
+        <button class="md-close" onclick="closeMeditation()">✕</button>
+        <div class="breath-circle"><div class="breath-text" id="breath-text">Breathe In</div></div>
+        <div class="md-timer" id="md-timer">5:00</div>
+        <div class="md-quote" id="md-quote">"Happiness is not something ready-made. It comes from your own actions." — Dalai Lama</div>
+        <div class="md-sounds">
+          <button class="md-sound active" onclick="selectMdSound(this,'🔔')">🔔</button>
+          <button class="md-sound" onclick="selectMdSound(this,'🌊')">🌊</button>
+          <button class="md-sound" onclick="selectMdSound(this,'🌲')">🌲</button>
+          <button class="md-sound" onclick="selectMdSound(this,'🏔️')">🏔️</button>
+        </div>
+        <button style="margin-top:12px;padding:10px 24px;border-radius:12px;background:linear-gradient(135deg,var(--g1),var(--g3));border:none;color:var(--b1);font-size:13px;font-weight:700;cursor:pointer" onclick="startMedTimer()">Start Session</button>
+      </div>
+
+      <!-- TRENDING ANALYTICS -->
+      <div class="analytics-overlay" id="analytics-overlay">
+        <div class="analytics-head"><h2>📊 Trending</h2><button onclick="closeAnalytics()">✕</button></div>
+        <div style="padding:8px 16px"><div class="section-title">🔥 Trending Hashtags</div></div>
+        <div id="trend-tags"></div>
+        <div style="padding:8px 16px"><div class="section-title">🎵 Trending Sounds</div></div>
+        <div id="trend-sounds"></div>
+        <div style="height:40px"></div>
+      </div>
+
+      <!-- SUBSCRIPTIONS -->
+      <div class="sub-overlay" id="sub-overlay">
+        <div class="sub-head"><h2>⭐ Subscribe</h2><button onclick="closeSubs()">✕</button></div>
+        <div style="text-align:center;padding:16px;font-size:13px;color:var(--w3)">Support your favorite creators</div>
+        <div id="sub-tiers"></div>
+        <div style="height:40px"></div>
+      </div>
+
+      <!-- MINI GAMES -->
+      <div class="minigame-overlay" id="minigame-overlay">
+        <div class="mg-head"><h2>🎮 Mini Games</h2><button onclick="closeMinigame()">✕</button></div>
+        <div class="mg-area">
+          <div class="mg-score" id="mg-score">Matches: 0/8</div>
+          <div class="emoji-grid" id="emoji-grid"></div>
+          <button class="mg-restart" onclick="initMemoryGame()">New Game</button>
+          <p style="font-size:11px;color:var(--w3)">Win coins by completing games!</p>
+        </div>
+      </div>
+
+      <!-- EFFECTS PANEL (for Studio) -->
+      <div class="effects-panel" id="effects-panel">
+        <div class="effects-tabs">
+          <div class="effects-tab active" onclick="switchEffectTab(this,0)">Filters</div>
+          <div class="effects-tab" onclick="switchEffectTab(this,1)">AR</div>
+          <div class="effects-tab" onclick="switchEffectTab(this,2)">Voice</div>
+          <div class="effects-tab" onclick="switchEffectTab(this,3)">Green Screen</div>
+        </div>
+        <div class="effects-grid" id="effects-grid"></div>
       </div>
 
       <!-- DOCK -->
@@ -2447,6 +2786,518 @@ function openFestival(){
   document.getElementById('festival-list').innerHTML=FESTIVALS.map(f=>'<div class="festival-item"><div class="fi-emoji">'+f.emoji+'</div><div class="fi-info"><div class="fi-name">'+f.name+'</div><div class="fi-date">'+f.date+'</div><div class="fi-desc">'+f.desc+'</div></div></div>').join('');
 }
 function closeFestival(){document.getElementById('festival-overlay').classList.remove('show')}
+
+// === DAILY REWARDS & STREAKS ===
+let streak=parseInt(localStorage.getItem('zk_streak')||'0');
+let lastClaimDate=localStorage.getItem('zk_lastClaim')||'';
+const DAILY_REWARDS=[
+  {emoji:'🪙',label:'50',reward:50},{emoji:'🪙',label:'100',reward:100},{emoji:'💎',label:'5',reward:5},
+  {emoji:'🪙',label:'200',reward:200},{emoji:'🏆',label:'Badge',reward:0},{emoji:'🪙',label:'500',reward:500},
+  {emoji:'🐉',label:'1000',reward:1000}
+];
+function checkDailyReward(){
+  const today=new Date().toDateString();
+  if(lastClaimDate!==today){
+    setTimeout(()=>{document.getElementById('rewards-overlay').style.display='flex';renderRewardDays()},2000);
+  }
+}
+function renderRewardDays(){
+  const container=document.getElementById('reward-days');
+  const today=new Date().toDateString();
+  const claimed=lastClaimDate===today;
+  container.innerHTML=DAILY_REWARDS.map((r,i)=>{
+    const isClaimed=i<streak;
+    const isToday=i===streak&&!claimed;
+    return `<div class="reward-day${isClaimed?' claimed':''}${isToday?' today':''}" ${isToday?'onclick="claimDailyReward()"':''}><div class="rd-emoji">${r.emoji}</div><div>Day ${i+1}</div></div>`;
+  }).join('');
+  document.getElementById('streak-count').textContent=streak;
+  const btn=document.getElementById('rw-claim');
+  btn.disabled=claimed;
+  btn.textContent=claimed?'Claimed! ✓':'Claim Today\'s Reward!';
+}
+function claimDailyReward(){
+  const today=new Date().toDateString();
+  if(lastClaimDate===today)return;
+  const reward=DAILY_REWARDS[streak%7];
+  streak++;
+  lastClaimDate=today;
+  localStorage.setItem('zk_streak',streak);
+  localStorage.setItem('zk_lastClaim',today);
+  if(reward.reward>0){
+    if(reward.emoji==='💎'){diamonds+=reward.reward;toast('💎 +'+reward.reward+' diamonds!')}
+    else{coins+=reward.reward;updateCoinUI();toast('🪙 +'+reward.reward+' coins!')}
+  }else{toast('🏆 Badge unlocked!')}
+  addK(10);addGNH(3);
+  renderRewardDays();
+  unlockAchievement('daily_devotee');
+}
+function closeRewards(){document.getElementById('rewards-overlay').style.display='none'}
+checkDailyReward();
+
+// Add streak badge to feed
+(function(){
+  document.querySelectorAll('.slide').forEach(s=>{
+    if(!s.querySelector('.streak-badge')){
+      const b=document.createElement('div');b.className='streak-badge';
+      b.textContent='🔥 '+streak+' day streak';
+      b.onclick=function(e){e.stopPropagation();document.getElementById('rewards-overlay').style.display='flex';renderRewardDays()};
+      s.appendChild(b);
+    }
+  });
+})();
+
+// === ACHIEVEMENT BADGES ===
+const ACHIEVEMENTS=[
+  {id:'first_like',emoji:'❤️',name:'First Like',desc:'Like your first video',check:()=>liked.size>=1},
+  {id:'social_butterfly',emoji:'🦋',name:'Social Butterfly',desc:'Follow 3 creators',check:()=>followed.size>=3},
+  {id:'commentator',emoji:'💬',name:'Commentator',desc:'Post 5 comments',check:()=>commentCount>=5},
+  {id:'daily_devotee',emoji:'🔥',name:'Daily Devotee',desc:'Claim daily reward',check:()=>streak>=1},
+  {id:'karma_king',emoji:'👑',name:'Karma King',desc:'Reach 100 karma',check:()=>karma>=100},
+  {id:'gift_giver',emoji:'🎁',name:'Gift Giver',desc:'Send a gift in live',check:()=>totalGiftsReceived>=1},
+  {id:'explorer',emoji:'🗺️',name:'Explorer',desc:'Visit all pages',check:()=>pagesVisited.size>=5},
+  {id:'prayer_master',emoji:'🙏',name:'Prayer Master',desc:'Spin prayer wheel 10 times',check:()=>prayerSpins>=10},
+  {id:'gnh_champion',emoji:'😊',name:'GNH Champion',desc:'Reach GNH score 90',check:()=>gnhScore>=90},
+  {id:'streak_warrior',emoji:'⚔️',name:'Streak Warrior',desc:'7-day streak',check:()=>streak>=7},
+  {id:'shopaholic',emoji:'🛍️',name:'Shopaholic',desc:'Browse the shop',check:()=>shopVisited},
+  {id:'zen_master',emoji:'🧘',name:'Zen Master',desc:'Complete meditation',check:()=>meditationDone}
+];
+let unlockedBadges=JSON.parse(localStorage.getItem('zk_badges')||'[]');
+let commentCount=parseInt(localStorage.getItem('zk_comments')||'0');
+let pagesVisited=new Set(JSON.parse(localStorage.getItem('zk_pages')||'[]'));
+let shopVisited=false,meditationDone=false;
+
+function unlockAchievement(id){
+  if(unlockedBadges.includes(id))return;
+  unlockedBadges.push(id);
+  localStorage.setItem('zk_badges',JSON.stringify(unlockedBadges));
+  const ach=ACHIEVEMENTS.find(a=>a.id===id);
+  if(ach){
+    toast(ach.emoji+' Achievement: '+ach.name+'!');
+    const di=document.querySelector('.dynamic-island');
+    di.classList.add('expand');
+    di.querySelector('.di-content').innerHTML='<span style="font-size:14px">'+ach.emoji+'</span>'+ach.name+' unlocked!';
+    setTimeout(()=>di.classList.remove('expand'),2500);
+  }
+  updateBadgeShowcase();
+}
+function checkAchievements(){
+  ACHIEVEMENTS.forEach(a=>{if(!unlockedBadges.includes(a.id)&&a.check())unlockAchievement(a.id)});
+}
+function openBadges(){
+  document.getElementById('badges-overlay').classList.add('show');
+  document.getElementById('badge-grid').innerHTML=ACHIEVEMENTS.map(a=>{
+    const unlocked=unlockedBadges.includes(a.id);
+    return `<div class="badge-card ${unlocked?'unlocked':'locked'}"><div class="bc-emoji">${a.emoji}</div><div class="bc-name">${a.name}</div><div class="bc-desc">${a.desc}</div>${!unlocked?'<div class="bc-progress"><div class="bc-fill" style="width:'+Math.min(100,Math.random()*80)+'%"></div></div>':''}</div>`;
+  }).join('');
+}
+function closeBadges(){document.getElementById('badges-overlay').classList.remove('show')}
+function updateBadgeShowcase(){
+  const el=document.getElementById('badge-showcase');
+  if(!el)return;
+  el.innerHTML=unlockedBadges.slice(0,5).map(id=>{const a=ACHIEVEMENTS.find(x=>x.id===id);return a?'<span title="'+a.name+'">'+a.emoji+'</span>':''}).join('');
+}
+updateBadgeShowcase();
+
+// Patch nav to track pages visited
+const _origNav=nav;
+nav=function(p){_origNav(p);pagesVisited.add(p);localStorage.setItem('zk_pages',JSON.stringify([...pagesVisited]));checkAchievements()};
+
+// Patch postCM to count comments
+const __origPostCM=postCM;
+postCM=function(){__origPostCM();commentCount++;localStorage.setItem('zk_comments',commentCount);checkAchievements()};
+
+// Periodically check achievements
+setInterval(checkAchievements,5000);
+
+// === HASHTAG CHALLENGES ===
+const CHALLENGES=[
+  {tag:'#BhutanDance',emoji:'💃',title:'Bhutanese Dance Challenge',desc:'Show us your best Cham dance moves!',prize:'10,000 coins + Featured',participants:12847,deadline:'3 days left',leaderboard:true},
+  {tag:'#DriglamNamzha',emoji:'🇧🇹',title:'Traditional Dress Challenge',desc:'Show your best Gho or Kira outfit',prize:'5,000 coins',participants:8421,deadline:'5 days left',leaderboard:true},
+  {tag:'#EmaDatshi',emoji:'🍲',title:'Cooking Challenge',desc:'Make your best ema datshi recipe!',prize:'3,000 coins',participants:5632,deadline:'1 week left',leaderboard:true},
+  {tag:'#ZhingkhamSunrise',emoji:'🌅',title:'Sunrise Challenge',desc:'Capture the most beautiful Bhutanese sunrise',prize:'7,500 coins + Badge',participants:15234,deadline:'2 days left',leaderboard:true},
+  {tag:'#BhutanPets',emoji:'🐕',title:'Pet Parade',desc:'Show us your adorable pets!',prize:'2,000 coins',participants:3891,deadline:'4 days left',leaderboard:false}
+];
+let joinedChallenges=new Set(JSON.parse(localStorage.getItem('zk_challenges')||'[]'));
+
+function openChallenges(){
+  document.getElementById('challenge-overlay').classList.add('show');
+  const content=document.getElementById('challenge-content');
+  content.innerHTML=CHALLENGES.map((c,i)=>{
+    const joined=joinedChallenges.has(c.tag);
+    const leaders=V.map((v,j)=>({name:v.u.name,av:v.u.av,score:Math.floor(Math.random()*50000)+10000})).sort((a,b)=>b.score-a.score);
+    return `<div class="challenge-banner" style="margin:12px 16px"><div style="font-size:28px;margin-bottom:8px">${c.emoji}</div><div class="cb-tag">${c.tag}</div><div style="font-size:14px;font-weight:700;margin:4px 0">${c.title}</div><div style="font-size:12px;color:var(--w3)">${c.desc}</div><div class="cb-prize">🏆 ${c.prize}</div><div class="cb-count">${fmt(c.participants)} participants · ${c.deadline}</div><button class="cb-join" onclick="joinChallenge('${c.tag}',this)" ${joined?'style="background:var(--b4);color:var(--w3)"':''}>${joined?'✓ Joined':'Join Challenge'}</button></div>${c.leaderboard?'<div style="padding:0 16px"><div class="section-title">Leaderboard</div></div><div class="challenge-list">'+leaders.slice(0,5).map((l,j)=>`<div class="challenge-item"><div class="ci-rank">${j+1}</div><img src="${l.av}"><div class="ci-info"><div class="ci-name">@${l.name}</div><div class="ci-score">${fmt(l.score)} views</div></div></div>`).join('')+'</div>':''}`;
+  }).join('');
+}
+function closeChallenges(){document.getElementById('challenge-overlay').classList.remove('show')}
+function joinChallenge(tag,btn){
+  if(joinedChallenges.has(tag)){joinedChallenges.delete(tag);btn.textContent='Join Challenge';btn.style.background='';btn.style.color=''}
+  else{joinedChallenges.add(tag);btn.textContent='✓ Joined';btn.style.background='var(--b4)';btn.style.color='var(--w3)';toast('🏆 Joined '+tag+'!');addK(5)}
+  localStorage.setItem('zk_challenges',JSON.stringify([...joinedChallenges]));
+}
+
+// === SHOPPING / E-COMMERCE ===
+const PRODUCTS=[
+  {emoji:'👘',name:'Traditional Bhutanese Gho',price:'Nu. 4,500',old:'Nu. 6,000',rating:4.8,reviews:234,cat:'Fashion',badge:'HOT'},
+  {emoji:'🧣',name:'Yathra Textile Scarf',price:'Nu. 1,200',old:'',rating:4.9,reviews:189,cat:'Fashion'},
+  {emoji:'🍵',name:'Bhutanese Butter Tea Set',price:'Nu. 890',old:'Nu. 1,200',rating:4.7,reviews:156,cat:'Food'},
+  {emoji:'🎭',name:'Handcrafted Mask',price:'Nu. 3,200',old:'',rating:4.6,reviews:87,cat:'Art'},
+  {emoji:'📿',name:'Prayer Beads (108)',price:'Nu. 650',old:'Nu. 800',rating:4.9,reviews:342,cat:'Spiritual'},
+  {emoji:'🏔️',name:'Bhutan Trekking Guide',price:'Nu. 450',old:'',rating:4.5,reviews:67,cat:'Books'},
+  {emoji:'🎨',name:'Mini Thangka Painting',price:'Nu. 8,500',old:'Nu. 12,000',rating:5.0,reviews:45,cat:'Art',badge:'NEW'},
+  {emoji:'🫖',name:'Cordyceps Tea (50g)',price:'Nu. 2,800',old:'',rating:4.8,reviews:198,cat:'Food',badge:'BEST'},
+  {emoji:'🧴',name:'Bhutanese Incense Set',price:'Nu. 350',old:'',rating:4.7,reviews:412,cat:'Spiritual'},
+  {emoji:'👑',name:'Silver Dragon Brooch',price:'Nu. 5,600',old:'Nu. 7,000',rating:4.9,reviews:56,cat:'Fashion',badge:'PREMIUM'}
+];
+const SHOP_CATS=['All','Fashion','Food','Art','Spiritual','Books'];
+
+function openShop(){
+  shopVisited=true;checkAchievements();
+  document.getElementById('shop-overlay').classList.add('show');
+  document.getElementById('shop-cats').innerHTML=SHOP_CATS.map((c,i)=>`<div class="shop-cat${i===0?' active':''}" onclick="filterShop(this,'${c}')">${c}</div>`).join('');
+  renderProducts('All');
+}
+function closeShop(){document.getElementById('shop-overlay').classList.remove('show')}
+function filterShop(el,cat){
+  document.querySelectorAll('.shop-cat').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderProducts(cat);
+}
+function renderProducts(cat){
+  const filtered=cat==='All'?PRODUCTS:PRODUCTS.filter(p=>p.cat===cat);
+  document.getElementById('product-grid').innerHTML=filtered.map(p=>`<div class="product-card" onclick="toast('🛒 Added to cart: ${p.name}');addK(2)"><div class="pc-img">${p.emoji}${p.badge?`<div class="pc-badge">${p.badge}</div>`:''}</div><div class="pc-info"><div class="pc-name">${p.name}</div><div class="pc-price">${p.price}${p.old?`<span class="pc-old">${p.old}</span>`:''}</div><div class="pc-rating">${'⭐'.repeat(Math.floor(p.rating))} ${p.rating} (${p.reviews})</div></div></div>`).join('');
+}
+
+// Add product tags to some videos
+(function(){
+  const tagProducts=[PRODUCTS[0],PRODUCTS[7],PRODUCTS[4]];
+  document.querySelectorAll('.slide').forEach((s,i)=>{
+    if(i<3){
+      const p=tagProducts[i];
+      const tag=document.createElement('div');tag.className='product-tag';
+      tag.innerHTML=`🛍️ ${p.name.substring(0,20)} · ${p.price}`;
+      tag.style.cssText=`bottom:${180+i*10}px;left:14px`;
+      tag.onclick=function(e){e.stopPropagation();toast('🛒 '+p.name+' — '+p.price);openShop()};
+      s.appendChild(tag);
+    }
+  });
+})();
+
+// === WATCH PARTY ===
+let wpChatInterval=null;
+function startWatchParty(){
+  closeShare();
+  const vid=document.getElementById('wp-video');
+  vid.src=V[0].src;vid.play().catch(()=>{});
+  document.getElementById('wp-avatars').innerHTML=V.slice(0,4).map(v=>`<img src="${v.u.av}">`).join('')+'<div class="wp-more">+12</div>';
+  document.getElementById('wp-chat-msgs').innerHTML='<div class="wp-msg"><img src="'+AVS.me+'"><div class="wpm-body"><b>You</b> started a watch party! 🎉</div></div>';
+  document.getElementById('watchparty-overlay').classList.add('show');
+  const WP_MSGS=['LOL 😂','This is amazing!','🔥🔥🔥','Haha love it','So cool!','Wait what?!','Best part!','Tashi Delek! 🙏','Wow 😍','Play that again!'];
+  wpChatInterval=setInterval(()=>{
+    const u=V[Math.floor(Math.random()*V.length)];
+    const m=WP_MSGS[Math.floor(Math.random()*WP_MSGS.length)];
+    const chat=document.getElementById('wp-chat-msgs');
+    chat.innerHTML+=`<div class="wp-msg"><img src="${u.u.av}"><div class="wpm-body"><b>${u.u.name}</b> ${m}</div></div>`;
+    chat.scrollTop=chat.scrollHeight;
+  },3000);
+  toast('🎉 Watch Party started! Code: ZK-'+Math.floor(Math.random()*9000+1000));
+}
+function closeWatchParty(){
+  document.getElementById('watchparty-overlay').classList.remove('show');
+  document.getElementById('wp-video').pause();
+  clearInterval(wpChatInterval);wpChatInterval=null;
+}
+function sendWPMsg(){
+  const inp=document.getElementById('wp-input');
+  const t=inp.value.trim();if(!t)return;inp.value='';
+  const chat=document.getElementById('wp-chat-msgs');
+  chat.innerHTML+=`<div class="wp-msg"><img src="${AVS.me}"><div class="wpm-body"><b>You</b> ${t}</div></div>`;
+  chat.scrollTop=chat.scrollHeight;
+}
+
+// === STITCH MODE ===
+let stitchRecording=false,stitchInterval=null,stitchSec=0;
+function openStitch(){
+  closeShare();
+  const activeSlide=document.querySelector('.slide video');
+  const vid=document.getElementById('stitch-video');
+  if(activeSlide)vid.src=activeSlide.src;
+  vid.play().catch(()=>{});
+  document.getElementById('stitch-title').textContent='Stitch with @'+V[0].u.name;
+  document.getElementById('stitch-overlay').classList.add('show');
+  document.getElementById('stitch-rec').classList.remove('recording');
+  document.getElementById('stitch-post').classList.remove('show');
+  stitchRecording=false;stitchSec=0;clearInterval(stitchInterval);
+}
+function closeStitch(){
+  document.getElementById('stitch-overlay').classList.remove('show');
+  document.getElementById('stitch-video').pause();
+  clearInterval(stitchInterval);stitchRecording=false;
+}
+function toggleStitchRec(){
+  const btn=document.getElementById('stitch-rec');
+  if(!stitchRecording){
+    stitchRecording=true;btn.classList.add('recording');
+    document.getElementById('stitch-post').classList.remove('show');
+    stitchInterval=setInterval(()=>{stitchSec++},1000);
+    toast('🔴 Recording stitch...');
+  }else{
+    stitchRecording=false;clearInterval(stitchInterval);
+    btn.classList.remove('recording');
+    document.getElementById('stitch-post').classList.add('show');
+  }
+}
+function postStitch(){closeStitch();toast('Stitch posted! 🎬');addK(10);addGNH(5)}
+
+// === POLLS ON VIDEOS ===
+const POLLS=[
+  {q:'Best Bhutanese food?',options:['Ema Datshi 🌶️','Phaksha Paa 🥩','Red Rice 🍚','Momos 🥟'],votes:[4521,2310,1890,3200]},
+  {q:'Favorite dzong to visit?',options:['Punakha 🏰','Paro 🏔️','Trongsa ⚔️','Rinpung 🐉'],votes:[5200,4100,1800,2900]},
+  null,
+  {q:'Best season in Bhutan?',options:['Spring 🌸','Autumn 🍂','Winter ❄️','Summer ☀️'],votes:[3100,6200,1500,2100]},
+  null
+];
+(function(){
+  document.querySelectorAll('.slide').forEach((s,i)=>{
+    const poll=POLLS[i];
+    if(!poll)return;
+    const total=poll.votes.reduce((a,b)=>a+b,0);
+    const maxVote=Math.max(...poll.votes);
+    const container=document.createElement('div');container.className='poll-container';
+    container.innerHTML=`<div class="poll-q">${poll.q}</div>${poll.options.map((o,j)=>{
+      const pct=Math.round(poll.votes[j]/total*100);
+      const isWinner=poll.votes[j]===maxVote;
+      const color=isWinner?'rgba(212,164,76,.2)':'rgba(248,245,239,.06)';
+      return `<div class="poll-option" onclick="votePoll(this,${pct},${isWinner})"><div class="po-fill" style="width:0;background:${color}"></div><span class="po-text">${o}</span><span class="po-pct">${pct}%</span></div>`;
+    }).join('')}<div class="poll-total">${fmt(total)} votes</div>`;
+    container.onclick=function(e){e.stopPropagation()};
+    s.appendChild(container);
+  });
+})();
+function votePoll(el,pct,isWinner){
+  const container=el.closest('.poll-container');
+  container.querySelectorAll('.poll-option').forEach(o=>{
+    o.classList.add('voted');
+    o.querySelector('.po-fill').style.width=o.querySelector('.po-pct').textContent;
+    if(o===el)o.style.borderColor='rgba(212,164,76,.4)';
+  });
+  el.querySelector('.po-fill').style.width=pct+'%';
+  if(isWinner)el.classList.add('winner');
+  addK(2);addGNH(1);
+}
+
+// === MEDITATION MODE ===
+let mdTimerInterval=null,mdSeconds=300;
+const MD_QUOTES=[
+  '"Happiness is not something ready-made. It comes from your own actions." — Dalai Lama',
+  '"In the practice of tolerance, one\'s enemy is the best teacher." — Dalai Lama',
+  '"The mind is everything. What you think you become." — Buddha',
+  '"Peace comes from within. Do not seek it without." — Buddha',
+  '"Gross National Happiness is more important than Gross National Product." — Bhutan',
+  '"Be kind whenever possible. It is always possible." — Dalai Lama',
+  '"The goal is not to be better than the other, but better than your previous self."',
+  '"Silence is sometimes the best answer." — Dalai Lama'
+];
+function openMeditation(){
+  document.getElementById('meditate-overlay').style.display='flex';
+  document.getElementById('md-quote').textContent=MD_QUOTES[Math.floor(Math.random()*MD_QUOTES.length)];
+  mdSeconds=300;
+  updateMdTimer();
+  document.querySelectorAll('.slide video').forEach(v=>v.pause());
+}
+function closeMeditation(){
+  document.getElementById('meditate-overlay').style.display='none';
+  clearInterval(mdTimerInterval);mdTimerInterval=null;
+}
+function updateMdTimer(){
+  const m=Math.floor(mdSeconds/60);
+  const s=mdSeconds%60;
+  document.getElementById('md-timer').textContent=m+':'+s.toString().padStart(2,'0');
+}
+function startMedTimer(){
+  if(mdTimerInterval)return;
+  const breathText=document.getElementById('breath-text');
+  let breathPhase=0;
+  mdTimerInterval=setInterval(()=>{
+    mdSeconds--;
+    updateMdTimer();
+    breathPhase=(breathPhase+1)%16;
+    if(breathPhase<4)breathText.textContent='Breathe In...';
+    else if(breathPhase<8)breathText.textContent='Hold...';
+    else if(breathPhase<12)breathText.textContent='Breathe Out...';
+    else breathText.textContent='Rest...';
+    if(mdSeconds<=0){
+      clearInterval(mdTimerInterval);mdTimerInterval=null;
+      meditationDone=true;checkAchievements();
+      toast('🧘 Meditation complete! +20 GNH');addGNH(20);addK(20);
+      closeMeditation();
+    }
+  },1000);
+  toast('🧘 Meditation started...');
+}
+function selectMdSound(el,sound){
+  document.querySelectorAll('.md-sound').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+  toast(sound+' Sound selected');
+}
+
+// === MINDFUL SCROLLING ===
+let videosWatched=0;
+const MINDFUL_INTERVAL=15;
+const _origObs=obs;
+const mindfulObs=new IntersectionObserver(es=>{es.forEach(e=>{
+  if(e.isIntersecting){
+    videosWatched++;
+    if(videosWatched>0&&videosWatched%MINDFUL_INTERVAL===0){
+      setTimeout(()=>{
+        const quote=MD_QUOTES[Math.floor(Math.random()*MD_QUOTES.length)];
+        toast('🧘 '+quote.substring(0,60)+'...');
+      },1000);
+    }
+  }
+})},{threshold:.6});
+document.querySelectorAll('.slide').forEach(s=>mindfulObs.observe(s));
+
+// === TRENDING ANALYTICS ===
+const TRENDING_TAGS=[
+  {tag:'#BhutanDance',views:'12.5M',growth:'+156%',spark:[3,5,4,7,8,6,9]},
+  {tag:'#EmaDatshi',views:'8.2M',growth:'+89%',spark:[2,3,5,4,6,7,8]},
+  {tag:'#TigerNest',views:'6.7M',growth:'+45%',spark:[4,5,3,6,5,7,6]},
+  {tag:'#BhutanTravel',views:'15.1M',growth:'+210%',spark:[2,4,6,5,8,9,10]},
+  {tag:'#DriglamNamzha',views:'3.4M',growth:'+67%',spark:[1,2,3,4,3,5,6]},
+  {tag:'#ZhingkhamVibes',views:'2.1M',growth:'+320%',spark:[1,1,2,3,5,7,10]}
+];
+const TRENDING_SOUNDS=[
+  {name:'Bhutanese Folk Remix',artist:'DJ Dorji',uses:'234K',emoji:'🎵'},
+  {name:'Mountain Morning',artist:'Pema Beats',uses:'189K',emoji:'🏔️'},
+  {name:'Cham Dance Mix',artist:'Karma Official',uses:'156K',emoji:'💃'},
+  {name:'Thunder Dragon Bass',artist:'Zhingkham Audio',uses:'98K',emoji:'🐉'},
+  {name:'Himalayan Lo-fi',artist:'Sonam Chill',uses:'87K',emoji:'🎧'}
+];
+function openAnalytics(){
+  document.getElementById('analytics-overlay').classList.add('show');
+  document.getElementById('trend-tags').innerHTML=TRENDING_TAGS.map((t,i)=>{
+    const maxS=Math.max(...t.spark);
+    return `<div class="trend-card"><div class="tc-rank">${i+1}</div><div class="tc-info"><div class="tc-tag">${t.tag}</div><div class="tc-stats">${t.views} views · ${t.growth}</div></div><div class="tc-spark">${t.spark.map(s=>`<span style="height:${(s/maxS)*100}%"></span>`).join('')}</div></div>`;
+  }).join('');
+  document.getElementById('trend-sounds').innerHTML=TRENDING_SOUNDS.map(s=>`<div class="trend-sound" onclick="toast('🎵 Playing: ${s.name}')"><div class="ts-disc">${s.emoji}</div><div class="ts-info"><div class="ts-name">${s.name}</div><div class="ts-artist">${s.artist}</div><div class="ts-uses">${s.uses} videos</div></div><div class="ts-play"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg></div></div>`).join('');
+}
+function closeAnalytics(){document.getElementById('analytics-overlay').classList.remove('show')}
+
+// === SUBSCRIPTION TIERS ===
+let subscribedTier=null;
+function openSubs(){
+  document.getElementById('sub-overlay').classList.add('show');
+  const tiers=[
+    {name:'Free',price:'Free',features:['Watch unlimited videos','Like & comment','Follow creators'],btn:'outline',current:!subscribedTier},
+    {name:'Supporter',price:'Nu. 49',period:'/month',features:['All Free features','Exclusive badge','Priority comments','Ad-free experience','Support your faves'],btn:'gold',premium:true},
+    {name:'VIP Dragon',price:'Nu. 149',period:'/month',features:['All Supporter features','Exclusive content access','Custom profile frame','Direct creator messages','Monthly coin bonus (500)','Early access to features'],btn:'gold'}
+  ];
+  document.getElementById('sub-tiers').innerHTML=tiers.map(t=>`<div class="sub-tier${t.premium?' premium':''}"><div class="st-name">${t.name}</div><div class="st-price">${t.price}${t.period?`<span>${t.period}</span>`:''}</div><div class="st-features">${t.features.map(f=>`<div class="st-feat">${f}</div>`).join('')}</div><button class="st-btn ${t.btn}" onclick="${t.current?'toast(\'Already on Free tier\')':'subscribeTier(\''+t.name+'\')'}">${t.current?'Current Plan':'Subscribe'}</button></div>`).join('');
+}
+function closeSubs(){document.getElementById('sub-overlay').classList.remove('show')}
+function subscribeTier(name){
+  subscribedTier=name;
+  toast('⭐ Subscribed to '+name+'! Thank you!');
+  addK(50);addGNH(10);
+  closeSubs();
+}
+
+// === MINI GAMES (Memory Match) ===
+let mgPairs=0,mgFlipped=[],mgMatched=new Set();
+const MG_EMOJIS=['🐉','🏔️','🙏','🎭','🍲','🌸','☸️','🦅'];
+let mgBoard=[];
+function initMemoryGame(){
+  mgPairs=0;mgFlipped=[];mgMatched=new Set();
+  const emojis=[...MG_EMOJIS,...MG_EMOJIS];
+  mgBoard=emojis.sort(()=>Math.random()-.5);
+  renderMG();
+}
+function renderMG(){
+  document.getElementById('mg-score').textContent='Matches: '+mgPairs+'/8';
+  document.getElementById('emoji-grid').innerHTML=mgBoard.map((e,i)=>{
+    const matched=mgMatched.has(i);
+    const flipped=mgFlipped.includes(i);
+    return `<div class="emoji-cell${matched?' matched':''}${flipped?' flipped':' hidden-card'}" onclick="flipCard(${i})">${matched||flipped?e:'❓'}</div>`;
+  }).join('');
+}
+function flipCard(idx){
+  if(mgFlipped.length>=2||mgFlipped.includes(idx)||mgMatched.has(idx))return;
+  mgFlipped.push(idx);
+  renderMG();
+  if(mgFlipped.length===2){
+    setTimeout(()=>{
+      if(mgBoard[mgFlipped[0]]===mgBoard[mgFlipped[1]]){
+        mgMatched.add(mgFlipped[0]);mgMatched.add(mgFlipped[1]);
+        mgPairs++;
+        if(mgPairs===8){
+          toast('🎮 You won! +100 coins!');
+          coins+=100;updateCoinUI();addK(20);addGNH(5);
+        }
+      }
+      mgFlipped=[];
+      renderMG();
+    },800);
+  }
+}
+function openMinigame(){
+  document.getElementById('minigame-overlay').classList.add('show');
+  initMemoryGame();
+}
+function closeMinigame(){document.getElementById('minigame-overlay').classList.remove('show')}
+
+// === AI FOR YOU RECOMMENDATIONS ===
+const AI_REASONS=[
+  '✨ Based on your dance interests','✨ Trending in Bhutan right now',
+  '✨ Similar to @dorji_wangmo','✨ Popular in your area',
+  '✨ Because you liked travel content','✨ Recommended by your friends',
+  '✨ New creator to discover','✨ Matches your GNH vibe'
+];
+(function(){
+  document.querySelectorAll('.slide').forEach((s,i)=>{
+    const reason=document.createElement('div');reason.className='ai-reason';
+    reason.innerHTML=`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z"/></svg>${AI_REASONS[i%AI_REASONS.length]}`;
+    reason.onclick=function(e){e.stopPropagation();toast(AI_REASONS[i%AI_REASONS.length])};
+    s.appendChild(reason);
+    setTimeout(()=>reason.classList.add('show'),2000+i*500);
+    setTimeout(()=>reason.classList.remove('show'),6000+i*500);
+  });
+})();
+
+// === EFFECTS PANEL (Studio) ===
+const EFFECTS=[
+  [{emoji:'🌅',name:'Warm'},{emoji:'❄️',name:'Cool'},{emoji:'🌙',name:'Night'},{emoji:'🎨',name:'Vivid'},{emoji:'📷',name:'Film'},{emoji:'🌸',name:'Bloom'},{emoji:'⚡',name:'Electric'},{emoji:'🏔️',name:'Alpine'}],
+  [{emoji:'🐉',name:'Dragon'},{emoji:'👑',name:'Crown'},{emoji:'🦋',name:'Butterfly'},{emoji:'✨',name:'Sparkle'},{emoji:'🔥',name:'Flames'},{emoji:'❄️',name:'Snow'},{emoji:'🌈',name:'Rainbow'},{emoji:'💫',name:'Stars'}],
+  [{emoji:'🤖',name:'Robot'},{emoji:'👽',name:'Alien'},{emoji:'🎤',name:'Deep'},{emoji:'🎵',name:'Auto-tune'},{emoji:'📢',name:'Echo'},{emoji:'🔊',name:'Chipmunk'},{emoji:'🎭',name:'Narrator'},{emoji:'🌊',name:'Underwater'}],
+  [{emoji:'🏔️',name:'Mountains'},{emoji:'🏖️',name:'Beach'},{emoji:'🌌',name:'Space'},{emoji:'🏰',name:'Dzong'},{emoji:'🌲',name:'Forest'},{emoji:'🌆',name:'City'},{emoji:'🎪',name:'Festival'},{emoji:'☁️',name:'Clouds'}]
+];
+let effectTab=0;
+function switchEffectTab(el,tab){
+  document.querySelectorAll('.effects-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');effectTab=tab;renderEffects();
+}
+function renderEffects(){
+  document.getElementById('effects-grid').innerHTML=EFFECTS[effectTab].map(e=>`<div class="effect-item" onclick="selectEffect(this,'${e.name}')"><div class="ei-icon">${e.emoji}</div><span>${e.name}</span></div>`).join('');
+}
+function selectEffect(el,name){
+  document.querySelectorAll('.effect-item').forEach(e=>e.classList.remove('active'));
+  el.classList.add('active');
+  toast('✨ '+name+' effect applied!');
+}
+function openEffectsPanel(){
+  renderEffects();
+  document.getElementById('effects-panel').classList.add('open');
+}
+function closeEffectsPanel(){document.getElementById('effects-panel').classList.remove('open')}
+
+// Wire effects to studio buttons
+(function(){
+  const studioEffects=document.querySelectorAll('.st-tool');
+  studioEffects.forEach(t=>{
+    if(t.textContent.includes('Effects')||t.textContent.includes('Filters')){
+      t.onclick=function(){openEffectsPanel()};
+    }
+  });
+})();
 
 // === PWA SERVICE WORKER & INSTALL ===
 if('serviceWorker' in navigator){

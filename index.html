@@ -59,7 +59,15 @@
       rgba(10,9,8,.55) 0%,rgba(10,9,8,0) 12%,
       rgba(10,9,8,0) 55%,rgba(10,9,8,.35) 72%,rgba(10,9,8,.92) 100%);pointer-events:none;z-index:1}
 
-    .top-bar{position:absolute;top:44px;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+    /* Fixed home top bar — outside feed, stays on scroll */
+    .home-top-bar{position:absolute;top:44px;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 16px;pointer-events:auto}
+    .home-top-bar .live-btn{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:800;background:linear-gradient(135deg,var(--r1),var(--coral));padding:6px 14px;border-radius:12px;color:white;border:none;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;animation:livePulse 2s ease infinite;box-shadow:0 2px 12px rgba(224,75,58,.4)}
+    .home-top-bar .live-btn::before{content:'';width:6px;height:6px;border-radius:50%;background:white;animation:blink 1s step-end infinite}
+    .home-top-bar .search-btn{width:32px;height:32px;border-radius:50%;background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--w5);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--w)}
+    .home-top-bar .search-btn svg{width:16px;height:16px}
+    @media(max-width:768px){.home-top-bar{top:14px}.gnh-badge{top:56px}.streak-badge{top:56px}.speed-pill{top:76px}.ai-reason{top:76px}}
+
+    .top-bar{position:absolute;top:44px;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 16px;display:none}
     .feed-tabs{display:flex;gap:0;background:var(--glass);backdrop-filter:blur(24px);border-radius:12px;padding:3px;border:1px solid var(--w5)}
     .feed-tab{padding:7px 18px;border-radius:9px;font-size:12px;font-weight:600;color:var(--w3);cursor:pointer;border:none;background:none;transition:all .3s var(--ease);position:relative}
     .feed-tab.active{background:rgba(212,164,76,.15);color:var(--g1);box-shadow:0 2px 8px rgba(212,164,76,.1)}
@@ -734,7 +742,7 @@
     .gnh-marker{position:absolute;top:-4px;width:16px;height:16px;border-radius:50%;background:var(--w);border:2px solid var(--g1);transform:translateX(-50%);transition:left .5s var(--ease);box-shadow:0 2px 6px rgba(0,0,0,.3)}
     .gnh-label{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:11px;color:var(--w3)}
     .gnh-label .gnh-emoji{font-size:18px}
-    .gnh-badge{position:absolute;top:88px;right:16px;z-index:21;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--w5);border-radius:10px;padding:4px 8px;font-size:10px;font-weight:700;color:var(--g1);pointer-events:none}
+    .gnh-badge{position:absolute;top:90px;right:16px;z-index:201;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--w5);border-radius:10px;padding:4px 8px;font-size:10px;font-weight:700;color:var(--g1);pointer-events:none}
 
     /* === CREATOR DASHBOARD === */
     .dashboard-overlay{position:absolute;inset:0;z-index:800;background:var(--b1);overflow-y:auto;transform:translateY(100%);transition:transform .35s var(--ease)}
@@ -855,7 +863,7 @@
     .bc-block{background:var(--r1);color:white}
 
     /* === SPEED CONTROL === */
-    .speed-pill{position:absolute;top:100px;right:10px;z-index:20;background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--w5);border-radius:16px;padding:5px 10px;font-size:11px;font-weight:700;color:var(--w);cursor:pointer;transition:all .2s var(--spring)}
+    .speed-pill{position:absolute;top:110px;right:10px;z-index:201;background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--w5);border-radius:16px;padding:5px 10px;font-size:11px;font-weight:700;color:var(--w);cursor:pointer;transition:all .2s var(--spring)}
     .speed-pill:active{transform:scale(.85)}
 
     /* === SCREEN TIME === */
@@ -932,7 +940,7 @@
     .rw-claim{padding:14px 48px;border-radius:20px;background:linear-gradient(135deg,var(--saffron),var(--r1));border:none;color:white;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 20px rgba(255,159,67,.4);transition:all .3s var(--spring)}
     .rw-claim:active{transform:scale(.92)}
     .rw-claim:disabled{opacity:.4;cursor:not-allowed}
-    .streak-badge{position:absolute;top:44px;left:16px;z-index:21;display:flex;align-items:center;gap:4px;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--w5);border-radius:10px;padding:4px 8px;font-size:10px;font-weight:700;color:var(--saffron);cursor:pointer}
+    .streak-badge{position:absolute;top:90px;left:16px;z-index:201;display:flex;align-items:center;gap:4px;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--w5);border-radius:10px;padding:4px 8px;font-size:10px;font-weight:700;color:var(--saffron);cursor:pointer}
 
     /* === ACHIEVEMENT BADGES === */
     .badges-overlay{position:absolute;inset:0;z-index:850;background:var(--b1);overflow-y:auto;transform:translateY(100%);transition:transform .35s var(--ease)}
@@ -1120,7 +1128,7 @@
     .mg-restart{padding:10px 24px;border-radius:12px;background:linear-gradient(135deg,var(--g1),var(--g3));border:none;color:var(--b1);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
 
     /* === AI FOR YOU === */
-    .ai-reason{position:absolute;top:80px;left:14px;z-index:15;display:flex;align-items:center;gap:6px;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--w5);border-radius:10px;padding:5px 10px;font-size:10px;font-weight:600;color:var(--acc);cursor:pointer;max-width:200px;opacity:0;transition:opacity .3s;pointer-events:none}
+    .ai-reason{position:absolute;top:110px;left:14px;z-index:201;display:flex;align-items:center;gap:6px;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--w5);border-radius:10px;padding:5px 10px;font-size:10px;font-weight:600;color:var(--acc);cursor:pointer;max-width:200px;opacity:0;transition:opacity .3s;pointer-events:none}
     .ai-reason.show{opacity:1;pointer-events:auto}
     .ai-reason svg{width:12px;height:12px;flex-shrink:0}
 
@@ -1150,6 +1158,14 @@
 
       <!-- FEED -->
       <div id="p-home" class="page active">
+        <!-- Fixed top bar — stays while scrolling, like TikTok -->
+        <div class="home-top-bar" id="home-top-bar">
+          <div class="feed-tabs"><button class="feed-tab" onclick="this.parentElement.querySelectorAll('.feed-tab').forEach(x=>x.classList.remove('active'));this.classList.add('active');toast('Trending feed')">Trending</button><button class="feed-tab active" onclick="this.parentElement.querySelectorAll('.feed-tab').forEach(x=>x.classList.remove('active'));this.classList.add('active');toast('Following feed')">Following</button></div>
+          <div class="top-right">
+            <button class="live-btn" onclick="openLive(V[0])">Live</button>
+            <button class="search-btn" onclick="nav('explore');document.getElementById('q').focus()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button>
+          </div>
+        </div>
         <div class="feed" id="feed"></div>
         <!-- Share Sheet -->
         <div class="ss-overlay hidden" id="ss-overlay" onclick="closeShare()"></div>
@@ -1816,14 +1832,6 @@ V.forEach((v,i)=>{
   s.innerHTML=`
     <video src="${v.src}" loop muted playsinline preload="${i<2?'auto':'metadata'}"></video>
     <div class="vid-progress"><div class="bar" id="prog-${v.id}"></div></div>
-    <div class="top-bar">
-      <div class="feed-tabs"><button class="feed-tab">Trending</button><button class="feed-tab active">Following</button></div>
-      <div class="top-right">
-        <button class="live-btn" onclick="openLive(V[0])">Live</button>
-        <button class="search-btn" onclick="nav('explore');document.getElementById('q').focus()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button>
-      </div>
-    </div>
-    <div style="position:absolute;top:48px;left:50%;transform:translateX(-50%);z-index:19;font-size:11px;font-weight:700;opacity:.3;color:var(--w);pointer-events:none;letter-spacing:1px">🐉 Zhingkham</div>
     ${i===0?'<div class="swipe-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span>Swipe up</span></div>':''}
     <div class="pause-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg></div>
     <div class="heart-anim"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
@@ -2512,15 +2520,13 @@ startLive=function(){_origStartLive();addGNH(10)};
 const _origAddDiamonds=addDiamonds;
 addDiamonds=function(cv,gn,gname){_origAddDiamonds(cv,gn,gname);addGNH(2)};
 
-// Add GNH badge to feed
+// Add GNH badge to home page (single element)
 (function(){
-  const slides=document.querySelectorAll('.slide');
-  slides.forEach(s=>{
-    const existing=s.querySelector('.gnh-badge');
-    if(!existing){
-      const b=document.createElement('div');b.className='gnh-badge';b.id='gnh-feed-badge';
-      b.textContent='GNH 75 😊';
-      s.appendChild(b);
+  const home=document.getElementById('p-home');
+  if(home&&!document.getElementById('gnh-feed-badge')){
+    const b=document.createElement('div');b.className='gnh-badge';b.id='gnh-feed-badge';
+    b.textContent='GNH 75 😊';
+    home.appendChild(b);
     }
   });
 })();
@@ -2673,23 +2679,19 @@ function confirmBlock(){
 let speedIdx=1;
 const SPEEDS=[0.5,1,1.5,2];
 (function(){
-  document.querySelectorAll('.slide').forEach(s=>{
-    const pill=document.createElement('div');
-    pill.className='speed-pill';
-    pill.textContent='1x';
-    pill.onclick=function(e){
-      e.stopPropagation();
-      speedIdx=(speedIdx+1)%SPEEDS.length;
-      const spd=SPEEDS[speedIdx];
-      this.textContent=spd+'x';
-      const vid=s.querySelector('video');
-      if(vid)vid.playbackRate=spd;
-      toast('Speed: '+spd+'x');
-      document.querySelectorAll('.speed-pill').forEach(p=>{p.textContent=spd+'x'});
-      document.querySelectorAll('.slide video').forEach(v=>{v.playbackRate=spd});
-    };
-    s.appendChild(pill);
-  });
+  const home=document.getElementById('p-home');
+  const pill=document.createElement('div');
+  pill.className='speed-pill';
+  pill.textContent='1x';
+  pill.onclick=function(e){
+    e.stopPropagation();
+    speedIdx=(speedIdx+1)%SPEEDS.length;
+    const spd=SPEEDS[speedIdx];
+    this.textContent=spd+'x';
+    toast('Speed: '+spd+'x');
+    document.querySelectorAll('.slide video').forEach(v=>{v.playbackRate=spd});
+  };
+  home.appendChild(pill);
 })();
 
 // === FEATURE: SCREEN TIME REMINDER ===
@@ -2834,16 +2836,15 @@ function claimDailyReward(){
 function closeRewards(){document.getElementById('rewards-overlay').style.display='none'}
 checkDailyReward();
 
-// Add streak badge to feed
+// Add streak badge to home page (single element)
 (function(){
-  document.querySelectorAll('.slide').forEach(s=>{
-    if(!s.querySelector('.streak-badge')){
-      const b=document.createElement('div');b.className='streak-badge';
-      b.textContent='🔥 '+streak+' day streak';
-      b.onclick=function(e){e.stopPropagation();document.getElementById('rewards-overlay').style.display='flex';renderRewardDays()};
-      s.appendChild(b);
-    }
-  });
+  const home=document.getElementById('p-home');
+  if(home&&!home.querySelector('.streak-badge')){
+    const b=document.createElement('div');b.className='streak-badge';b.id='streak-feed-badge';
+    b.textContent='🔥 '+streak+' day streak';
+    b.onclick=function(e){e.stopPropagation();document.getElementById('rewards-overlay').style.display='flex';renderRewardDays()};
+    home.appendChild(b);
+  }
 })();
 
 // === ACHIEVEMENT BADGES ===
@@ -3252,15 +3253,13 @@ const AI_REASONS=[
   '✨ Because you liked travel content','✨ Recommended by your friends',
   '✨ New creator to discover','✨ Matches your GNH vibe'
 ];
+// Add single AI reason badge to home page, updates on slide change
 (function(){
-  document.querySelectorAll('.slide').forEach((s,i)=>{
-    const reason=document.createElement('div');reason.className='ai-reason';
-    reason.innerHTML=`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z"/></svg>${AI_REASONS[i%AI_REASONS.length]}`;
-    reason.onclick=function(e){e.stopPropagation();toast(AI_REASONS[i%AI_REASONS.length])};
-    s.appendChild(reason);
-    setTimeout(()=>reason.classList.add('show'),2000+i*500);
-    setTimeout(()=>reason.classList.remove('show'),6000+i*500);
-  });
+  const home=document.getElementById('p-home');
+  const reason=document.createElement('div');reason.className='ai-reason show';reason.id='ai-reason-badge';
+  reason.innerHTML=`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z"/></svg>${AI_REASONS[0]}`;
+  reason.onclick=function(e){e.stopPropagation();toast(reason.textContent)};
+  home.appendChild(reason);
 })();
 
 // === EFFECTS PANEL (Studio) ===

@@ -1143,7 +1143,8 @@
     .ai-reason svg{width:12px;height:12px;flex-shrink:0}
 
     /* === EFFECT PANEL === */
-    .effects-panel{position:absolute;bottom:60px;left:0;right:0;z-index:100;background:var(--glass2);backdrop-filter:blur(30px);border-top:1px solid var(--w5);border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform .4s var(--spring);padding:16px 0}
+    .effects-panel{position:absolute;bottom:60px;left:0;right:0;z-index:100;background:var(--glass2);backdrop-filter:blur(30px);border-top:1px solid var(--w5);border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform .4s var(--spring);padding:16px 0;pointer-events:none}
+    .effects-panel.open{pointer-events:auto}
     .effects-panel.open{transform:translateY(0)}
     .effects-tabs{display:flex;gap:0;padding:0 16px;margin-bottom:12px}
     .effects-tab{flex:1;padding:8px;text-align:center;font-size:11px;font-weight:600;color:var(--w3);border-bottom:2px solid transparent;cursor:pointer}
@@ -1823,7 +1824,7 @@ function addK(n){
   fill.style.width=Math.min(karma,100)+'%';
   const di=document.getElementById('di');
   di.classList.add('expand');
-  document.getElementById('di-text').textContent='+'+n+' Karma';
+  di.querySelector('.di-content').innerHTML='<span style="font-size:14px">⭐</span>+'+n+' Karma';
   setTimeout(()=>{di.classList.remove('expand')},1200);
 }
 
@@ -2292,18 +2293,19 @@ function playGiftAnim(page,gift,senderName,senderAv,isCombo,combo){
 function confirmSendGift(){
   if(!selectedGift)return;
   if(coins<selectedGift.p){closeGiftShop();openCoinShop();return}
-  coins-=selectedGift.p;
+  const gift=selectedGift;
+  coins-=gift.p;
   updateCoinUI();
   closeGiftShop();
-  if(selectedGift.n===lastGiftName&&giftComboTimer){giftCombo++}else{giftCombo=1}
-  lastGiftName=selectedGift.n;
+  if(gift.n===lastGiftName&&giftComboTimer){giftCombo++}else{giftCombo=1}
+  lastGiftName=gift.n;
   clearTimeout(giftComboTimer);
   giftComboTimer=setTimeout(()=>{giftCombo=0;lastGiftName='';giftComboTimer=null},5000);
   const page=document.querySelector('.live-page');
-  playGiftAnim(page,selectedGift,'You',AVS.me,true,giftCombo);
-  addLiveChatMsg('You','sent '+selectedGift.n+(giftCombo>1?' x'+giftCombo:'')+' (🪙'+selectedGift.p+')');
-  addK(selectedGift.p>=200?20:10);
-  addDiamonds(selectedGift.p,'You',selectedGift.n);
+  playGiftAnim(page,gift,'You',AVS.me,true,giftCombo);
+  addLiveChatMsg('You','sent '+gift.n+(giftCombo>1?' x'+giftCombo:'')+' (🪙'+gift.p+')');
+  addK(gift.p>=200?20:10);
+  addDiamonds(gift.p,'You',gift.n);
 }
 
 // Simulate other viewers sending gifts during live

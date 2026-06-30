@@ -1048,7 +1048,10 @@
     .stitch-post.show{display:block}
 
     /* === POLLS === */
-    .poll-container{position:absolute;bottom:160px;left:14px;right:66px;z-index:12;background:var(--glass);backdrop-filter:blur(16px);border-radius:14px;padding:12px;border:1px solid var(--w5)}
+    .poll-container{position:absolute;bottom:160px;left:14px;right:66px;z-index:12;background:var(--glass);backdrop-filter:blur(16px);border-radius:14px;padding:12px;border:1px solid var(--w5);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+    .poll-container.closing{opacity:0;transform:translateY(10px) scale(.97);pointer-events:none}
+    .poll-by{font-size:10px;color:var(--w3);margin-bottom:6px;display:flex;align-items:center;gap:4px}
+    .poll-by b{color:var(--g1);font-weight:700}
     .poll-q{font-size:13px;font-weight:700;margin-bottom:8px}
     .poll-option{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--b3);border-radius:10px;margin-bottom:4px;cursor:pointer;border:1px solid var(--w5);transition:all .2s;position:relative;overflow:hidden}
     .poll-option:active{transform:scale(.97)}
@@ -3065,7 +3068,8 @@ const POLLS=[
     const total=poll.votes.reduce((a,b)=>a+b,0);
     const maxVote=Math.max(...poll.votes);
     const container=document.createElement('div');container.className='poll-container';
-    container.innerHTML=`<div class="poll-q">${poll.q}</div>${poll.options.map((o,j)=>{
+    const creator=V[i]?.u?.name||'creator';
+    container.innerHTML=`<div class="poll-by">📊 Poll by <b>@${creator}</b></div><div class="poll-q">${poll.q}</div>${poll.options.map((o,j)=>{
       const pct=Math.round(poll.votes[j]/total*100);
       const isWinner=poll.votes[j]===maxVote;
       const color=isWinner?'rgba(212,164,76,.2)':'rgba(248,245,239,.06)';
@@ -3085,6 +3089,10 @@ function votePoll(el,pct,isWinner){
   el.querySelector('.po-fill').style.width=pct+'%';
   if(isWinner)el.classList.add('winner');
   addK(2);addGNH(1);
+  setTimeout(()=>{
+    container.classList.add('closing');
+    setTimeout(()=>container.remove(),400);
+  },1800);
 }
 
 // === MEDITATION MODE ===
